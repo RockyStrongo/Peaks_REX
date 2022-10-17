@@ -1,0 +1,19 @@
+/* catamaran-regular - latin */
+@font-face {
+    src:
+      url('../assets/fonts/catamaran/catamaran-regular.woff2') format('woff2'), 
+      url('../assets/fonts/catamaran/catamaran-regular.woff') format('woff');
+    font-family: 'Catamaran';
+    font-style: normal;
+    font-weight: 400;
+  }
+  
+  /* oswald-regular - latin */
+  @font-face {
+    src:
+      url('../assets/fonts/oswald/oswald-regular.woff2') format('woff2'), 
+      url('../assets/fonts/oswald/oswald-regular.woff') format('woff');
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 400;
+  }
