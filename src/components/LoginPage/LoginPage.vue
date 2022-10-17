@@ -29,9 +29,36 @@
 
 <script>
 
-import LoginPage from './LoginPage.js';
+import ConnectionForm from '../ConnectionForm/ConnectionForm.vue';
 
-export default LoginPage;
+
+export default {
+    name: 'LoginPage',
+
+    components: {
+        ConnectionForm
+    },
+
+    computed: {
+
+    },
+
+    data() {
+        return {
+
+        }
+
+    },
+
+    methods: {
+
+       
+    },
+    mounted() {
+
+    }
+}
+
 
 </script>
 

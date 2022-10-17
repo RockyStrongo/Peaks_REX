@@ -8,9 +8,16 @@
 </template>
 
 <script>
-import SnackBar from './SnackBar.js';
+export default {
+    name: 'SnackBar',
 
-export default SnackBar;
+    props: {
+        snackText: '',
+        snackColor: '',
+        snackIconPath: '',
+    },
+
+}
 </script>
 
 
