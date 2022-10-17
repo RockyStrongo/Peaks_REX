@@ -1,10 +1,16 @@
 <template>
 
-    <label>{{label}}</label>
+    <label class="PasswordInput-Label">{{label}}</label>
 
-    <input class="input-text" type="password" autocomplete="current-password" v-model="password" name="password" placeholder="Mot de passe" data-input-password/>
-    <img class="pw-eye" src="../../assets/images/eye-password-open.svg" data-eye="open" aria-hidden="false" @click="togglePasswordVisibility">
-    <img class="pw-eye" src="../../assets/images/eye-password-closed.svg" data-eye="close" aria-hidden="true" @click="togglePasswordVisibility">
+    <div class="container-eye">
+        <input class="input-text" type="password" autocomplete="current-password" v-model="password" name="password"
+            placeholder="Mot de passe" data-input-password />
+        <img class="pw-eye" src="../../assets/images/eye-password-open.svg" data-eye="open" aria-hidden="false"
+            @click="togglePasswordVisibility">
+        <img class="pw-eye" src="../../assets/images/eye-password-closed.svg" data-eye="close" aria-hidden="true"
+            @click="togglePasswordVisibility">
+    </div>
+
 
 </template>
 
@@ -21,12 +27,12 @@ export default {
             const eyeIconsElements = document.querySelectorAll(EYES_SELECTOR)
             return eyeIconsElements;
         },
-        eyeIconOpenSelector(){
+        eyeIconOpenSelector() {
             const EYE_OPEN_SELECTOR = '[data-eye=open]'
             const eyeOpenIconElement = document.querySelector(EYE_OPEN_SELECTOR)
             return eyeOpenIconElement
         },
-        eyeIconClosedSelector(){
+        eyeIconClosedSelector() {
             const EYE_CLOSE_SELECTOR = '[data-eye=close]'
             const eyeCloseIconElement = document.querySelector(EYE_CLOSE_SELECTOR)
             return eyeCloseIconElement
@@ -59,15 +65,15 @@ export default {
             const fieldtype = this.passwordInputSelector.type.toLowerCase()
             fieldtype === 'password' ? this.showPassword() : this.hidePassword()
         },
-        showPassword(){
+        showPassword() {
             console.log("hi")
-            this.passwordInputSelector.type="text"
+            this.passwordInputSelector.type = "text"
             this.eyeIconClosedSelector.setAttribute('aria-hidden', 'false')
             this.eyeIconOpenSelector.setAttribute('aria-hidden', 'true')
 
         },
-        hidePassword(){
-            this.passwordInputSelector.type="password"
+        hidePassword() {
+            this.passwordInputSelector.type = "password"
             this.eyeIconOpenSelector.setAttribute('aria-hidden', 'false')
             this.eyeIconClosedSelector.setAttribute('aria-hidden', 'true')
         },
