@@ -1,9 +1,17 @@
 <template>
     <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackIconPath="snackBarIcon"></SnackBar>
-    <form data-form-connection>
-        <EmailInput label="Email"/>
-        <PasswordInput label="Mot de passe"/>
-        <Button class="Button Button--pink pink-button" label="Connexion"></Button>
+    <form class="connection-form" name="connection-form" action="" data-form-connection>
+        <h2>Connexion</h2>
+        <span class="subtext ">Les champs marqués d'une <span class="pink-text">*</span> sont
+            obligatoires</span>
+        <hr class="line">
+        <EmailInput label="Email" />
+        <PasswordInput label="Mot de passe" />
+        <div class="align-right">
+            <a href="" class="link link--small lostpassword">Vous n'avez pas encore de compte ?</a>
+            <Button type="submit" class="Button Button--pink pink-button" label="Connexion"></Button>
+          </div>
+        
     </form>
 </template>
 

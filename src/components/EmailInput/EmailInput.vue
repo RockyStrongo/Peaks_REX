@@ -1,6 +1,6 @@
 <template>
     <label>{{label}}</label>
-    <input class="EmailInput" type="email" autocomplete="username" v-model="email" />
+    <input class="input-text" name="login" placeholder="Email" type="email" autocomplete="username" v-model="email" required data-input-email />
 </template>
 
 <script>
@@ -8,9 +8,3 @@ import EmailInput from './EmailInput.js';
 
 export default EmailInput;
 </script>
-
-
-
-<style>
-@import url(EmailInput.css);
-</style>

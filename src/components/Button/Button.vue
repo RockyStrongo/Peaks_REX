@@ -19,5 +19,5 @@ export default {
 
 
 <style>
-@import url(Button.css);
+@import url(Button.scss);
 </style>

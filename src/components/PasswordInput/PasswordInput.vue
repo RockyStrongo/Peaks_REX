@@ -2,7 +2,7 @@
 
     <label>{{label}}</label>
 
-    <input class="PasswordInput" type="password" autocomplete="current-password" v-model="password" data-input-password/>
+    <input class="input-text" type="password" autocomplete="current-password" v-model="password" name="password" placeholder="Mot de passe" data-input-password/>
     <img class="pw-eye" src="../../assets/images/eye-password-open.svg" data-eye="open" aria-hidden="false" >
     <img class="pw-eye" src="../../assets/images/eye-password-closed.svg" data-eye="close" aria-hidden="true" >
 

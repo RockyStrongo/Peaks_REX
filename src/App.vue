@@ -1,17 +1,17 @@
 <script>
-import ConnectionForm from './components/ConnectionForm/ConnectionForm.vue';
+import LoginPage from './components/LoginPage/LoginPage.vue';
 
 
 export default {
   components: {
-    ConnectionForm
+    LoginPage
 }
 }
 </script>
 
 
 <template>
-<ConnectionForm/>
+<LoginPage/>
 </template>
 
 <style>

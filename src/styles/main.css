@@ -5,25 +5,6 @@
 
 @import url(fonts.css);
 
-/* colors */
-:root {
-    --white: #fff;
-    --pink: #F063A7;
-    --blue: #19284A;
-    --transitionTime: .2s;
-}
-
-.white-background {
-    background-color: var(--white);
-}
-
-.pink-text {
-    color: var(--pink);
-}
-
-.pink-background {
-    background-color: var(--pink);
-}
 
 /* elements */
 h2 {
