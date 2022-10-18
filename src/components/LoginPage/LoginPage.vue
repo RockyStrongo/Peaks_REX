@@ -1,14 +1,14 @@
 <template>
 
-    <div class="grid-container">
+    <div class="LoginPage-grid-container">
 
         <!-- left column -->
-        <div class="grid-item-left"></div>
+        <div class="LoginPage-grid-item-left"></div>
 
         <!-- right column -->
-        <div class="grid-item-right">
+        <div class="LoginPage-grid-item-right">
 
-            <div class="flex-container">
+            <div class="LoginPage-flex-container">
 
                 <Logo />
                 <ConnectionForm />
@@ -16,8 +16,8 @@
             </div>
 
             <!-- Recover password link -->
-            <div class="bottom-right">
-                <a href="/" class="link link--small">Vous avez perdu votre mot de passe ?</a>
+            <div class="LoginPage-bottom-right">
+                <Link class="Link--small Link--lostpassword" href="https://google.com" target="_self"  title="Vous avez perdu votre mot de passe ?"/>
             </div>
 
         </div>
@@ -29,6 +29,7 @@
 
 import ConnectionForm from '../ConnectionForm/ConnectionForm.vue';
 import Logo from '../Logo/Logo.vue';
+import Link from '../Link/Link.vue';
 
 
 export default {
@@ -36,7 +37,8 @@ export default {
 
     components: {
     ConnectionForm,
-    Logo
+    Logo,
+    Link 
 },
 
     computed: {
@@ -63,25 +65,25 @@ export default {
 </script>
 
 <style>
-.grid-item-left {
+.LoginPage-grid-item-left {
     background: linear-gradient(rgba(25, 40, 74, 0.45),
-            rgba(25, 40, 74, 0.45)), url(../assets/images/montagne.jpg)no-repeat;
+            rgba(25, 40, 74, 0.45)), url(../src/assets/images/montagne.jpg)no-repeat;
     background-size: cover;
 }
 
-.grid-item-right {
+.LoginPage-grid-item-right {
     display: grid;
     grid-template-rows: 9fr 1fr;
     background: #19284A;
 }
 
-.grid-container {
+.LoginPage-grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 100vh;
 }
 
-.flex-container {
+.LoginPage-flex-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -93,7 +95,7 @@ export default {
     margin: 0 auto;
 }
 
-.bottom-right {
+.LoginPage-bottom-right {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -101,9 +103,5 @@ export default {
     grid-row: 2/3;
     margin-right: 15px;
     margin-bottom: 17px;
-}
-
-.bottom-right .link {
-    color: #fff;
 }
 </style>

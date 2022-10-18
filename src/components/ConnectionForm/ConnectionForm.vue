@@ -1,17 +1,29 @@
 <template>
+
     <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackIconPath="snackBarIcon"></SnackBar>
-    <form class="connection-form" name="connection-form" action="" data-form-connection>
-        <h2>Connexion</h2>
-        <span class="subtext ">Les champs marqués d'une <span class="pink-text">*</span> sont
+
+    <form class="ConnectionForm" ref="ConnectionFormElement" @submit="validateConnnectionForm">
+
+        <Title title="Connexion" class="ConnectionForm-title"> </Title>
+
+        <span class="ConnectionForm-subtext ">Les champs marqués d'un <span class="pink-asterisk">*</span> sont
             obligatoires</span>
-        <hr class="line">
-        <EmailInput label="Email" />
-        <PasswordInput label="Mot de passe" />
+
+        <hr class="ConnectionForm-line">
+
+        <EmailInput label="Email" :isRequired="true" />
+
+        <PasswordInput label="Mot de passe" :isRequired="true" />
+
         <div class="align-right">
-            <a href="" class="link link--small lostpassword">Vous n'avez pas encore de compte ?</a>
-            <Button type="submit" class="Button Button--pink pink-button" label="Connexion"></Button>
-          </div>
-        
+
+            <Link href="http://netflix.com" class="Link--small Link--noaccount"
+                title="Vous n'avez pas encore de compte ?" target="_self" />
+
+            <Button label="Connexion" class="Button--pink"></Button>
+
+        </div>
+
     </form>
 </template>
 
@@ -20,6 +32,8 @@ import EmailInput from '../EmailInput/EmailInput.vue';
 import PasswordInput from '../PasswordInput/PasswordInput.vue';
 import Button from '../Button/Button.vue';
 import SnackBar from '../SnackBar/SnackBar.vue';
+import Link from '../Link/Link.vue';
+import Title from '../Title/Title.vue';
 
 
 
@@ -30,17 +44,9 @@ export default {
         EmailInput,
         PasswordInput,
         Button,
-        SnackBar
-    },
-
-    computed: {
-
-        connectionFormSelector() {
-            const CONNEXION_FORM_SELECTOR = '[data-form-connection]'
-            const connectionFormElement = document.querySelector(CONNEXION_FORM_SELECTOR)
-            return connectionFormElement;
-        }
-
+        SnackBar,
+        Link,
+        Title
     },
 
     data() {
@@ -84,7 +90,7 @@ export default {
                 this.snackBarIcon = this.SNACK_BAR_ICON_ERROR
 
             } else {
-                this.connectionFormSelector.submit()
+                this.$refs.ConnectionFormElement.submit()
             }
 
         },
@@ -100,8 +106,6 @@ export default {
         }
     },
     mounted() {
-        this.connectionFormSelector.addEventListener('submit', this.validateConnnectionForm)
-
         this.emitter.on("email-valid", this.getEmailIsValidfromEmitter)
         this.emitter.on("email-peaks", this.getEmailIsPeaksfromEmitter)
         this.emitter.on("password-complex", this.getPasswordIsComplexfromEmitter)
@@ -111,5 +115,22 @@ export default {
 </script>
 
 <style>
-@import url(ConnectionForm.css);
+.ConnectionForm {
+    color: #fff;
+}
+
+.ConnectionForm-subtext {
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.pink-asterisk {
+    color: var(--pink);
+}
+
+.ConnectionForm-line {
+    width: 215px;
+    margin-top: 13px;
+    margin-bottom: 24px;
+}
 </style>

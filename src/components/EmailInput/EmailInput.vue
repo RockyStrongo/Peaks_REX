@@ -1,6 +1,6 @@
 <template>
-    <label class="EmailInput-label">{{label}}</label>
-    <input class="input-text" name="login" placeholder="Email" type="email" autocomplete="username" v-model="email" required data-input-email />
+    <label class="EmailInput-label">{{label}} <span class="pink-asterisk" v-if="isRequired"> *</span> </label>
+    <input class="EmailInput" name="login" placeholder="Email" type="email" autocomplete="username" v-model="email" />
 </template>
 
 <script>
@@ -10,9 +10,9 @@ export default {
 
     name: 'EmailInput',
 
-
     props: {
-        label: ''
+        label: '',
+        isRequired: false
     },
 
     data() {
@@ -61,5 +61,9 @@ export default {
     font-weight: 700;
     font-size: 12px;
     margin-bottom: 5px;
+}
+
+.pink-asterisk {
+    color: var(--pink);
 }
 </style>

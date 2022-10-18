@@ -1,13 +1,13 @@
 <template>
 
-    <label class="PasswordInput-Label">{{label}}</label>
+    <label class="PasswordInput-Label">{{label}}<span class="pink-asterisk" v-if="isRequired"> *</span></label>
 
-    <div class="container-eye">
-        <input class="input-text" type="password" autocomplete="current-password" v-model="password" name="password"
-            placeholder="Mot de passe" data-input-password />
-        <img class="pw-eye" src="../../assets/images/eye-password-open.svg" data-eye="open" aria-hidden="false"
+    <div class="PasswordInput-eye-container">
+        <input class="PasswordInput" type="password" autocomplete="current-password" v-model="password" name="password"
+            placeholder="Mot de passe" ref="inputPasswordElement" />
+        <img class="PasswordInput-eye" src="../../assets/images/eye-password-open.svg" v-if="!passwordVisible"
             @click="togglePasswordVisibility">
-        <img class="pw-eye" src="../../assets/images/eye-password-closed.svg" data-eye="close" aria-hidden="true"
+        <img class="PasswordInput-eye" src="../../assets/images/eye-password-closed.svg" v-if="passwordVisible"
             @click="togglePasswordVisibility">
     </div>
 
@@ -21,38 +21,16 @@ export default {
 
     name: 'PasswordInput',
 
-    computed: {
-        eyeIconSelector() {
-            const EYES_SELECTOR = '[data-eye]'
-            const eyeIconsElements = document.querySelectorAll(EYES_SELECTOR)
-            return eyeIconsElements;
-        },
-        eyeIconOpenSelector() {
-            const EYE_OPEN_SELECTOR = '[data-eye=open]'
-            const eyeOpenIconElement = document.querySelector(EYE_OPEN_SELECTOR)
-            return eyeOpenIconElement
-        },
-        eyeIconClosedSelector() {
-            const EYE_CLOSE_SELECTOR = '[data-eye=close]'
-            const eyeCloseIconElement = document.querySelector(EYE_CLOSE_SELECTOR)
-            return eyeCloseIconElement
-
-        },
-        passwordInputSelector() {
-            const PASSWORD_INPUT_SELECTOR = '[data-input-password]'
-            const passwordInputElement = document.querySelector(PASSWORD_INPUT_SELECTOR)
-            return passwordInputElement;
-        }
-    },
-
     props: {
-        label: ''
+        label: '',
+        isRequired: false
     },
 
     data() {
         return {
             password: '',
-            passwordComplex: false
+            passwordComplex: false,
+            passwordVisible: false,
         }
     },
 
@@ -62,20 +40,17 @@ export default {
         },
         togglePasswordVisibility() {
 
-            const fieldtype = this.passwordInputSelector.type.toLowerCase()
+            const fieldtype = this.$refs.inputPasswordElement.type.toLowerCase()
             fieldtype === 'password' ? this.showPassword() : this.hidePassword()
         },
         showPassword() {
-            console.log("hi")
-            this.passwordInputSelector.type = "text"
-            this.eyeIconClosedSelector.setAttribute('aria-hidden', 'false')
-            this.eyeIconOpenSelector.setAttribute('aria-hidden', 'true')
+            this.$refs.inputPasswordElement.type = "text"
+            this.passwordVisible = true
 
         },
         hidePassword() {
-            this.passwordInputSelector.type = "password"
-            this.eyeIconOpenSelector.setAttribute('aria-hidden', 'false')
-            this.eyeIconClosedSelector.setAttribute('aria-hidden', 'true')
+            this.$refs.inputPasswordElement.type = "password"
+            this.passwordVisible = false
         },
     },
     watch: {
@@ -88,5 +63,39 @@ export default {
 </script>
 
 <style>
-@import url(PasswordInput.css);
+.PasswordInput {
+    height: 45px;
+    width: 100%;
+    padding: 18px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #19284A;
+}
+
+.PasswordInput-Label {
+    font-family: Catamaran;
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.PasswordInput-eye {
+    position: absolute;
+    top: 13px;
+    right: 18px;
+    display: block;
+    height: 18px;
+    cursor: pointer;
+}
+
+.PasswordInput-eye-container {
+    position: relative
+}
+
+.pink-asterisk {
+    color: var(--pink);
+}
+
 </style>

@@ -8,10 +8,6 @@ export default {
 
     name: 'Logo',
 
-
-    props: {
-    },
-
 }
 </script>
 
