@@ -18,3 +18,15 @@
 .SnackBar-text {
     padding-left: 11px;
 }
+
+.SnackBar-Error{
+    background-color: colors.$error;
+}
+
+.SnackBar-Info{
+    background-color: colors.$info;
+}
+
+.SnackBar-Success {
+    background-color: colors.$success;
+}

@@ -1,6 +1,6 @@
 <template>
 
-    <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackIconPath="snackBarIcon"></SnackBar>
+    <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
 
     <form class="ConnectionForm" ref="ConnectionFormElement" @submit="validateConnnectionForm">
 
@@ -57,13 +57,11 @@ export default {
             snackBarVisible: false,
 
             snackBarText: "",
-            snackBarIcon: "",
+            snackBarType: "",
 
             ERROR_MESSAGE_INVALID_EMAIL: "L'adresse email doit être valide",
             ERROR_MESSAGE_EMAIL_PEAKS: "L'adresse email doit appartenir à Peaks",
             ERROR_MESSAGE_PASSWORD_COMPLEXITY: "Le mot de passe doit contenir au minimum 8 caractères, un chiffre et une majuscule",
-
-            SNACK_BAR_ICON_ERROR: "../../src/assets/images/attention.svg",
         }
 
     },
@@ -76,18 +74,18 @@ export default {
             if (!this.emailIsValid) {
                 this.snackBarVisible = true
                 this.snackBarText = this.ERROR_MESSAGE_INVALID_EMAIL
-                this.snackBarIcon = this.SNACK_BAR_ICON_ERROR
+                this.snackBarType = "error"
             }
             else if (!this.emailIsPeaks) {
                 this.snackBarVisible = true
                 this.snackBarText = this.ERROR_MESSAGE_EMAIL_PEAKS
-                this.snackBarIcon = this.SNACK_BAR_ICON_ERROR
+                this.snackBarType = "error"
 
             }
             else if (!this.passwordIsComplex) {
                 this.snackBarVisible = true
                 this.snackBarText = this.ERROR_MESSAGE_PASSWORD_COMPLEXITY
-                this.snackBarIcon = this.SNACK_BAR_ICON_ERROR
+                this.snackBarType = "error"
 
             } else {
                 this.$refs.ConnectionFormElement.submit()
