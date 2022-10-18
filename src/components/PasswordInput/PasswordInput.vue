@@ -63,5 +63,5 @@ export default {
 </script>
 
 <style>
-@import url('PasswordInput.css')
+@import url('PasswordInput.css');
 </style>

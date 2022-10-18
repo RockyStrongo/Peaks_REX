@@ -22,5 +22,5 @@ export default {
 
 
 <style>
-@import url('Link.css')
+@import url('Link.css');
 </style>

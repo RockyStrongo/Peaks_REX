@@ -113,5 +113,5 @@ export default {
 </script>
 
 <style>
-@import url('ConnectionForm.css')
+@import url('ConnectionForm.css');
 </style>

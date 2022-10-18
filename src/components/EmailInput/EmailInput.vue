@@ -45,5 +45,5 @@ export default {
 </script>
 
 <style>
-@import url('EmailInput.css')
+@import url('EmailInput.css');
 </style>
