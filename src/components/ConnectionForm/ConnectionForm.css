@@ -1,0 +1,18 @@
+.ConnectionForm {
+  color: #fff;
+}
+
+.ConnectionForm-subtext {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.pink-asterisk {
+  color: #F063A7;
+}
+
+.ConnectionForm-line {
+  width: 215px;
+  margin-top: 13px;
+  margin-bottom: 24px;
+}/*# sourceMappingURL=ConnectionForm.css.map */

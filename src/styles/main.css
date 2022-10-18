@@ -1,86 +1,101 @@
-@import url(reset.css);
-@import url(fonts.css);
-@import url(colors.css);
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
 
-@import url(fonts.css);
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
 
+ol, ul {
+  list-style: none;
+}
 
-/* elements */
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* html {
+	1rem = 10px
+	font-size: 0.625;
+} */
+body {
+  line-height: 1;
+  font-family: Oswald;
+  /* font-size: 1.6rem; */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input {
+  font-family: inherit;
+}
+
+/* catamaran-regular - latin */
+@font-face {
+  src: url("../assets/fonts/catamaran/catamaran-regular.woff2") format("woff2"), url("../assets/fonts/catamaran/catamaran-regular.woff") format("woff");
+  font-family: "Catamaran";
+  font-style: normal;
+  font-weight: 400;
+}
+/* oswald-regular - latin */
+@font-face {
+  src: url("../assets/fonts/oswald/oswald-regular.woff2") format("woff2"), url("../assets/fonts/oswald/oswald-regular.woff") format("woff");
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 400;
+}
 label,
 input,
 textarea {
-    display: block;
+  display: block;
 }
 
 input,
 textarea {
-    border-radius: 4px;
-    font-size: 16px;
-    outline: none;
-}
-
-/* classes */
-
-.input-text {
-    height: 45px;
-    width: 100%;
-    padding: 18px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #19284A;
-}
-
-.input-text::placeholder {
-    color: #C2CADD;
-}
-
-.align-right {
-    flex-direction: row;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    margin-top: 18px;
-}
-
-
-
-
-
-.snackbar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 32px;
-    padding: 11px;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: 300;
-    background-color: var(--pink);
-    color: var(--white);
-}
-
-.snackbar[aria-hidden=true] {
-    display: none;
-}
-
-.snack-text {
-    padding-left: 11px;
-}
-
-
-
-.pw-eye {
-    position: absolute;
-    top: 13px;
-    right : 18px;
-    display: block;
-    height: 18px;
-    cursor: pointer;
-} 
-
-.pw-eye[aria-hidden=true] {
-    display: none;
-}
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+}/*# sourceMappingURL=main.css.map */

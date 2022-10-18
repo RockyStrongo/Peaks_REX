@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import mitt from 'mitt'
-
 import './styles/main.css'
 
 const emitter = mitt();

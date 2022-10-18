@@ -1,0 +1,16 @@
+@use 'reset.css';
+@use 'colors';
+@use 'fonts.css';
+
+label,
+input,
+textarea {
+    display: block;
+}
+
+input,
+textarea {
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}

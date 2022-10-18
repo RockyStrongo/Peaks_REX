@@ -115,22 +115,5 @@ export default {
 </script>
 
 <style>
-.ConnectionForm {
-    color: #fff;
-}
-
-.ConnectionForm-subtext {
-    font-size: 12px;
-    font-weight: 300;
-}
-
-.pink-asterisk {
-    color: var(--pink);
-}
-
-.ConnectionForm-line {
-    width: 215px;
-    margin-top: 13px;
-    margin-bottom: 24px;
-}
+@import url('ConnectionForm.css')
 </style>

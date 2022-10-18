@@ -22,26 +22,5 @@ export default {
 
 
 <style>
-.Link {
-    text-decoration: underline;
-    transition: color .2s;
-}
-
-link:hover,
-link:focus-visible {
-    color: var(--blue)
-}
-
-
-.Link--small {
-    font-size: 12px;
-}
-
-.Link--noaccount {
-    margin: 12px;
-}
-
-.Link--lostpassword{
-    color: var(--white)
-}
+@import url('Link.css')
 </style>

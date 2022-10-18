@@ -1,8 +1,8 @@
 <template>
 
-    <div class="snackbar">
+    <div class="SnackBar">
         <img :src="snackIconPath" />
-        <span class="snack-text">{{snackText}}</span>
+        <span class="SnackBar-text">{{snackText}}</span>
     </div>
 
 </template>

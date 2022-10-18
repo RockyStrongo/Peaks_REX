@@ -1,0 +1,20 @@
+@use '../../styles/colors';
+
+.ConnectionForm {
+    color: colors.$white;
+}
+
+.ConnectionForm-subtext {
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.pink-asterisk {
+    color: colors.$pink;
+}
+
+.ConnectionForm-line {
+    width: 215px;
+    margin-top: 13px;
+    margin-bottom: 24px;
+}

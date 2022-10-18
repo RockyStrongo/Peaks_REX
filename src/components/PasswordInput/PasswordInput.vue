@@ -63,39 +63,5 @@ export default {
 </script>
 
 <style>
-.PasswordInput {
-    height: 45px;
-    width: 100%;
-    padding: 18px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #19284A;
-}
-
-.PasswordInput-Label {
-    font-family: Catamaran;
-    font-weight: 700;
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-
-.PasswordInput-eye {
-    position: absolute;
-    top: 13px;
-    right: 18px;
-    display: block;
-    height: 18px;
-    cursor: pointer;
-}
-
-.PasswordInput-eye-container {
-    position: relative
-}
-
-.pink-asterisk {
-    color: var(--pink);
-}
-
+@import url('PasswordInput.css')
 </style>
