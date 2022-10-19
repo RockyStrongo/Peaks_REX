@@ -31,14 +31,13 @@ import ConnectionForm from '../ConnectionForm/ConnectionForm.vue';
 import Logo from '../Logo/Logo.vue';
 import Link from '../Link/Link.vue';
 
-
 export default {
     name: 'LoginPage',
 
     components: {
     ConnectionForm,
     Logo,
-    Link 
+    Link,
 },
 
     computed: {
@@ -54,7 +53,6 @@ export default {
 
     methods: {
 
-       
     },
     mounted() {
 

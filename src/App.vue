@@ -1,17 +1,18 @@
 <script>
-import LoginPage from './components/LoginPage/LoginPage.vue';
-
+import LoginPage from "./components/LoginPage/LoginPage.vue";
+import SignUpPage from "./components/SignUpPage/SignUpPage.vue";
 
 export default {
   components: {
-    LoginPage
+    LoginPage,
+    SignUpPage
 }
 }
 </script>
 
 
 <template>
-<LoginPage/>
+    <RouterView />
 </template>
 
 <style>

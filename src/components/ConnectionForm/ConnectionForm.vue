@@ -4,21 +4,16 @@
 
     <form class="ConnectionForm" ref="ConnectionFormElement" @submit="validateConnnectionForm">
 
-        <Title title="Connexion" class="ConnectionForm-title"> </Title>
-
-        <span class="ConnectionForm-subtext ">Les champs marqués d'un <span class="pink-asterisk">*</span> sont
-            obligatoires</span>
-
-        <hr class="ConnectionForm-line">
+        <LoginFormsTitle titleText="Connexion" />
 
         <EmailInput label="Email" :isRequired="true" />
 
         <PasswordInput label="Mot de passe" :isRequired="true" />
 
-        <div class="align-right">
+        <div class="ConnectionForm-align-right">
 
-            <Link href="http://netflix.com" class="Link--small Link--noaccount"
-                title="Vous n'avez pas encore de compte ?" target="_self" />
+            <Link  href="/signup" class="Link--small Link--noaccount"
+                title="Vous n'avez pas encore de compte ?" target="_self"/>
 
             <Button label="Connexion" class="Button--pink"></Button>
 
@@ -33,7 +28,7 @@ import PasswordInput from '../PasswordInput/PasswordInput.vue';
 import Button from '../Button/Button.vue';
 import SnackBar from '../SnackBar/SnackBar.vue';
 import Link from '../Link/Link.vue';
-import Title from '../Title/Title.vue';
+import LoginFormsTitle from '../LoginFormsTitle/LoginFormsTitle.vue';
 
 
 
@@ -41,13 +36,13 @@ export default {
     name: 'ConnectionForm',
 
     components: {
-        EmailInput,
-        PasswordInput,
-        Button,
-        SnackBar,
-        Link,
-        Title
-    },
+    EmailInput,
+    PasswordInput,
+    Button,
+    SnackBar,
+    Link,
+    LoginFormsTitle
+},
 
     data() {
         return {
@@ -101,7 +96,7 @@ export default {
         },
         getPasswordIsComplexfromEmitter(bool) {
             this.passwordIsComplex = bool
-        }
+        },
     },
     mounted() {
         this.emitter.on("email-valid", this.getEmailIsValidfromEmitter)

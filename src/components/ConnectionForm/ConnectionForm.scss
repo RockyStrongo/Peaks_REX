@@ -2,19 +2,10 @@
 
 .ConnectionForm {
     color: colors.$white;
+    width: 100%;
 }
 
-.ConnectionForm-subtext {
-    font-size: 12px;
-    font-weight: 300;
-}
-
-.pink-asterisk {
-    color: colors.$pink;
-}
-
-.ConnectionForm-line {
-    width: 215px;
-    margin-top: 13px;
-    margin-bottom: 24px;
+.ConnectionForm-align-right{
+    display: flex;
+    justify-content: right;
 }

@@ -1,6 +1,6 @@
 <template>
-    <label class="EmailInput-label">{{label}} <span class="pink-asterisk" v-if="isRequired"> *</span> </label>
-    <input class="EmailInput" name="login" placeholder="Email" type="email" autocomplete="username" v-model="email" />
+    <label class="EmailInput-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{label}}</label>
+    <input class="EmailInput" name="login" placeholder="Email" type="email" autocomplete="username" v-model="email" :required="isRequired"/>
 </template>
 
 <script>

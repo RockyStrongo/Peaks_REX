@@ -1,10 +1,10 @@
 <template>
 
-    <label class="PasswordInput-Label">{{label}}<span class="pink-asterisk" v-if="isRequired"> *</span></label>
+    <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span>{{label}}</label>
 
     <div class="PasswordInput-eye-container">
-        <input class="PasswordInput" type="password" autocomplete="current-password" v-model="password" name="password"
-            placeholder="Mot de passe" ref="inputPasswordElement" />
+        <input class="input" type="password" autocomplete="current-password" v-model="password" name="password"
+            placeholder="Mot de passe" ref="inputPasswordElement" :required="isRequired" @change="test" />
         <img class="PasswordInput-eye" src="../../assets/images/eye-password-open.svg" v-if="!passwordVisible"
             @click="togglePasswordVisibility">
         <img class="PasswordInput-eye" src="../../assets/images/eye-password-closed.svg" v-if="passwordVisible"
@@ -23,7 +23,15 @@ export default {
 
     props: {
         label: '',
-        isRequired: false
+        isRequired: false,
+        confirmation: false,
+    },
+
+    watch: {
+        password(event) {
+            this.passwordComplex = this.passwordIsComplex()
+            this.emitter.emit("password-complex", this.passwordComplex);
+        }
     },
 
     data() {
@@ -52,13 +60,19 @@ export default {
             this.$refs.inputPasswordElement.type = "password"
             this.passwordVisible = false
         },
-    },
-    watch: {
-        password() {
-            this.passwordComplex = this.passwordIsComplex()
-            this.emitter.emit("password-complex", this.passwordComplex);
+        test(){
+            switch (this.confirmation) {
+            case true:
+            this.emitter.emit("password-confirmation", this.password);            
+                break;
+            case false:
+            this.emitter.emit("password", this.password);          
+                break;
+        }
+
         }
     },
+
 }
 </script>
 

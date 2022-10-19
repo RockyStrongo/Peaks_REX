@@ -24,8 +24,4 @@ export default {
     font-family: Catamaran;
     font-size: 35px;
 }
-.ConnectionForm-title {
-    font-weight: 700;
-    font-size: 20px;
-}
 </style>
