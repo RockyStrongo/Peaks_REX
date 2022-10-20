@@ -13,9 +13,15 @@ export default {
     name: 'TextInput',
 
     props: {
-        label: '',
-        placeholder: '',
-        isRequired: false
+        label: {
+            type: String,
+            required: true
+        },
+        placeholder: String,
+        isRequired: {
+            type: Boolean,
+            required: true
+        }
     },
 
     data() {

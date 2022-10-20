@@ -10,7 +10,10 @@ export default {
 
 
     props: {
-        title: '',
+        title: {
+            type : String,
+            required: true,
+        },
         class:''
     },
 

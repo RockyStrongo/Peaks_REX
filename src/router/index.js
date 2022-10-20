@@ -7,8 +7,9 @@ import {
 
 // 1. Define route components.
 // These can be imported from other files
-import LoginPage from "../components/LoginPage/LoginPage.vue";
-import SignUpPage from "../components/SignUpPage/SignUpPage.vue";
+import LoginPage from "../pages/LoginPage/LoginPage.vue";
+import SignUpPage from "../pages/SignUpPage/SignUpPage.vue";
+import RecoverPasswordPage from "../pages/RecoverPasswordPage/RecoverPasswordPage.vue";
 
 
 const history = createWebHistory();
@@ -24,6 +25,10 @@ const routes = [
   {
     path: "/signup",
     component: SignUpPage
+  },
+  {
+    path: "/recover-password",
+    component: RecoverPasswordPage
   },
 ];
 

@@ -16,7 +16,10 @@ export default {
     name: 'LoginFormsTitle',
 
     props: {
-      titleText : '',
+      titleText : {
+        type: String,
+        required: true 
+      },
     },
 
     components: {

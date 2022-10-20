@@ -1,5 +1,5 @@
 <template>
-    <a class="Link" :class="class" :href="href" :target="target" >{{title}}</a>
+    <a class="Link" :class="class" :href="href" :target="target">{{title}}</a>
 </template>
 
 <script>
@@ -8,12 +8,14 @@ export default {
 
     name: 'Link',
 
-
     props: {
-        title: '',
-        href: '',
-        target: '',
-        class:''
+        title: {
+            type: String,
+            required: true,
+        },
+        href: String,
+        target: String,
+        class: String
     },
 
 }

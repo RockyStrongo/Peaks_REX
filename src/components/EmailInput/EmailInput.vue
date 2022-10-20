@@ -1,18 +1,25 @@
 <template>
     <label class="EmailInput-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{label}}</label>
-    <input class="EmailInput" name="login" placeholder="Email" type="email" autocomplete="username" v-model="email" :required="isRequired"/>
+    <input class="EmailInput" name="login" placeholder="Email" type="email" autocomplete="username" v-model="email"
+        :required="isRequired" />
 </template>
 
 <script>
-const VALID_EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+import globalConstants from '../../const'
 
 export default {
 
     name: 'EmailInput',
 
     props: {
-        label: '',
-        isRequired: false
+        label: {
+            type: String,
+            required: true,
+        },
+        isRequired: {
+            type: Boolean,
+            required: true,
+        }
     },
 
     data() {
@@ -25,7 +32,7 @@ export default {
 
     methods: {
         emailIsValid() {
-           this.emailValid = VALID_EMAIL_REGEX.test(this.email)
+            this.emailValid = globalConstants.VALID_EMAIL_REGEX.test(this.email)
         },
 
         emailIsPeaks() {

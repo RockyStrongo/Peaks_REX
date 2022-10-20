@@ -12,8 +12,14 @@ export default {
     name: 'SnackBar',
 
     props: {
-        snackText: '',
-        snackType: '',
+        snackText: {
+            type: String,
+            required: true,
+        },
+        snackType: {
+            type: String,
+            required: true,
+        },
     },
 
 
@@ -32,18 +38,16 @@ export default {
         switch (this.snackType) {
             case 'error':
                 this.snackIcon = this.snackIconPath.error
-                this.snackClass = this.snackClassName.error                
+                this.snackClass = this.snackClassName.error
                 break;
             case 'success':
                 this.snackIcon = this.snackIconPath.success
-                this.snackClass = this.snackClassName.success                
+                this.snackClass = this.snackClassName.success
                 break;
-            case 'info':
+            default:
                 this.snackIcon = this.snackIconPath.info
-                this.snackClass = this.snackClassName.info                
-                break;
+                this.snackClass = this.snackClassName.info
         }
-
     },
 }
 </script>

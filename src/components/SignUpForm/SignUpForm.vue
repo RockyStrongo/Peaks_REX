@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <SelectInput :items=agencyOptions label="Agence de rattachement" :isRequired="true"></SelectInput>
+        <SelectInput :items="agencyOptions" label="Agence de rattachement" :isRequired="true"></SelectInput>
 
         <EmailInput label="Email" :isRequired="true" />
 
@@ -46,6 +46,8 @@ import LoginFormsTitle from '../LoginFormsTitle/LoginFormsTitle.vue';
 import TextInput from '../TextInput/TextInput.vue';
 import SelectInput from '../SelectInput/SelectInput.vue';
 
+import globalConstants from '../../const'
+
 export default {
     name: 'SignUpForm',
 
@@ -73,15 +75,7 @@ export default {
 
             snackBarText: "",
             snackBarType: "",
-
-            //où stocker ces messages pour qu'ils soient utilisables partout?
-            ERROR_MESSAGE_INVALID_EMAIL: "L'adresse email doit être valide",
-            ERROR_MESSAGE_EMAIL_PEAKS: "L'adresse email doit appartenir à Peaks",
-            ERROR_MESSAGE_PASSWORD_COMPLEXITY: "Le mot de passe doit contenir au minimum 8 caractères, un chiffre et une majuscule",
-            ERROR_MESSAGE_PASSWORD_CONFIRMATION: "Le mot de passe et la confirmation ne correspondent pas",
-
-            //où stocker ces options pour qu'elles soient utilisables partout?
-            agencyOptions: ["Aix", "Lyon", "Reims/Paris"]
+            agencyOptions : globalConstants.AGENCY_OPTIONS,
         }
 
     },
@@ -93,24 +87,24 @@ export default {
 
             if (!this.emailIsValid) {
                 this.snackBarVisible = true
-                this.snackBarText = this.ERROR_MESSAGE_INVALID_EMAIL
+                this.snackBarText = globalConstants.ERROR_MESSAGE_INVALID_EMAIL
                 this.snackBarType = "error"
             }
             else if (!this.emailIsPeaks) {
                 this.snackBarVisible = true
-                this.snackBarText = this.ERROR_MESSAGE_EMAIL_PEAKS
+                this.snackBarText = globalConstants.ERROR_MESSAGE_EMAIL_PEAKS
                 this.snackBarType = "error"
 
             }
             else if (!this.passwordIsComplex) {
                 this.snackBarVisible = true
-                this.snackBarText = this.ERROR_MESSAGE_PASSWORD_COMPLEXITY
+                this.snackBarText = globalConstants.ERROR_MESSAGE_PASSWORD_COMPLEXITY
                 this.snackBarType = "error"
 
             }
             else if (this.password !== this.passwordConfirmation) {
                 this.snackBarVisible = true
-                this.snackBarText = this.ERROR_MESSAGE_PASSWORD_CONFIRMATION
+                this.snackBarText = globalConstants.ERROR_MESSAGE_PASSWORD_CONFIRMATION
                 this.snackBarType = "error"
             }
             else {

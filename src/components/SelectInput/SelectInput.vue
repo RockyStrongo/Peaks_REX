@@ -12,9 +12,18 @@ export default {
     name: 'SelectInput',
 
     props: {
-        label: '',
-        isRequired: false,
-        items: []
+        label: {
+            type: String,
+            required: true
+        },
+        isRequired: {
+            type: Boolean,
+            required: true
+        },
+        items: {
+            type: Array,
+            required: true
+        }
     },
 
 }

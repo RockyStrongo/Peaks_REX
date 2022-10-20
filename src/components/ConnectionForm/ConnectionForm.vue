@@ -30,6 +30,7 @@ import SnackBar from '../SnackBar/SnackBar.vue';
 import Link from '../Link/Link.vue';
 import LoginFormsTitle from '../LoginFormsTitle/LoginFormsTitle.vue';
 
+import globalConstants from '../../const'
 
 
 export default {
@@ -53,10 +54,6 @@ export default {
 
             snackBarText: "",
             snackBarType: "",
-
-            ERROR_MESSAGE_INVALID_EMAIL: "L'adresse email doit être valide",
-            ERROR_MESSAGE_EMAIL_PEAKS: "L'adresse email doit appartenir à Peaks",
-            ERROR_MESSAGE_PASSWORD_COMPLEXITY: "Le mot de passe doit contenir au minimum 8 caractères, un chiffre et une majuscule",
         }
 
     },
@@ -68,18 +65,18 @@ export default {
 
             if (!this.emailIsValid) {
                 this.snackBarVisible = true
-                this.snackBarText = this.ERROR_MESSAGE_INVALID_EMAIL
+                this.snackBarText = globalConstants.ERROR_MESSAGE_INVALID_EMAIL
                 this.snackBarType = "error"
             }
             else if (!this.emailIsPeaks) {
                 this.snackBarVisible = true
-                this.snackBarText = this.ERROR_MESSAGE_EMAIL_PEAKS
+                this.snackBarText = globalConstants.ERROR_MESSAGE_EMAIL_PEAKS
                 this.snackBarType = "error"
 
             }
             else if (!this.passwordIsComplex) {
                 this.snackBarVisible = true
-                this.snackBarText = this.ERROR_MESSAGE_PASSWORD_COMPLEXITY
+                this.snackBarText = globalConstants.ERROR_MESSAGE_PASSWORD_COMPLEXITY
                 this.snackBarType = "error"
 
             } else {

@@ -10,8 +10,12 @@ export default {
 
 
     props: {
-        label: '',
-        class: '',
+        label: {
+            type: String,
+            required: true,
+        }
+        ,
+        class: String,
     },
 
 }

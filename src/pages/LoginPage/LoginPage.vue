@@ -17,7 +17,7 @@
 
             <!-- Recover password link -->
             <div class="LoginPage-bottom-right">
-                <Link class="Link--small Link--lostpassword" href="https://google.com" target="_self"  title="Vous avez perdu votre mot de passe ?"/>
+                <Link class="Link--small Link--lostpassword" href="/recover-password" target="_self"  title="Vous avez perdu votre mot de passe ?"/>
             </div>
 
         </div>
@@ -27,9 +27,9 @@
 
 <script>
 
-import ConnectionForm from '../ConnectionForm/ConnectionForm.vue';
-import Logo from '../Logo/Logo.vue';
-import Link from '../Link/Link.vue';
+import ConnectionForm from '../../components/ConnectionForm/ConnectionForm.vue';
+import Logo from '../../components/Logo/Logo.vue';
+import Link from '../../components/Link/Link.vue';
 
 export default {
     name: 'LoginPage',
@@ -40,23 +40,6 @@ export default {
     Link,
 },
 
-    computed: {
-
-    },
-
-    data() {
-        return {
-
-        }
-
-    },
-
-    methods: {
-
-    },
-    mounted() {
-
-    }
 }
 
 

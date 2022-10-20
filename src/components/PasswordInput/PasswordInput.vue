@@ -4,7 +4,7 @@
 
     <div class="PasswordInput-eye-container">
         <input class="input" type="password" autocomplete="current-password" v-model="password" name="password"
-            placeholder="Mot de passe" ref="inputPasswordElement" :required="isRequired" @change="test" />
+            :placeholder="label" ref="inputPasswordElement" :required="isRequired" @change="test" />
         <img class="PasswordInput-eye" src="../../assets/images/eye-password-open.svg" v-if="!passwordVisible"
             @click="togglePasswordVisibility">
         <img class="PasswordInput-eye" src="../../assets/images/eye-password-closed.svg" v-if="passwordVisible"
@@ -15,21 +15,27 @@
 </template>
 
 <script>
-const PASSWORD_COMPLEXITY_REGEX = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+import globalConstants from '../../const'
 
 export default {
 
     name: 'PasswordInput',
 
     props: {
-        label: '',
-        isRequired: false,
-        field:'',
+        label: {
+            type: String,
+            required: true
+        },
+        isRequired: {
+            type: Boolean,
+            required: true
+        },
+        field: String,
     },
 
     watch: {
         password() {
-            this.emitter.emit(this.field, this.password);            
+            this.emitter.emit(this.field, this.password);
 
             this.passwordComplex = this.passwordIsComplex()
             this.emitter.emit("password-complex", this.passwordComplex);
@@ -46,7 +52,7 @@ export default {
 
     methods: {
         passwordIsComplex() {
-            return PASSWORD_COMPLEXITY_REGEX.test(this.password) || false
+            return globalConstants.PASSWORD_COMPLEXITY_REGEX.test(this.password) || false
         },
         togglePasswordVisibility() {
 
@@ -62,10 +68,7 @@ export default {
             this.$refs.inputPasswordElement.type = "password"
             this.passwordVisible = false
         },
-        test(){
-            
 
-        }
     },
 
 }

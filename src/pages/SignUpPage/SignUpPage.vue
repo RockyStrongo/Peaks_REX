@@ -22,8 +22,8 @@
 
 <script>
 
-import Logo from '../Logo/Logo.vue';
-import SignUpForm from '../SignUpForm/SignUpForm.vue';
+import Logo from '../../components/Logo/Logo.vue';
+import SignUpForm from '../../components/SignUpForm/SignUpForm.vue';
 
 export default {
     name: 'SignUpPage',
