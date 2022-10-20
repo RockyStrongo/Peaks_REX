@@ -11,6 +11,7 @@ export default {
     ERROR_MESSAGE_EMAIL_PEAKS: "L'adresse email doit appartenir à Peaks",
     ERROR_MESSAGE_PASSWORD_COMPLEXITY: "Le mot de passe doit contenir au minimum 8 caractères, un chiffre et une majuscule",
     ERROR_MESSAGE_PASSWORD_CONFIRMATION: "Le mot de passe et la confirmation ne correspondent pas",
+    ERROR_MESSAGE_INVALID_CREDENTIALS: "La combinaison email - mot de passe est incorrecte",
 
     //List of Peaks Agencies
     AGENCY_OPTIONS: ["Aix", "Lyon", "Reims/Paris"],

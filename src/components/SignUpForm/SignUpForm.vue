@@ -8,21 +8,22 @@
 
         <div class="SignUpForm-flex-container">
             <div class="SignUpForm-flex-container-child">
-                <TextInput label="Nom" placeholder="Nom" :isRequired="true" />
+                <TextInput label="Nom" placeholder="Nom" :isRequired="true" field="lastName" />
             </div>
 
             <div class=SignUpForm-flex-container-child>
-                <TextInput label="Prénom" placeholder="Prénom" :isRequired="true" />
+                <TextInput label="Prénom" placeholder="Prénom" :isRequired="true" field="firstName" />
             </div>
         </div>
 
-        <SelectInput :items="agencyOptions" label="Agence de rattachement" :isRequired="true"></SelectInput>
+        <SelectInput :items="agencyOptions" label="Agence de rattachement" :isRequired="true" field="agency">
+        </SelectInput>
 
-        <EmailInput label="Email" :isRequired="true" />
+        <EmailInput label="Email" :isRequired="true" field="email" />
 
         <PasswordInput label="Mot de passe" :isRequired="true" field="password" />
 
-        <PasswordInput label="Mot de passe (confirmation)" :isRequired="true" field="password-confirmation" />
+        <PasswordInput label="Mot de passe (confirmation)" :isRequired="true" field="passwordConfirmation" />
 
 
         <div class="SignUpForm-align-right">
@@ -64,8 +65,15 @@ export default {
 
     data() {
         return {
-            password: '',
-            passwordConfirmation: '',
+            formFields: ["firstName", "lastName", "agency", "email", "password", "passwordConfirmation"],
+
+            firstName: String,
+            lastName: String,
+            agency: String,
+            email: String,
+            password: String,
+            passwordConfirmation: String,
+
 
             emailIsValid: false,
             emailIsPeaks: false,
@@ -75,7 +83,7 @@ export default {
 
             snackBarText: "",
             snackBarType: "",
-            agencyOptions : globalConstants.AGENCY_OPTIONS,
+            agencyOptions: globalConstants.AGENCY_OPTIONS,
         }
 
     },
@@ -125,16 +133,23 @@ export default {
         getPasswordfromEmitter(string) {
             this.password = string
         },
-        getPasswordConfirmationfromEmitter(string) {
-            this.passwordConfirmation = string
+
+        getFormDatafromEmitter(item) {
+            const fieldname = item.field.toString()
+            this[fieldname] = item.value
         }
+
+
     },
     mounted() {
         this.emitter.on("email-valid", this.getEmailIsValidfromEmitter)
         this.emitter.on("email-peaks", this.getEmailIsPeaksfromEmitter)
         this.emitter.on("password-complex", this.getPasswordIsComplexfromEmitter)
-        this.emitter.on("password", this.getPasswordfromEmitter)
-        this.emitter.on("password-confirmation", this.getPasswordConfirmationfromEmitter)
+
+        this.formFields.forEach(item =>
+
+            this.emitter.on(item, this.getFormDatafromEmitter))
+
     }
 }
 

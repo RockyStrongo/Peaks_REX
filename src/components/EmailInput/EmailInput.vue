@@ -19,7 +19,8 @@ export default {
         isRequired: {
             type: Boolean,
             required: true,
-        }
+        },
+        field : String,
     },
 
     data() {
@@ -46,6 +47,9 @@ export default {
 
             this.emailIsPeaks()
             this.emitter.emit("email-peaks", this.emailPeaks);
+
+            const dataobj = {"field": this.field, "value" : this.email};
+            this.emitter.emit(this.field, dataobj);
         }
     }
 }

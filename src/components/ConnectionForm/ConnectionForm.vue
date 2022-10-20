@@ -6,14 +6,14 @@
 
         <LoginFormsTitle titleText="Connexion" />
 
-        <EmailInput label="Email" :isRequired="true" />
+        <EmailInput label="Email" :isRequired="true" field="email" />
 
-        <PasswordInput label="Mot de passe" :isRequired="true" />
+        <PasswordInput label="Mot de passe" :isRequired="true" field="password" />
 
         <div class="ConnectionForm-align-right">
 
-            <Link  href="/signup" class="Link--small Link--noaccount"
-                title="Vous n'avez pas encore de compte ?" target="_self"/>
+            <Link href="/signup" class="Link--small Link--noaccount" title="Vous n'avez pas encore de compte ?"
+                target="_self" />
 
             <Button label="Connexion" class="Button--pink"></Button>
 
@@ -37,23 +37,30 @@ export default {
     name: 'ConnectionForm',
 
     components: {
-    EmailInput,
-    PasswordInput,
-    Button,
-    SnackBar,
-    Link,
-    LoginFormsTitle
-},
+        EmailInput,
+        PasswordInput,
+        Button,
+        SnackBar,
+        Link,
+        LoginFormsTitle
+    },
 
     data() {
         return {
-            emailIsValid: false,
-            emailIsPeaks: false,
-            passwordIsComplex: false,
+            formFields: ["email", "password"],
+            email: String,
+            password: String,
+
+            emailExists: Boolean,
+            PasswordIsCorrect: Boolean,
+
+            emailIsValid: Boolean,
+            emailIsPeaks: Boolean,
+            passwordIsComplex: Boolean,
             snackBarVisible: false,
 
-            snackBarText: "",
-            snackBarType: "",
+            snackBarText: String,
+            snackBarType: String,
         }
 
     },
@@ -80,7 +87,54 @@ export default {
                 this.snackBarType = "error"
 
             } else {
-                this.$refs.ConnectionFormElement.submit()
+                this.checkCredentials().then(
+                
+                
+
+                )
+            }
+
+        },
+
+
+        async checkCredentials() {
+
+            const emailinput = this.email
+
+            const response = await fetch('../../src/mock-data/mock-user-data.json')
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        console.log("error")
+                    }
+                })
+
+            const filtered = response.filter(item => item['email'] === emailinput)
+
+            filtered.length !== 1
+                ? this.emailExists = false
+                : this.emailExists = true
+
+            if (filtered.length === 1) {
+                const userpassword = filtered[0].password
+                userpassword === this.password
+                    ? this.PasswordIsCorrect = true
+                    : this.PasswordIsCorrect = false
+            }
+
+            if (!this.emailExists) {
+                this.snackBarVisible = true
+                this.snackBarText = globalConstants.ERROR_MESSAGE_INVALID_CREDENTIALS
+                this.snackBarType = "error"
+            } else if (!this.PasswordIsCorrect) {
+                this.snackBarVisible = true
+                this.snackBarText = globalConstants.ERROR_MESSAGE_INVALID_CREDENTIALS
+                this.snackBarType = "error"
+            } else {
+                this.snackBarVisible = true
+                this.snackBarText = "Bravo ! vous êtes connecté "
+                this.snackBarType = "success"
             }
 
         },
@@ -94,11 +148,23 @@ export default {
         getPasswordIsComplexfromEmitter(bool) {
             this.passwordIsComplex = bool
         },
+        getFormDatafromEmitter(item) {
+            const fieldname = item.field.toString()
+            this[fieldname] = item.value
+        }
+
     },
     mounted() {
         this.emitter.on("email-valid", this.getEmailIsValidfromEmitter)
         this.emitter.on("email-peaks", this.getEmailIsPeaksfromEmitter)
         this.emitter.on("password-complex", this.getPasswordIsComplexfromEmitter)
+
+        this.formFields.forEach(item =>
+
+            this.emitter.on(item, this.getFormDatafromEmitter)
+
+        )
+
     }
 }
 

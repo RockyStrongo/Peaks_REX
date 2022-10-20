@@ -5,10 +5,10 @@
     <div class="PasswordInput-eye-container">
         <input class="input" type="password" autocomplete="current-password" v-model="password" name="password"
             :placeholder="label" ref="inputPasswordElement" :required="isRequired" @change="test" />
-        <img class="PasswordInput-eye" src="../../assets/images/eye-password-open.svg" v-if="!passwordVisible"
+
+            <img class="PasswordInput-eye" :src="passwordVisible ? src='../../src/assets/images/eye-password-closed.svg' : src='../../src/assets/images/eye-password-open.svg'" 
             @click="togglePasswordVisibility">
-        <img class="PasswordInput-eye" src="../../assets/images/eye-password-closed.svg" v-if="passwordVisible"
-            @click="togglePasswordVisibility">
+
     </div>
 
 
@@ -35,10 +35,11 @@ export default {
 
     watch: {
         password() {
-            this.emitter.emit(this.field, this.password);
-
             this.passwordComplex = this.passwordIsComplex()
             this.emitter.emit("password-complex", this.passwordComplex);
+
+            const dataobj = {"field": this.field, "value" : this.password};
+            this.emitter.emit(this.field, dataobj);
         }
     },
 
