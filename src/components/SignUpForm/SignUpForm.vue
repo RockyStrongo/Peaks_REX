@@ -20,9 +20,9 @@
 
         <EmailInput label="Email" :isRequired="true" />
 
-        <PasswordInput label="Mot de passe" :isRequired="true" :confirmation="false" />
+        <PasswordInput label="Mot de passe" :isRequired="true" field="password" />
 
-        <PasswordInput label="Mot de passe (confirmation)" :isRequired="true" :confirmation="true" />
+        <PasswordInput label="Mot de passe (confirmation)" :isRequired="true" field="password-confirmation" />
 
 
         <div class="SignUpForm-align-right">

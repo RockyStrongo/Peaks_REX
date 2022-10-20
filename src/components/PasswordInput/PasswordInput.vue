@@ -24,11 +24,13 @@ export default {
     props: {
         label: '',
         isRequired: false,
-        confirmation: false,
+        field:'',
     },
 
     watch: {
-        password(event) {
+        password() {
+            this.emitter.emit(this.field, this.password);            
+
             this.passwordComplex = this.passwordIsComplex()
             this.emitter.emit("password-complex", this.passwordComplex);
         }
@@ -61,14 +63,7 @@ export default {
             this.passwordVisible = false
         },
         test(){
-            switch (this.confirmation) {
-            case true:
-            this.emitter.emit("password-confirmation", this.password);            
-                break;
-            case false:
-            this.emitter.emit("password", this.password);          
-                break;
-        }
+            
 
         }
     },
