@@ -87,11 +87,9 @@ export default {
                 this.snackBarType = "error"
 
             } else {
-                this.checkCredentials().then(
-                
-                
 
-                )
+                this.ValidateCredentials()
+
             }
 
         },
@@ -122,6 +120,11 @@ export default {
                     ? this.PasswordIsCorrect = true
                     : this.PasswordIsCorrect = false
             }
+        },
+
+
+        async ValidateCredentials() {
+            await this.checkCredentials()
 
             if (!this.emailExists) {
                 this.snackBarVisible = true
@@ -136,8 +139,8 @@ export default {
                 this.snackBarText = "Bravo ! vous êtes connecté "
                 this.snackBarType = "success"
             }
-
         },
+
 
         getEmailIsValidfromEmitter(bool) {
             this.emailIsValid = bool
@@ -171,4 +174,5 @@ export default {
 </script>
 
 <style>
+
 </style>
