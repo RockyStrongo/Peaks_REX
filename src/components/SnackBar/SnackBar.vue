@@ -1,6 +1,6 @@
 <template>
 
-    <div class="SnackBar" :class="snackClass">
+    <div class="SnackBar" :class="`SnackBar-${snackType}`">
         <img :src="snackIcon" />
         <span class="SnackBar-text">{{snackText}}</span>
     </div>
@@ -22,33 +22,28 @@ export default {
         },
     },
 
+    computed: {
+        snackIcon() {
+            switch (this.snackType) {
+                case 'error':
+                    return this.snackIconPath.error
+                case 'success':
+                    return this.snackIconPath.success
+                default:
+                    return this.snackIconPath.info
+            }
+        },
 
+    },
 
     data() {
         return {
             snackBarpossibleTypes: ['error', 'success', 'info'],
             snackIconPath: { 'error': '../../src/assets/images/error-icon.svg', 'success': '../../src/assets/images/success-icon.svg', 'info': '../../src/assets/images/info-icon.svg' },
             snackClassName: { 'error': 'SnackBar-Error', 'success': 'SnackBar-Success', 'info': 'SnackBar-Info' },
-            snackIcon: '',
-            snackClass: '',
         }
     },
 
-    mounted() {
-        switch (this.snackType) {
-            case 'error':
-                this.snackIcon = this.snackIconPath.error
-                this.snackClass = this.snackClassName.error
-                break;
-            case 'success':
-                this.snackIcon = this.snackIconPath.success
-                this.snackClass = this.snackClassName.success
-                break;
-            default:
-                this.snackIcon = this.snackIconPath.info
-                this.snackClass = this.snackClassName.info
-        }
-    },
 }
 </script>
 

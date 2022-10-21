@@ -10,7 +10,7 @@ import {
 import LoginPage from "../pages/LoginPage/LoginPage.vue";
 import SignUpPage from "../pages/SignUpPage/SignUpPage.vue";
 import RecoverPasswordPage from "../pages/RecoverPasswordPage/RecoverPasswordPage.vue";
-
+import ListOfExperiencesPage from "../pages/ListOfExperiencesPage/ListOfExperiencesPage.vue";
 
 const history = createWebHistory();
 const routes = [
@@ -30,7 +30,12 @@ const routes = [
     path: "/recover-password",
     component: RecoverPasswordPage
   },
+  {
+    path: "/list-of-experiences",
+    component: ListOfExperiencesPage
+  },
 ];
+
 
 const router = createRouter({
   history,

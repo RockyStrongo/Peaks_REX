@@ -1,36 +1,51 @@
 <template>
+
     <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span>{{label}}</label>
-    <select :required="isRequired" class="SelectInput input ">
-        <option value=""></option>
-        <option v-for="item in items" :value="item">{{item}}</option>
-    </select>
+
+    <VueMultiselect 
+        class="SelectInput input" 
+        placeholder="Choisir" 
+        v-model="selected" 
+        :options="options" 
+        select-label="" 
+        selected-label="" 
+        deselectLabel="">
+    </VueMultiselect>
+
 </template>
 
 <script>
+import VueMultiselect from 'vue-multiselect'
 
 export default {
     name: 'SelectInput',
 
+    components: { VueMultiselect },
+
+
     props: {
-        label: {
-            type: String,
-            required: true
-        },
-        isRequired: {
-            type: Boolean,
-            required: true
-        },
-        items: {
-            type: Array,
-            required: true
-        },
-        field: String
+        label: '',
+        isRequired: false,
+        items: Array,
+        field: String,
     },
+
+    data() {
+        return {
+            selected: null,
+            options: this.items
+        }
+    }
 
 }
 
 
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.css">
+
+</style>
+
 
 <style>
 @import url('SelectInput.css');

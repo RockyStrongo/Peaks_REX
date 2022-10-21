@@ -1,5 +1,5 @@
 <template>
-<Title title="Connexion" class="LoginFormsTitle-title"> </Title>
+<Title :title="titleText" class="LoginFormsTitle-title"> </Title>
 
 <span class="LoginFormsTitle-subtext ">Les champs marqués d'un <span class="pink-asterisk">*</span> sont
     obligatoires</span>

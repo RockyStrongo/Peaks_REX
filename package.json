@@ -9,6 +9,7 @@
   "dependencies": {
     "mitt": "^3.0.0",
     "vue": "^3.2.38",
+    "vue-multiselect": "^3.0.0-alpha.2",
     "vue-router": "^4.1.5"
   },
   "devDependencies": {

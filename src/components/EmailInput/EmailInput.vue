@@ -1,7 +1,7 @@
 <template>
     <label class="EmailInput-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{label}}</label>
     <input class="EmailInput" name="login" placeholder="Email" type="email" autocomplete="username" v-model="email"
-        :required="isRequired" />
+        :required="isRequired" @blur="test"/>
 </template>
 
 <script>
@@ -39,6 +39,7 @@ export default {
         emailIsPeaks() {
             this.emailPeaks = this.email.includes("peaks")
         },
+
     },
     watch: {
         email() {

@@ -1,5 +1,5 @@
 <template>
-    <img class="logo" src="../../assets/images/logo.svg" alt="Logo peaks" title="Logo peaks" @click="goHome">
+    <img class="Logo" src="../../assets/images/logo.svg" alt="Logo peaks" title="Logo peaks" @click="goHome">
 </template>
 
 <script>
@@ -20,9 +20,10 @@ export default {
 
 
 <style>
-.logo {
+.Logo {
     width: 150px;
-    margin-bottom: 10vh;
     cursor: pointer;
+    margin-bottom: 10vh;
 }
+
 </style>

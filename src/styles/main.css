@@ -100,6 +100,18 @@ textarea {
   outline: none;
 }
 
+*::-moz-placeholder {
+  color: #C2CADD;
+}
+
+*:-ms-input-placeholder {
+  color: #C2CADD;
+}
+
+*::placeholder {
+  color: #C2CADD;
+}
+
 .input {
   height: 45px;
   width: 100%;
@@ -135,4 +147,14 @@ textarea {
 .login-forms-align-right {
   display: flex;
   justify-content: right;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }/*# sourceMappingURL=main.css.map */

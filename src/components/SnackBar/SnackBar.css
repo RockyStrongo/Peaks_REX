@@ -16,14 +16,14 @@
   padding-left: 11px;
 }
 
-.SnackBar-Error {
+.SnackBar-error {
   background-color: #EE3737;
 }
 
-.SnackBar-Info {
+.SnackBar-info {
   background-color: #F063A7;
 }
 
-.SnackBar-Success {
+.SnackBar-success {
   background-color: #40B568;
 }/*# sourceMappingURL=SnackBar.css.map */

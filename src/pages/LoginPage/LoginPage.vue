@@ -9,15 +9,17 @@
         <div class="LoginPage-grid-item-right">
 
             <div class="LoginPage-flex-container">
-
-                <Logo />
+                <div class="LoginPage-logo-container">
+                    <Logo />
+                </div>
                 <ConnectionForm />
 
             </div>
 
             <!-- Recover password link -->
             <div class="LoginPage-bottom-right">
-                <Link class="Link--small Link--lostpassword" href="/recover-password" target="_self"  title="Vous avez perdu votre mot de passe ?"/>
+                <Link class="Link--small Link--lostpassword" href="/recover-password" target="_self"
+                    title="Vous avez perdu votre mot de passe ?" />
             </div>
 
         </div>
@@ -35,10 +37,10 @@ export default {
     name: 'LoginPage',
 
     components: {
-    ConnectionForm,
-    Logo,
-    Link,
-},
+        ConnectionForm,
+        Logo,
+        Link,
+    },
 
 }
 

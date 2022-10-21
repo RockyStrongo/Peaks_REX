@@ -1,6 +1,7 @@
 <template>
-
-    <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+    <Transition>
+        <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+    </Transition>
 
     <form class="login-forms" ref="SignUpFormElement" @submit="validateSignUpForm">
 

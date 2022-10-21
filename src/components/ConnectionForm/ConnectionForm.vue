@@ -1,6 +1,8 @@
 <template>
 
-    <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+    <Transition>
+        <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+    </Transition>
 
     <form class="login-forms" ref="ConnectionFormElement" @submit="validateConnnectionForm">
 
@@ -45,6 +47,11 @@ export default {
         LoginFormsTitle
     },
 
+    computed: {
+
+
+    },
+
     data() {
         return {
             formFields: ["email", "password"],
@@ -54,48 +61,34 @@ export default {
             emailExists: Boolean,
             PasswordIsCorrect: Boolean,
 
-            emailIsValid: Boolean,
-            emailIsPeaks: Boolean,
-            passwordIsComplex: Boolean,
             snackBarVisible: false,
 
             snackBarText: String,
             snackBarType: String,
+
+            userConnected: Array,
         }
 
     },
 
     methods: {
-        validateConnnectionForm(event) {
-
+        async validateConnnectionForm(event) {
             event.preventDefault();
 
-            if (!this.emailIsValid) {
-                this.snackBarVisible = true
-                this.snackBarText = globalConstants.ERROR_MESSAGE_INVALID_EMAIL
-                this.snackBarType = "error"
+            const credentialsOK = await this.ValidateCredentials();
+
+            if(credentialsOK){
+                sessionStorage.setItem('userConnected', JSON.stringify(this.userConnected));
+                this.$router.push('/list-of-experiences')
+                // let b = JSON.parse(sessionStorage.getItem('userConnected'))
+                // console.log(b[0].firstname)
             }
-            else if (!this.emailIsPeaks) {
-                this.snackBarVisible = true
-                this.snackBarText = globalConstants.ERROR_MESSAGE_EMAIL_PEAKS
-                this.snackBarType = "error"
 
-            }
-            else if (!this.passwordIsComplex) {
-                this.snackBarVisible = true
-                this.snackBarText = globalConstants.ERROR_MESSAGE_PASSWORD_COMPLEXITY
-                this.snackBarType = "error"
-
-            } else {
-
-                this.ValidateCredentials()
-
-            }
 
         },
 
 
-        async checkCredentials() {
+        async getUserData() {
 
             const emailinput = this.email
 
@@ -115,6 +108,9 @@ export default {
                 : this.emailExists = true
 
             if (filtered.length === 1) {
+                
+                this.userConnected = filtered;
+
                 const userpassword = filtered[0].password
                 userpassword === this.password
                     ? this.PasswordIsCorrect = true
@@ -124,7 +120,7 @@ export default {
 
 
         async ValidateCredentials() {
-            await this.checkCredentials()
+            await this.getUserData()
 
             if (!this.emailExists) {
                 this.snackBarVisible = true
@@ -135,22 +131,11 @@ export default {
                 this.snackBarText = globalConstants.ERROR_MESSAGE_INVALID_CREDENTIALS
                 this.snackBarType = "error"
             } else {
-                this.snackBarVisible = true
-                this.snackBarText = "Bravo ! vous êtes connecté "
-                this.snackBarType = "success"
+                return true;
             }
         },
 
 
-        getEmailIsValidfromEmitter(bool) {
-            this.emailIsValid = bool
-        },
-        getEmailIsPeaksfromEmitter(bool) {
-            this.emailIsPeaks = bool
-        },
-        getPasswordIsComplexfromEmitter(bool) {
-            this.passwordIsComplex = bool
-        },
         getFormDatafromEmitter(item) {
             const fieldname = item.field.toString()
             this[fieldname] = item.value
@@ -158,9 +143,6 @@ export default {
 
     },
     mounted() {
-        this.emitter.on("email-valid", this.getEmailIsValidfromEmitter)
-        this.emitter.on("email-peaks", this.getEmailIsPeaksfromEmitter)
-        this.emitter.on("password-complex", this.getPasswordIsComplexfromEmitter)
 
         this.formFields.forEach(item =>
 

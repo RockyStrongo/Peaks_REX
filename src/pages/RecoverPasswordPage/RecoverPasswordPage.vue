@@ -22,6 +22,9 @@
 import Logo from '../../components/Logo/Logo.vue';
 import RecoverPasswordForm from '../../components/RecoverPasswordForm/RecoverPasswordForm.vue';
 
+
+
+
 export default {
     name: 'RecoverPasswordPage',
 

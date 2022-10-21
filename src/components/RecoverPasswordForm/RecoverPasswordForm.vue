@@ -1,20 +1,20 @@
 <template>
-  <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+    <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
 
-<form class="login-forms" ref="RecoverPasswordFormElement" @submit="validateRecoverPasswordForm">
+    <form class="login-forms" ref="RecoverPasswordFormElement" @submit="validateRecoverPasswordForm">
 
-    <LoginFormsTitle titleText="Récupération du mot de passe" />
+        <LoginFormsTitle titleText="Récupération du mot de passe" />
 
-    <EmailInput label="Email" :isRequired="true" />
+        <EmailInput label="Email" :isRequired="true" field="email" />
 
 
-    <div class="login-forms-align-right">
+        <div class="login-forms-align-right">
 
-        <Button label="Connexion" class="Button--pink"></Button>
+            <Button label="Connexion" class="Button--pink"></Button>
 
-    </div>
+        </div>
 
-</form>
+    </form>
 </template>
 
 <script>
@@ -23,19 +23,21 @@ import LoginFormsTitle from '../LoginFormsTitle/LoginFormsTitle.vue';
 import EmailInput from '../EmailInput/EmailInput.vue';
 import Button from '../Button/Button.vue';
 
+import globalConstants from '../../const'
+
 export default {
     name: 'RecoverPasswordForm',
 
     props: {
-      
+
     },
 
     components: {
-    SnackBar,
-    LoginFormsTitle,
-    EmailInput,
-    Button
-},
+        SnackBar,
+        LoginFormsTitle,
+        EmailInput,
+        Button
+    },
 
 
     computed: {
@@ -48,11 +50,13 @@ export default {
 
     data() {
         return {
-            emailIsValid: false,
-            emailIsPeaks: false,
+            formFields: ["email"],
+
+            email: String,
+
+            emailExists: Boolean,
 
             snackBarVisible: false,
-
             snackBarText: "",
             snackBarType: "",
 
@@ -61,37 +65,62 @@ export default {
     },
 
     methods: {
-        validateConnnectionForm(event) {
+        validateRecoverPasswordForm(event) {
+            event.preventDefault()
+            this.ValidateEmail()
+        },
 
-            event.preventDefault();
+        async getUserData() {
 
-            if (!this.emailIsValid) {
+            const emailinput = this.email
+
+            const response = await fetch('../../src/mock-data/mock-user-data.json')
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        console.log("error")
+                    }
+                })
+
+            const filtered = response.filter(item => item['email'] === emailinput)
+
+            filtered.length !== 1
+                ? this.emailExists = false
+                : this.emailExists = true
+        },
+
+        async ValidateEmail() {
+            await this.getUserData()
+
+            if (!this.emailExists) {
                 this.snackBarVisible = true
-                this.snackBarText = globalConstants.ERROR_MESSAGE_INVALID_EMAIL
+                this.snackBarText = globalConstants.ERROR_MESSAGE_EMAIL_DOES_NOT_EXIST
                 this.snackBarType = "error"
-            }
-            else if (!this.emailIsPeaks) {
+            } else {
+                //send recover email
                 this.snackBarVisible = true
-                this.snackBarText = globalConstants.ERROR_MESSAGE_EMAIL_PEAKS
-                this.snackBarType = "error"
-
-            }
-            else {
-                this.$refs.ConnectionFormElement.submit()
+                this.snackBarText = globalConstants.INFO_MESSAGE_RECOVER_EMAIL+this.email
+                this.snackBarType = "info"
             }
 
         },
 
-        getEmailIsValidfromEmitter(bool) {
-            this.emailIsValid = bool
-        },
-        getEmailIsPeaksfromEmitter(bool) {
-            this.emailIsPeaks = bool
-        },
+        getFormDatafromEmitter(item) {
+            const fieldname = item.field.toString()
+            this[fieldname] = item.value
+        }
+
+
     },
     mounted() {
-        this.emitter.on("email-valid", this.getEmailIsValidfromEmitter)
-        this.emitter.on("email-peaks", this.getEmailIsPeaksfromEmitter)
+
+        this.formFields.forEach(item =>
+
+            this.emitter.on(item, this.getFormDatafromEmitter)
+
+        )
+
     }
 }
 
