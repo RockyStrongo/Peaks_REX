@@ -125,4 +125,14 @@ textarea {
 
 .pink-asterisk {
   color: #F063A7;
+}
+
+.login-forms {
+  color: #fff;
+  width: 100%;
+}
+
+.login-forms-align-right {
+  display: flex;
+  justify-content: right;
 }/*# sourceMappingURL=main.css.map */

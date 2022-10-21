@@ -2,7 +2,7 @@
 
     <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
 
-    <form class="ConnectionForm" ref="ConnectionFormElement" @submit="validateConnnectionForm">
+    <form class="login-forms" ref="ConnectionFormElement" @submit="validateConnnectionForm">
 
         <LoginFormsTitle titleText="Connexion" />
 
@@ -10,7 +10,7 @@
 
         <PasswordInput label="Mot de passe" :isRequired="true" field="password" />
 
-        <div class="ConnectionForm-align-right">
+        <div class="login-forms-align-right">
 
             <Link href="/signup" class="Link--small Link--noaccount" title="Vous n'avez pas encore de compte ?"
                 target="_self" />
@@ -171,5 +171,4 @@ export default {
 </script>
 
 <style>
-@import url('ConnectionForm.css');
 </style>

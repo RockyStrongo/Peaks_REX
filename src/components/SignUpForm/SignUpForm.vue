@@ -2,7 +2,7 @@
 
     <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
 
-    <form class="SignUpForm" ref="SignUpFormElement" @submit="validateSignUpForm">
+    <form class="login-forms" ref="SignUpFormElement" @submit="validateSignUpForm">
 
         <LoginFormsTitle titleText="Inscription" />
 
@@ -26,7 +26,7 @@
         <PasswordInput label="Mot de passe (confirmation)" :isRequired="true" field="passwordConfirmation" />
 
 
-        <div class="SignUpForm-align-right">
+        <div class="login-forms-align-right">
 
             <Link href="/login" class="Link--small Link--noaccount" title="Se connecter" target="_self" />
 

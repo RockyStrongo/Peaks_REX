@@ -1,1 +1,1 @@
-{"version":3,"sources":["SignUpForm.scss","../../styles/colors.scss","SignUpForm.css"],"names":[],"mappings":"AAEA;EACI,WCDI;EDEJ,WAAA;AEDJ;;AFIA;EACI,aAAA;AEDJ;;AFIA;EACI,aAAA;EACA,oBAAA;AEDJ;;AFIA;EACI,kBAAA;AEDJ","file":"SignUpForm.css"}
+{"version":3,"sources":["SignUpForm.scss","SignUpForm.css"],"names":[],"mappings":"AAIA;EACI,aAAA;ACHJ;;ADMA;EACI,kBAAA;ACHJ","file":"SignUpForm.css"}

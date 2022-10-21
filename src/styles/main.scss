@@ -26,14 +26,14 @@ textarea {
     color: colors.$blue;
 }
 
-.input-label{
+.input-label {
     font-family: Catamaran;
     font-weight: 700;
     font-size: 12px;
     margin-bottom: 5px;
 }
 
-.input-flex-container{
+.input-flex-container {
     display: flex;
     flex-direction: column;
 }
@@ -42,3 +42,13 @@ textarea {
     color: colors.$pink;
 }
 
+.login-forms {
+    color: colors.$white;
+    width: 100%;
+}
+
+.login-forms-align-right {
+    display: flex;
+    justify-content: right;
+
+}

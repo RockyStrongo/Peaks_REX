@@ -1,14 +1,14 @@
 <template>
   <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
 
-<form class="" ref="RecoverPasswordFormElement" @submit="validateRecoverPasswordForm">
+<form class="login-forms" ref="RecoverPasswordFormElement" @submit="validateRecoverPasswordForm">
 
     <LoginFormsTitle titleText="Récupération du mot de passe" />
 
     <EmailInput label="Email" :isRequired="true" />
 
 
-    <div class="ConnectionForm-align-right">
+    <div class="login-forms-align-right">
 
         <Button label="Connexion" class="Button--pink"></Button>
 
@@ -99,6 +99,6 @@ export default {
 
 </script>
 
-<style>
+<style >
 
 </style>

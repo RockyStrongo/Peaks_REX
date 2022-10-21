@@ -1,17 +1,9 @@
 @use '../../styles/colors';
 
-.SignUpForm {
-    color: colors.$white;
-    width: 100%;
-}
+
 
 .SignUpForm-flex-container {
     display: flex;
-}
-
-.SignUpForm-align-right {
-    display: flex;
-    justify-content: end;
 }
 
 .SignUpForm-flex-container-child:nth-child(odd){
