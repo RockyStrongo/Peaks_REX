@@ -1,10 +1,20 @@
 <template>
 
-    <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span>{{label}}</label>
+    <label class="input-label">
+        <span class="pink-asterisk" v-if="isRequired">* </span>
+        {{label}}
+    </label>
 
     <div class="PasswordInput-eye-container">
-        <input class="input" type="password" autocomplete="current-password" v-model="password" name="password"
-            :placeholder="label" ref="inputPasswordElement" :required="isRequired" @change="test" />
+        <input 
+        class="input" 
+        type="password" 
+        autocomplete="current-password" 
+        v-model="password" 
+        name="password"
+        :placeholder="label" 
+        ref="inputPasswordElement" :required="isRequired" 
+        @keyup="emit" />
 
             <img class="PasswordInput-eye" :src="passwordVisible ? src='../../src/assets/images/eye-password-closed.svg' : src='../../src/assets/images/eye-password-open.svg'" 
             @click="togglePasswordVisibility">
@@ -33,16 +43,6 @@ export default {
         field: String,
     },
 
-    watch: {
-        password() {
-            this.passwordComplex = this.passwordIsComplex()
-            this.emitter.emit("password-complex", this.passwordComplex);
-
-            const dataobj = {"field": this.field, "value" : this.password};
-            this.emitter.emit(this.field, dataobj);
-        }
-    },
-
     data() {
         return {
             password: '',
@@ -69,6 +69,13 @@ export default {
             this.$refs.inputPasswordElement.type = "password"
             this.passwordVisible = false
         },
+        emit(){
+            this.passwordComplex = this.passwordIsComplex()
+            this.emitter.emit("password-complex", this.passwordComplex);
+
+            const dataobj = {"field": this.field, "value" : this.password};
+            this.emitter.emit(this.field, dataobj);
+        }
 
     },
 

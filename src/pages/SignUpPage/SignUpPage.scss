@@ -3,7 +3,7 @@
 .SignUpPage-grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 100vh;
+    grid-template-rows: minmax(100vh, 100%);
 }
 
 .SignUpPage-grid-item-left {

@@ -23,7 +23,6 @@ export default {
 .Logo {
     width: 150px;
     cursor: pointer;
-    margin-bottom: 10vh;
 }
 
 </style>
