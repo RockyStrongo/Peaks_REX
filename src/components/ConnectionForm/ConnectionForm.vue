@@ -1,11 +1,12 @@
 <template>
 
-    <Transition>
-        <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
-    </Transition>
+
 
     <form class="login-forms" ref="ConnectionFormElement" @submit="validateConnnectionForm">
-
+        <Transition>
+            <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+        </Transition>
+        
         <LoginFormsTitle titleText="Connexion" />
 
         <EmailInput label="Email" :isRequired="true" field="email" />
@@ -77,7 +78,7 @@ export default {
 
             const credentialsOK = await this.ValidateCredentials();
 
-            if(credentialsOK){
+            if (credentialsOK) {
                 sessionStorage.setItem('userConnected', JSON.stringify(this.userConnected));
                 this.$router.push('/list-of-experiences')
                 // let b = JSON.parse(sessionStorage.getItem('userConnected'))
@@ -108,7 +109,7 @@ export default {
                 : this.emailExists = true
 
             if (filtered.length === 1) {
-                
+
                 this.userConnected = filtered;
 
                 const userpassword = filtered[0].password

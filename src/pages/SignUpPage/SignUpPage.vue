@@ -10,9 +10,9 @@
 
             <div class="SignUpPage-flex-container">
 
-                <Logo />
+                <Logo type="pinkA" />
                 <SignUpForm />
-                
+
             </div>
 
         </div>
@@ -29,9 +29,9 @@ export default {
     name: 'SignUpPage',
 
     components: {
-    Logo,
-    SignUpForm,
-},
+        Logo,
+        SignUpForm,
+    },
 }
 
 

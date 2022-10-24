@@ -18,4 +18,14 @@
 
 .Button--pink {
   background-color: #F063A7;
+}
+
+.Button--bluelight {
+  background-color: #68789B;
+}
+
+.Button--bluelight:focus-visible,
+.Button--bluelight:hover {
+  background-color: #F063A7;
+  color: #fff;
 }/*# sourceMappingURL=Button.css.map */

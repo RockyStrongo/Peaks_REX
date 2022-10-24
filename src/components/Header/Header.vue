@@ -1,9 +1,26 @@
 <template>
-<Logo/>
-<img :src="userConnected[0].profilimage" alt="profile-picture">
-<span>Bonjour, {{userConnected[0].firstname}}</span>
-<Link title="Mon Profil"/>
-<Button label="Déconnexion"></Button>
+    <div class="Header">
+
+        <div class="Header-logo">
+            <Logo type="normal" />
+        </div>
+
+        <div class="Header-profile-div">
+            <img :v-if="userConnected" class="Header-profile-picture" :src="userConnected[0].profilimage"
+                alt="profile-picture">
+
+            <span :v-if="userConnected">Bonjour, {{ userConnected[0].firstname }}</span>
+        </div>
+
+
+        <div class="vertical-line"></div>
+
+        <Link class='Header-profile-link' title="Mon Profil" />
+
+        <Button class='Button--bluelight' label="Déconnexion"></Button>
+
+    </div>
+
 
 </template>
 
@@ -17,20 +34,18 @@ export default {
     name: '',
 
     props: {
-      
+
     },
 
     components: {
-    Link,
-    Button,
-    Logo
-},
+        Link,
+        Button,
+        Logo
+    },
 
 
     computed: {
-        userConnected(){
-            return JSON.parse(sessionStorage.getItem('userConnected'))
-        }
+
     },
 
     watch: {
@@ -46,7 +61,6 @@ export default {
 
     methods: {
 
-
     },
     mounted() {
 
@@ -57,4 +71,5 @@ export default {
 </script>
 
 <style>
+@import url('Header.css');
 </style>

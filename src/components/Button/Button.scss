@@ -21,3 +21,13 @@
 .Button--pink {
     background-color: colors.$pink;
 } 
+
+.Button--bluelight{
+    background-color: colors.$bluelight;
+}
+
+.Button--bluelight:focus-visible,
+.Button--bluelight:hover {
+    background-color: colors.$pink;
+    color: colors.$white;
+}

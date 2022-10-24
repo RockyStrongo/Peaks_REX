@@ -1,10 +1,11 @@
 <template>
-    <Transition>
-        <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
-    </Transition>
+
 
     <form class="login-forms" ref="SignUpFormElement" @submit="validateSignUpForm">
-
+        <Transition>
+            <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+        </Transition>
+        
         <LoginFormsTitle titleText="Inscription" />
 
         <div class="SignUpForm-flex-container">

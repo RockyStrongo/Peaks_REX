@@ -1,10 +1,12 @@
-<script>
-</script>
-
-
 <template>
-    <RouterView />
+
+    <RouterView></RouterView>
+
 </template>
+
+<script>
+
+</script>
 
 <style>
 

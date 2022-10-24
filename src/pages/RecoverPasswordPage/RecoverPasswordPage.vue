@@ -9,7 +9,7 @@
 
     <div class="LoginPage-flex-container">
 
-        <Logo/>
+        <Logo type="pinkA" />
         <RecoverPasswordForm/>
 
     </div>

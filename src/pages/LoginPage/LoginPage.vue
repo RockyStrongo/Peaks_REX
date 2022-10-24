@@ -10,7 +10,7 @@
 
             <div class="LoginPage-flex-container">
                 <div class="LoginPage-logo-container">
-                    <Logo />
+                    <Logo type="pinkA" />
                 </div>
                 <ConnectionForm />
 

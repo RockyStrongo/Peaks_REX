@@ -1,7 +1,8 @@
 <template>
-    <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
 
     <form class="login-forms" ref="RecoverPasswordFormElement" @submit="validateRecoverPasswordForm">
+        
+        <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
 
         <LoginFormsTitle titleText="Récupération du mot de passe" />
 
