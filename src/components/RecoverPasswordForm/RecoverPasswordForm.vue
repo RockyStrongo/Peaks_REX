@@ -40,15 +40,6 @@ export default {
         Button
     },
 
-
-    computed: {
-
-    },
-
-    watch: {
-
-    },
-
     data() {
         return {
             formFields: ["email"],
