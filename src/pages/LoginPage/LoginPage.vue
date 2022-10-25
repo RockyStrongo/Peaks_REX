@@ -14,7 +14,7 @@
                 </div>
                 <ConnectionForm />
 
-            </div>
+            </div> 
 
             <!-- Recover password link -->
             <div class="LoginPage-bottom-right">
