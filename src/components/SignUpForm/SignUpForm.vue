@@ -157,6 +157,17 @@ export default {
 
 </script>
 
-<style>
-@import url('SignUpForm.css');
+<style lang="scss">
+@use '../../styles/colors';
+
+
+
+.SignUpForm-flex-container {
+    display: flex;
+}
+
+.SignUpForm-flex-container-child:nth-child(odd){
+    margin-right: 20px;
+}
+
 </style>

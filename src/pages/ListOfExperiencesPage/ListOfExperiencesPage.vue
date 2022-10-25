@@ -20,14 +20,6 @@ export default {
     },
 
 
-    computed: {
-
-    },
-
-    watch: {
-
-    },
-
     data() {
         return {
 

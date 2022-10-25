@@ -1,14 +1,14 @@
 <template>
 
-    <div class="SignUpPage-grid-container">
+    <div class="login-pages-grid-container">
 
         <!-- left column -->
-        <div class="SignUpPage-grid-item-left"></div>
+        <div class="login-pages-grid-item-left"></div>
 
         <!-- right column -->
-        <div class="SignUpPage-grid-item-right">
+        <div class="login-pages-grid-item-right">
 
-            <div class="SignUpPage-flex-container">
+            <div class="login-pages-flex-container">
 
                 <Logo type="pinkA" />
                 <SignUpForm />
@@ -37,6 +37,5 @@ export default {
 
 </script>
 
-<style>
-@import url('SignUpPage.css');
+<style lang="scss">
 </style>

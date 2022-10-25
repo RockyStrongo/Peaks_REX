@@ -23,6 +23,23 @@ export default {
 
 
 
-<style>
-@import url('Link.css');
+<style lang="scss">
+@use '../../styles/colors';
+
+.Link {
+    text-decoration: underline;
+    transition: color .2s;
+}
+
+.Link--small {
+    font-size: 12px;
+}
+
+.Link--noaccount {
+    margin: 12px;
+}
+
+.Link--lostpassword{
+    color: colors.$white;
+}
 </style>

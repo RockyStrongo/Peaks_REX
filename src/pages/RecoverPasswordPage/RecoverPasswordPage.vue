@@ -1,13 +1,13 @@
 <template>
- <div class="LoginPage-grid-container">
+ <div class="login-pages-grid-container">
 
 <!-- left column -->
-<div class="LoginPage-grid-item-left"></div>
+<div class="login-pages-grid-item-left"></div>
 
 <!-- right column -->
-<div class="LoginPage-grid-item-right">
+<div class="login-pages-grid-item-right">
 
-    <div class="LoginPage-flex-container">
+    <div class="login-pages-flex-container">
 
         <Logo type="pinkA" />
         <RecoverPasswordForm/>

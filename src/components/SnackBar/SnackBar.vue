@@ -49,6 +49,37 @@ export default {
 
 
 
-<style>
-@import url(SnackBar.css);
+<style lang="scss">
+@use '../../styles/colors';
+@use '../../styles/variables';
+
+.SnackBar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 32px;
+    padding: 11px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 300;
+    background-color: colors.$pink;
+    color: colors.$white;
+    box-shadow: variables.$boxshadow;
+}
+
+.SnackBar-text {
+    padding-left: 11px;
+}
+
+.SnackBar-error{
+    background-color: colors.$error;
+}
+
+.SnackBar-info{
+    background-color: colors.$info;
+}
+
+.SnackBar-success {
+    background-color: colors.$success;
+}
 </style>

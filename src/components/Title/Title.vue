@@ -22,7 +22,7 @@ export default {
 
 
 
-<style>
+<style lang="scss">
 .Form {
     font-family: Catamaran;
     font-size: 35px;

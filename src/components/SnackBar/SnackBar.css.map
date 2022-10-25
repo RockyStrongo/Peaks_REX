@@ -1,1 +1,0 @@
-{"version":3,"sources":["SnackBar.scss","../../styles/colors.scss","../../styles/variables.scss","SnackBar.css"],"names":[],"mappings":"AAGA;EACI,aAAA;EACA,mBAAA;EACA,WAAA;EACA,mBAAA;EACA,aAAA;EACA,kBAAA;EACA,eAAA;EACA,gBAAA;EACA,yBCTG;EDUH,WCXI;EDYJ,6BEbQ;ACWZ;;AHKA;EACI,kBAAA;AGFJ;;AHKA;EACI,yBCjBE;AEeN;;AHKA;EACI,yBCvBG;AEqBP;;AHKA;EACI,yBCxBI;AEsBR","file":"SnackBar.css"}

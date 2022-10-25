@@ -49,6 +49,27 @@ export default {
 
 </script>
 
-<style>
-@import url('LoginFormsTitle.css');
+<style lang="scss">
+@use '../../styles/colors';
+
+.LoginFormsTitle-title{
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.LoginFormsTitle-subtext {
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.pink-asterisk {
+    color: colors.$pink;
+}
+
+.LoginFormsTitle-line {
+    width: 215px;
+    margin-top: 13px;
+    margin-bottom: 24px;
+}
+
 </style>

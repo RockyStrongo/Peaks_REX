@@ -32,6 +32,33 @@ export default {
 }
 </script>
 
-<style>
-@import url('TextInput.css');
+<style lang="scss">
+@use '../../styles/colors';
+
+.TextInput {
+  height: 45px;
+  width: 100%;
+  padding: 18px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  color: colors.$blue;
+}
+
+.TextInput-label {
+  font-family: Catamaran;
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.TextInput-flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.pink-asterisk {
+    color: colors.$pink;
+}
 </style>

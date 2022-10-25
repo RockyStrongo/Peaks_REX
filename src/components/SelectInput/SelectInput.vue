@@ -47,6 +47,54 @@ export default {
 </style>
 
 
-<style>
-@import url('SelectInput.css');
+<style lang="scss">
+@use '../../styles/colors';
+
+.input.SelectInput {
+    line-height: 1;
+    font-family: Oswald;
+    padding: initial;
+    min-height: 45px;
+}
+
+.multiselect__tags {
+    display: flex;
+    align-items: center;
+    min-height: 45px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: none;
+    padding: 0 0 0 10px;
+}
+
+.multiselect__placeholder{
+    margin-bottom: unset;
+    padding-top: unset;
+    margin-left: 5px;
+    color: colors.$gray;
+}
+
+.multiselect__select {
+    height: 43px;
+    padding: unset;
+    z-index: 51;
+}
+
+.multiselect__single {
+    margin-bottom: unset;
+}
+
+.multiselect--active > .multiselect__tags > input {
+    margin-bottom: unset;
+    padding-top: unset;
+}
+
+.multiselect__option--highlight{
+    background: colors.$pink;
+}
+
+.multiselect__option--selected.multiselect__option--highlight{
+    background: colors.$pink;
+}
+
 </style>

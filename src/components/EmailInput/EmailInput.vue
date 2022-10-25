@@ -56,6 +56,29 @@ export default {
 }
 </script>
 
-<style>
-@import url('EmailInput.css');
+<style lang="scss">
+
+@use '../../styles/colors';
+
+.EmailInput {
+    height: 45px;
+    width: 100%;
+    padding: 18px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: colors.$blue;
+}
+
+.EmailInput-label{
+    font-family: Catamaran;
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.pink-asterisk {
+    color: colors.$pink;
+}
 </style>

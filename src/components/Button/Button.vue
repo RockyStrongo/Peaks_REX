@@ -22,6 +22,38 @@ export default {
 </script>
 
 
-<style>
-@import url('Button.css');
+<style lang="scss">
+@use '../../styles/colors';
+
+.Button {
+    display: inline-block;
+    padding: 12px 20px;
+    font-family: Oswald;
+    border: none;
+    border-radius: 4px;
+    background-color: colors.$blue;
+    color: colors.$white;
+    cursor: pointer;
+    transition: background-color .2s ease-in-out, color .2s;
+}
+
+.Button:focus-visible,
+.Button:hover {
+    background-color: colors.$white;
+    color: colors.$blue;
+}
+
+.Button--pink {
+    background-color: colors.$pink;
+} 
+
+.Button--bluelight{
+    background-color: colors.$bluelight;
+}
+
+.Button--bluelight:focus-visible,
+.Button--bluelight:hover {
+    background-color: colors.$pink;
+    color: colors.$white;
+}
 </style>

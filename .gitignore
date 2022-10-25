@@ -26,3 +26,4 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+GOOGLE_API_KEYS.json

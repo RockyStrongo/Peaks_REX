@@ -49,6 +49,20 @@ export default {
 
 
 
-<style>
-@import url('Logo.css');
+<style lang="scss">
+@use '../../styles/colors';
+
+.Logo {
+    width: 150px;
+    height: 88px;
+    cursor: pointer;
+}
+
+.Logo-pink {
+    color: colors.$pink;
+}
+
+.Header-logo > .Logo{
+    width: inherit;
+}
 </style>

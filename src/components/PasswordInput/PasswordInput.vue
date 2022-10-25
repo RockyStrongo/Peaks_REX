@@ -82,6 +82,19 @@ export default {
 }
 </script>
 
-<style>
-@import url('PasswordInput.css');
+<style lang="scss">
+@use '../../styles/colors';
+
+.PasswordInput-eye {
+    position: absolute;
+    top: 13px;
+    right: 18px;
+    display: block;
+    height: 18px;
+    cursor: pointer;
+}
+
+.PasswordInput-eye-container {
+    position: relative
+}
 </style>

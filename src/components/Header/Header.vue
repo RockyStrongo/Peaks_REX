@@ -44,6 +44,24 @@ export default {
     },
 
 
+    computed: {
+        userConnected() {
+            let user = sessionStorage.getItem('userConnected')
+
+            if (user) {
+                return JSON.parse(sessionStorage.getItem('userConnected'))
+
+            } else {
+                this.$router.push('/login')
+                return false
+            }
+        }
+    },
+
+    watch: {
+
+    },
+
     data() {
         return {
 
@@ -62,6 +80,52 @@ export default {
 
 </script>
 
-<style>
-@import url('Header.css');
+<style lang="scss">
+@use '../../styles/colors';
+@use '../../styles/variables';
+
+
+.Header {
+    font-family: Catamaran;
+    color: colors.$bluelight;
+    height: 91px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-shadow: variables.$boxshadow;
+}
+
+.Header>* {
+    margin: 29px;
+}
+
+.Header-logo {
+    margin-right: auto;
+    width: 81px;
+}
+
+.Header-profile-picture {
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 13px;
+}
+
+.Header-button {
+    height: fit-content;
+}
+
+.vertical-line {
+    border-left: 2px solid colors.$bluelight;
+    height: 45%;
+}
+
+.Header-profile-link {
+    color: colors.$blue;
+    font-weight: bolder;
+}
+
+.Header-profile-div{
+    display: flex;
+    align-items: center;
+}
 </style>
