@@ -15,7 +15,7 @@ textarea {
     outline: none;
 }
 
-*::placeholder{
+*::placeholder {
     color: colors.$gray;
 }
 
@@ -59,12 +59,12 @@ textarea {
 
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
 
 .login-pages-grid-container {
@@ -97,15 +97,69 @@ textarea {
     margin: 0 auto;
 }
 
+
+// Toggle styles
+.toggle {
+    --toggle-border-on: #68789B;
+    --toggle-border-off: #68789B;
+    --toggle-bg-on: #68789B;
+    --toggle-bg-off: white;
+    --toggle-width: 32px;
+    --toggle-height: 19px;
+    --toggle-handle-enabled: #68789B;
+    --toggle-handle-disabled: white;
+}
+
+.toggle-on>.toggle-handle-on {
+    background: white;
+}
+
+
+//radio button styles
+
+input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: #fff;
+    /* Not removed via appearance */
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid colors.$bluelight;
+    border-radius: 30%;
+    display: grid;
+    place-content: center;  
+    cursor: pointer;
+  }
+
+  input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 30%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em colors.$bluelight;
+  }
+
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+  }
+  
+
 @media only screen and (max-width: 600px) {
 
     .login-pages-grid-container {
-        display:grid;
+        display: grid;
         grid-template-columns: 1fr;
     }
 
     .login-pages-grid-item-left {
         display: none;
     }
-    
+
 }

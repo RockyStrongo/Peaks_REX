@@ -10,7 +10,8 @@
                 <Button class="Button--pink" label="Ajouter une expérience"></Button>
             </div>
             <div class="ListOfExperiences-search-container">
-                <input class="ListOfExperiences-search-bar-input input" placeholder="Chercher par mot clé" type="text" />
+                <input class="ListOfExperiences-search-bar-input input" placeholder="Chercher par mot clé"
+                    type="text" />
                 <svg viewBox="0 0 24 25" alt="Search icon" title="Search icon"
                     class="ListOfExperiencesPage-search-icon">
                     <use xlink:href='../../assets/images/search-icon.svg#searchIcon'
@@ -18,8 +19,26 @@
                     </use>
                 </svg>
             </div>
-            <div>
-                Filtrer les résultats
+            <div class="ListOfExperiencesPage-filters-section">
+
+                <span class="ListOfExperiencesPage-filters-title">
+                    Filtrer les résultats
+                </span>
+                <div class="ListOfExperiencesPage-filters-container">
+                    <div>
+                        <Toggle v-model="value" />
+                        <span class="ListOfExperiencesPage-toggle-label">Mes retours d'expérience uniquement</span>
+                    </div>
+                    <div class="ListOfExperiencesPage-radio-container">
+                        <span>Agences Peaks : </span>
+                        <input type="checkbox" name="agency" id="Aix">
+                        <label for="aix">Aix-en-Provence</label>
+                        <input type="checkbox" name="agency" id="reimsparis">
+                        <label for="reimsparis">Reims/Paris</label>
+                        <input type="checkbox" name="agency" id="lyon">
+                        <label for="lyon">Lyon</label>
+                    </div>
+                </div>
             </div>
         </div>
         <div>
@@ -33,6 +52,7 @@ import Header from '../../components/Header/Header.vue';
 import Title from '../../components/Title/Title.vue';
 import Button from '../../components/Button/Button.vue';
 import TextInput from '../../components/TextInput/TextInput.vue';
+import Toggle from '@vueform/toggle';
 
 
 export default {
@@ -46,15 +66,15 @@ export default {
         Header,
         Title,
         Button,
-        TextInput
+        TextInput,
+        Toggle,
     },
 
 
     data() {
         return {
-
+            value: true
         }
-
     },
 
     methods: {
@@ -68,6 +88,10 @@ export default {
 
 
 </script>
+
+<style src="@vueform/toggle/themes/default.css">
+
+</style>
 
 <style lang="scss">
 @use '../../styles/colors';
@@ -115,16 +139,57 @@ export default {
     margin: 17px;
 }
 
-.ListOfExperiencesPage-title-container{
+.ListOfExperiencesPage-title-container {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
 
-.ListOfExperiencesPage-title-container > h2, div {
-    color : colors.$blue;
+.ListOfExperiencesPage-title-container>h2,
+div {
+    color: colors.$blue;
     font-weight: bold;
 }
 
+.ListOfExperiencesPage-filters-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    margin: 10px;
+
+}
+
+.ListOfExperiencesPage-filters-section {
+    width: 55%;
+}
+
+.ListOfExperiencesPage-filters-section>*, .ListOfExperiencesPage-filters-container>* {
+    color: colors.$bluelight;
+    font-family: Oswald;
+    font-weight: 400;
+}
+
+.ListOfExperiencesPage-toggle-label {
+    margin-left: 10px;
+}
+
+.ListOfExperiencesPage-radio-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.ListOfExperiencesPage-radio-container > label {
+   margin: 10px;
+}
+
+.ListOfExperiencesPage-radio-container > span {
+   margin: 10px;
+}
+
+.ListOfExperiencesPage-filters-title{
+    text-transform: uppercase;
+    text-decoration: underline;
+}
 </style>
