@@ -121,7 +121,7 @@ export default {
 
 .Header-profile-link {
     color: colors.$blue;
-    font-weight: bolder;
+    font-weight: 700    ;
 }
 
 .Header-profile-div{

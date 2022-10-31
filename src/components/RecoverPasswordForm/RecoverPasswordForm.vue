@@ -2,7 +2,9 @@
 
     <form class="login-forms" ref="RecoverPasswordFormElement" @submit="validateRecoverPasswordForm">
         
-        <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+        <Transition>
+            <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+        </Transition>
 
         <LoginFormsTitle titleText="Récupération du mot de passe" />
 

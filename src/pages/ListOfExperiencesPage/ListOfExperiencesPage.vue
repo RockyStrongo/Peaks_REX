@@ -5,7 +5,7 @@
     <div class="ListOfExperiencesPage-grid">
 
         <!-- Search section  -->
-        <div class="ListOfExperiencesPage-search-section">
+        <div class="ListOfExperiencesPage-searchSection">
 
             <!-- Title  -->
             <div class="ListOfExperiencesPage-title-container">
@@ -20,9 +20,8 @@
             <div class="ListOfExperiences-search-container">
                 <input class="ListOfExperiences-search-bar-input input" placeholder="Chercher par mot clé" type="text"
                     v-model="keyword" @keyup="updateData" />
-                <div class="ListOfExperiencesPage-search-icon-background"></div>
-                <svg viewBox="0 0 24 25" alt="Search icon" title="Search icon"
-                    class="ListOfExperiencesPage-search-icon">
+                <div class="ListOfExperiencesPage-searchIconBackground"></div>
+                <svg viewBox="0 0 24 25" alt="Search icon" title="Search icon" class="ListOfExperiencesPage-searchIcon">
                     <use xlink:href='../../assets/images/search-icon.svg#searchIcon'
                         href="../../assets/images/search-icon.svg#searchIcon">
                     </use>
@@ -41,11 +40,11 @@
                     </div>
                     <div class="ListOfExperiencesPage-radio-container">
                         <span>Agences Peaks : </span>
-                        <input type="checkbox" name="agency" id="Aix" @change="updateData">
+                        <input type="checkbox" name="agency" ref="agency" id="Aix" @change="updateData">
                         <label for="aix">Aix-en-Provence</label>
-                        <input type="checkbox" name="agency" id="Reims/Paris" @change="updateData">
+                        <input type="checkbox" name="agency" ref="agency" id="Reims/Paris" @change="updateData">
                         <label for="reimsparis">Reims/Paris</label>
-                        <input type="checkbox" name="agency" id="Lyon" @change="updateData">
+                        <input type="checkbox" name="agency" ref="agency" id="Lyon" @change="updateData">
                         <label for="lyon">Lyon</label>
                     </div>
                 </div>
@@ -55,10 +54,10 @@
         <!-- List section  -->
 
         <div class="ListOfExperiencesPage-list-section">
-            <table-lite class="ListOfExperiencesPage-table" :is-static-mode="true" :columns="tableData.columns"
-                :rows="tableData.rows" :total="tableData.totalRecordCount" :sortable="tableData.sortable"
-                :messages="tableData.messages" @row-clicked="test" :pageOptions="tableData.pageOptions" :pageSize="5"
-                max-height="250" />
+            <table-lite class="ListOfExperiencesPage-table" ref="table" :is-static-mode="true"
+                :columns="tableData.columns" :rows="tableData.rows" :total="tableData.totalRecordCount"
+                :sortable="tableData.sortable" :messages="tableData.messages" @row-clicked="test"
+                :pageOptions="tableData.pageOptions" :pageSize="5" :max-height="250" />
         </div>
 
 
@@ -103,16 +102,11 @@ export default {
         }
     },
 
-    computed: {
-
-
-
-    },
-
     methods: {
 
         agencyFilter() {
             let checkboxes = document.getElementsByName("agency")
+
             let agencyFilterArray = Array(0)
 
             checkboxes.forEach(
@@ -147,10 +141,9 @@ export default {
                 item.agency.toLowerCase().includes(this.keyword.toLowerCase()) ||
                 item.project.toLowerCase().includes(this.keyword.toLowerCase()) ||
                 item.client.toLowerCase().includes(this.keyword.toLowerCase()) ||
-                item.start_date.toLowerCase().includes(this.keyword.toLowerCase()) ||
-                item.end_date.toLowerCase().includes(this.keyword.toLowerCase()) ||
                 item.technologies.toLowerCase().includes(this.keyword.toLowerCase())
             )
+
         },
 
         tableConfig() {
@@ -160,13 +153,13 @@ export default {
                     {
                         label: "Collaborateur",
                         field: "consultant_name",
-                        width: "3%",
+                        width: "15%",
                         sortable: true,
                     },
                     {
                         label: "Agence",
                         field: "agency",
-                        width: "10%",
+                        width: "15%",
                         sortable: true,
                     },
                     {
@@ -235,6 +228,8 @@ export default {
 
         },
 
+
+
         async updateData() {
 
             const response = await fetch('../../src/mock-data/mock-user-data.json')
@@ -293,11 +288,9 @@ export default {
 
 </script>
 
-<style src="@vueform/toggle/themes/default.css">
-
-</style>
 
 <style lang="scss">
+@use '../../../node_modules/@vueform/toggle/themes/default.css';
 @use '../../styles/colors';
 
 .ListOfExperiencesPage-grid {
@@ -306,7 +299,7 @@ export default {
     min-height: calc(100vh - 91px);
 }
 
-.ListOfExperiencesPage-search-section {
+.ListOfExperiencesPage-searchSection {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -315,7 +308,7 @@ export default {
     box-shadow: inset 0px -24px 109px rgba(0, 0, 0, 0.1);
 }
 
-.ListOfExperiencesPage-search-icon {
+.ListOfExperiencesPage-searchIcon {
     width: 24px;
     position: absolute;
     right: 12px;
@@ -324,7 +317,7 @@ export default {
     color: colors.$bluelight;
 }
 
-.ListOfExperiencesPage-search-icon-background {
+.ListOfExperiencesPage-searchIconBackground {
     width: 40px;
     height: 40px;
     position: absolute;
@@ -363,7 +356,7 @@ export default {
 
 .ListOfExperiencesPage-title-container>h2 {
     color: colors.$blue;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .ListOfExperiencesPage-filters-container {
@@ -421,7 +414,7 @@ export default {
 
 .vtl-table .vtl-thead .vtl-thead-th {
     font-family: Catamaran;
-    font-weight: bold;
+    font-weight: 700;
     color: colors.$blue;
     background-color: colors.$lightgray;
     border-color: colors.$lightgray;
@@ -452,5 +445,9 @@ export default {
 
 .vtl-thead-column.vtl-sortable.vtl-both.vtl-desc {
     background-image: url('../../assets/images/sort-down-icon.svg');
+}
+
+.highlight {
+    background-color: yellow;
 }
 </style>    
