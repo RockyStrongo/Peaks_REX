@@ -10,10 +10,36 @@ import mitt from 'mitt'
 
 const emitter = mitt();
 
+//Apollo librairy for connection to graphQL Api
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
+import { createApolloProvider } from '@vue/apollo-option'
+
+    // HTTP connection to the API
+    const httpLink = createHttpLink({
+        // You should use an absolute URL here
+        uri: 'https://peaksrex-dev.herokuapp.com/v1/graphql',
+    })
+    
+    // Cache implementation
+    const cache = new InMemoryCache()
+    
+    // Create the apollo client
+    const apolloClient = new ApolloClient({
+        link: httpLink,
+        cache,
+    })
+    
+    const apolloProvider = createApolloProvider({
+        defaultClient: apolloClient,
+    })
+
+
 const app = createApp(App)
 
 app.use(router)
 
 app.config.globalProperties.emitter = emitter;
+
+app.use(apolloProvider)
 
 app.mount('#app');

@@ -40,11 +40,12 @@
                     </div>
                     <div class="ListOfExperiencesPage-radio-container">
                         <span>Agences Peaks : </span>
-                        <input type="checkbox" name="agency" ref="agency" id="Aix" @change="updateData">
+                        <input type="checkbox" name="agency" ref="agency" :id="agencyIds.Aix" @change="updateData">
                         <label for="aix">Aix-en-Provence</label>
-                        <input type="checkbox" name="agency" ref="agency" id="Reims/Paris" @change="updateData">
+                        <input type="checkbox" name="agency" ref="agency" :id="agencyIds.ReimsParis"
+                            @change="updateData">
                         <label for="reimsparis">Reims/Paris</label>
-                        <input type="checkbox" name="agency" ref="agency" id="Lyon" @change="updateData">
+                        <input type="checkbox" name="agency" ref="agency" :id="agencyIds.Lyon" @change="updateData">
                         <label for="lyon">Lyon</label>
                     </div>
                 </div>
@@ -70,16 +71,16 @@ import Title from '../../components/Title/Title.vue';
 import Button from '../../components/Button/Button.vue';
 import TextInput from '../../components/TextInput/TextInput.vue';
 
+import globalConstants from '../../const'
+
+//Toggle library
 import Toggle from '@vueform/toggle';
+//Sortable table library
 import TableLite from "vue3-table-lite";
 
 
 export default {
     name: 'ListOfExperiencesPage',
-
-    props: {
-
-    },
 
     components: {
         Header,
@@ -91,19 +92,64 @@ export default {
 
     },
 
+    apollo: {
+        retour_exp() {
+            return {
+                query: globalConstants.GQL_GET_EXPERIENCES
+            }
+        }
+    },
 
     data() {
         return {
+            retour_exp: String,
+
             filteredOnUser: true,
             experiencesData: Array,
             tableData: Array,
             filteredOnAgency: Array,
             keyword: '',
+            agencyIds: {
+                Aix: "472c3523-80ca-40fb-93cc-e41746894d29",
+                Lyon: "ad8cc137-ed55-463c-a232-0f5483c1d5f0",
+                ReimsParis: "f756adc3-9d4f-44c3-aca2-cc4901705c60"
+            },
         }
     },
-
+    
     methods: {
 
+        getData() {
+
+            let processedData = []
+
+            this.retour_exp.map(function (item) {
+
+                //make a copy as originial object is not extensible
+                let itemcopy = Object.assign([], item);
+
+                //concatenate first name and last name
+                let fullName = item.user.firstname + " " + item.user.lastname
+                itemcopy.consultantName = fullName
+
+                //move agency name to first level
+                let agencyName = item.agency.name
+                itemcopy.agencyName = agencyName
+
+                //concatenate technologies in one string
+                let technoString = item.retour_exp_technologies.reduce((previtem, currentitem) => {
+                    return previtem.technology.name + ", ".concat(currentitem.technology.name);
+                })
+
+                itemcopy.technologies = technoString
+
+                processedData.push(itemcopy)
+            })
+
+            this.experiencesData = processedData
+            console.log(this.experiencesData)
+
+        },
         agencyFilter() {
             let checkboxes = document.getElementsByName("agency")
 
@@ -118,17 +164,17 @@ export default {
             )
 
             agencyFilterArray.length === 0
-                ? this.filteredOnAgency = ["Aix", "Lyon", "Reims/Paris"]
+                ? this.filteredOnAgency = [this.agencyIds.Aix, this.agencyIds.Lyon, this.agencyIds.ReimsParis]
                 : this.filteredOnAgency = agencyFilterArray
 
-            this.experiencesData = this.experiencesData.filter(item => this.filteredOnAgency.includes(item.agency))
+            this.experiencesData = this.experiencesData.filter(item => this.filteredOnAgency.includes(item.agency.id))
         },
 
         userFilter() {
             if (this.filteredOnUser) {
                 let user = JSON.parse(sessionStorage.getItem('userConnected'))
-                let userId = user[0].ID
-                this.experiencesData = this.experiencesData.filter(item => item.consultant === userId)
+                let userId = user[0].id
+                this.experiencesData = this.experiencesData.filter(item => item.user.id === userId)
             } else if (!this.filteredOnUser) {
                 this.experiencesData = this.experiencesData
             }
@@ -137,8 +183,8 @@ export default {
         keywordFilter() {
 
             this.experiencesData = this.experiencesData.filter(item =>
-                item.consultant_name.toLowerCase().includes(this.keyword.toLowerCase()) ||
-                item.agency.toLowerCase().includes(this.keyword.toLowerCase()) ||
+                item.consultantName.toLowerCase().includes(this.keyword.toLowerCase()) ||
+                item.agencyName.toLowerCase().includes(this.keyword.toLowerCase()) ||
                 item.project.toLowerCase().includes(this.keyword.toLowerCase()) ||
                 item.client.toLowerCase().includes(this.keyword.toLowerCase()) ||
                 item.technologies.toLowerCase().includes(this.keyword.toLowerCase())
@@ -152,13 +198,13 @@ export default {
                 columns: [
                     {
                         label: "Collaborateur",
-                        field: "consultant_name",
+                        field: "consultantName",
                         width: "15%",
                         sortable: true,
                     },
                     {
                         label: "Agence",
-                        field: "agency",
+                        field: "agencyName",
                         width: "15%",
                         sortable: true,
                     },
@@ -222,8 +268,6 @@ export default {
                         value: 50,
                         text: "50"
                     }]
-
-
             }
 
         },
@@ -232,34 +276,36 @@ export default {
 
         async updateData() {
 
-            const response = await fetch('../../src/mock-data/mock-user-data.json')
-                .then(function (response) {
-                    if (response.ok) {
-                        return response.json()
-                    } else {
-                        console.log("error")
-                    }
-                })
-
-            // Extract experiences data from json 
-            let onlyexperiences = response.map(item => item.retour_exp)
-
-            // Flatten the array 
-            onlyexperiences = onlyexperiences.reduce((previousValue, currentValue) => {
-                return previousValue.concat(currentValue);
-            });
-
-            //convert the technologies to one string
-            onlyexperiences = onlyexperiences.map(function (item, array) {
-                let technos = item.technologies
-                let technoString = technos.reduce((previtem, currentitem) => {
-                    return previtem + ", ".concat(currentitem);
-                })
-                item['technologies'] = technoString
-                return item
+            let wait = await this.$apollo.query({
+                query: globalConstants.GQL_GET_EXPERIENCES,
             })
 
-            this.experiencesData = onlyexperiences
+            let processedData = []
+
+            this.retour_exp.map(function (item) {
+
+                //make a copy as originial object is not extensible
+                let itemcopy = Object.assign([], item);
+
+                //concatenate first name and last name
+                let fullName = item.user.firstname + " " + item.user.lastname
+                itemcopy.consultantName = fullName
+
+                //move agency name to first level
+                let agencyName = item.agency.name
+                itemcopy.agencyName = agencyName
+
+                //concatenate technologies in one string
+                let technoString = item.retour_exp_technologies.reduce((previtem, currentitem) => {
+                    return previtem.technology.name + ", ".concat(currentitem.technology.name);
+                })
+
+                itemcopy.technologies = technoString
+
+                processedData.push(itemcopy)
+            })
+
+            this.experiencesData = processedData
 
             //apply user filter
             this.userFilter()

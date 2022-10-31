@@ -1,3 +1,5 @@
+import gql from 'graphql-tag'
+
 export default {
 
     //email validation regex
@@ -17,5 +19,47 @@ export default {
 
     //List of Peaks Agencies
     AGENCY_OPTIONS: ["Aix", "Lyon", "Reims/Paris"],
+    AGENCY_IDS : {
+        Aix : "472c3523-80ca-40fb-93cc-e41746894d29",
+        Lyon : "ad8cc137-ed55-463c-a232-0f5483c1d5f0",
+        ReimsParis : "f756adc3-9d4f-44c3-aca2-cc4901705c60"
+    },
+
+    //graphQL queries
+    GQL_GET_USER_DATA: gql`query GetUser {
+        user {
+          id
+          email
+          password
+          profilimage
+          firstname
+        }
+      }
+      `,
+    GQL_GET_EXPERIENCES: gql`
+      query GetExperiences {
+        retour_exp {
+          id
+          project
+          client
+          start_date
+          end_date
+          user {
+            id
+            firstname
+            lastname
+          }
+          agency {
+            id
+            name
+          }
+          retour_exp_technologies {
+            technology {
+              name
+            }
+          }
+        }
+      }
+      `
 
 }

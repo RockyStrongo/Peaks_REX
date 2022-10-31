@@ -48,14 +48,16 @@ export default {
         LoginFormsTitle
     },
 
-    computed: {
-
-
+    apollo: {
+        user: globalConstants.GQL_GET_USER_DATA
     },
 
     data() {
         return {
             formFields: ["email", "password"],
+            
+            user: String,
+
             email: String,
             password: String,
 
@@ -73,6 +75,7 @@ export default {
     },
 
     methods: {
+        
         async validateConnnectionForm(event) {
             event.preventDefault();
 
@@ -91,18 +94,17 @@ export default {
 
         async getUserData() {
 
+            let wait = await this.$apollo.query({
+                query: globalConstants.GQL_GET_USER_DATA,
+            })
+
             const emailinput = this.email
 
-            const response = await fetch('../../src/mock-data/mock-user-data.json')
-                .then(function (response) {
-                    if (response.ok) {
-                        return response.json()
-                    } else {
-                        console.log("error")
-                    }
-                })
+            const usersData = this.user
 
-            const filtered = response.filter(item => item['email'] === emailinput)
+            const filtered = usersData.filter(item => item['email'] === emailinput)
+
+            console.log(filtered)
 
             filtered.length !== 1
                 ? this.emailExists = false
