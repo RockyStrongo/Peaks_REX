@@ -24,6 +24,7 @@ export default {
         Lyon : "ad8cc137-ed55-463c-a232-0f5483c1d5f0",
         ReimsParis : "f756adc3-9d4f-44c3-aca2-cc4901705c60"
     },
+    AGENCY_ID_AIX: "472c3523-80ca-40fb-93cc-e41746894d29",
 
     //graphQL queries
     GQL_GET_USER_DATA: gql`query GetUser {

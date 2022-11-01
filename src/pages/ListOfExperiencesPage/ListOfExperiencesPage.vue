@@ -116,40 +116,9 @@ export default {
             },
         }
     },
-    
+
     methods: {
 
-        getData() {
-
-            let processedData = []
-
-            this.retour_exp.map(function (item) {
-
-                //make a copy as originial object is not extensible
-                let itemcopy = Object.assign([], item);
-
-                //concatenate first name and last name
-                let fullName = item.user.firstname + " " + item.user.lastname
-                itemcopy.consultantName = fullName
-
-                //move agency name to first level
-                let agencyName = item.agency.name
-                itemcopy.agencyName = agencyName
-
-                //concatenate technologies in one string
-                let technoString = item.retour_exp_technologies.reduce((previtem, currentitem) => {
-                    return previtem.technology.name + ", ".concat(currentitem.technology.name);
-                })
-
-                itemcopy.technologies = technoString
-
-                processedData.push(itemcopy)
-            })
-
-            this.experiencesData = processedData
-            console.log(this.experiencesData)
-
-        },
         agencyFilter() {
             let checkboxes = document.getElementsByName("agency")
 
@@ -296,9 +265,15 @@ export default {
                 itemcopy.agencyName = agencyName
 
                 //concatenate technologies in one string
-                let technoString = item.retour_exp_technologies.reduce((previtem, currentitem) => {
-                    return previtem.technology.name + ", ".concat(currentitem.technology.name);
-                })
+                let technoString = []
+                if (item.retour_exp_technologies.length > 1) {
+                    technoString = item.retour_exp_technologies.reduce((previtem, currentitem) => {
+                        return previtem.technology.name + ", ".concat(currentitem.technology.name);
+                    })
+                } else {
+                    technoString = item.retour_exp_technologies.map(item => item.technology.name)
+                    technoString = technoString[0]
+                }
 
                 itemcopy.technologies = technoString
 

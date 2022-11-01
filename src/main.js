@@ -16,7 +16,7 @@ import { createApolloProvider } from '@vue/apollo-option'
 
     // HTTP connection to the API
     const httpLink = createHttpLink({
-        // You should use an absolute URL here
+        // console : https://peaksrex-dev.herokuapp.com/console
         uri: 'https://peaksrex-dev.herokuapp.com/v1/graphql',
     })
     
