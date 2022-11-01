@@ -3,6 +3,7 @@
     <div class="SnackBar" :class="`SnackBar-${snackType}`">
         <img :src="snackIcon" />
         <span class="SnackBar-text">{{snackText}}</span>
+        <a :href="snackLink" class="SnackBar-link">{{snackLinkText}}</a>
     </div>
 
 </template>
@@ -20,6 +21,8 @@ export default {
             type: String,
             required: true,
         },
+        snackLink: String,
+        snackLinkText: String,
     },
 
     computed: {
@@ -69,6 +72,11 @@ export default {
 
 .SnackBar-text {
     padding-left: 11px;
+}
+
+.SnackBar-link{
+    text-decoration: underline;
+    margin-left: 5px;
 }
 
 .SnackBar-error{

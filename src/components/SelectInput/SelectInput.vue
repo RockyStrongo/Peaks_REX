@@ -5,13 +5,13 @@
     <VueMultiselect 
         class="SelectInput input" 
         placeholder="Choisir" 
-        v-model="selected" 
+        v-model="value" 
         :options="options" 
         select-label="" 
         selected-label="" 
-        deselectLabel="">
+        deselectLabel=""
+        @select="emit">
     </VueMultiselect>
-
 </template>
 
 <script>
@@ -32,10 +32,17 @@ export default {
 
     data() {
         return {
-            selected: null,
+            value: '',
             options: this.items
         }
-    }
+    },
+
+    methods: {
+        emit(item){
+            const dataobj = {"field": this.field, "value" : item};
+            this.emitter.emit(this.field, dataobj);
+        }
+    },
 
 }
 

@@ -3,9 +3,15 @@
 
     <form class="login-forms" ref="SignUpFormElement" @submit="validateSignUpForm">
         <Transition>
-            <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+            <SnackBar 
+                v-if="snackBarVisible" 
+                :snackText="snackBarText" 
+                :snackType="snackBarType" 
+                :snackLink="snackBarLink"
+                :snackLinkText="snackBarLinkText">
+            </SnackBar>
         </Transition>
-        
+
         <LoginFormsTitle titleText="Inscription" />
 
         <div class="SignUpForm-flex-container">
@@ -85,10 +91,14 @@ export default {
 
             snackBarText: "",
             snackBarType: "",
+            snackBarLink: "",
+            snackBarLinkText: "",
+
             agencyOptions: globalConstants.AGENCY_OPTIONS,
         }
 
     },
+
 
     methods: {
         validateSignUpForm(event) {
@@ -118,7 +128,7 @@ export default {
                 this.snackBarType = "error"
             }
             else {
-                this.$refs.SignUpFormElement.submit()
+                this.createUser()
             }
 
         },
@@ -139,6 +149,40 @@ export default {
         getFormDatafromEmitter(item) {
             const fieldname = item.field.toString()
             this[fieldname] = item.value
+        },
+        createUser() {
+            this.$apollo.mutate({
+                mutation: globalConstants.GQL_CREATE_USER,
+                variables: {
+                    email: this.email,
+                    firstname: this.firstName,
+                    lastname: this.lastName,
+                    password: this.password,
+                    agency_id: this.agencyID(this.agency)
+                }
+            }).then(() => {
+                this.snackBarVisible = true
+                this.snackBarText = globalConstants.SUCCESS_MESSAGE_USER_CREATED
+                this.snackBarType = "success"
+                this.snackBarLink = "/login"
+                this.snackBarLinkText = " Se connecter"
+            }).catch((error) => {
+                this.snackBarVisible = true
+                this.snackBarText = error
+                this.snackBarType = "error"
+            })
+        },
+        agencyID(agency) {
+            switch (agency) {
+                case 'Aix-en-Provence':
+                    return globalConstants.AGENCY_IDS.Aix
+                case 'Lyon':
+                    return globalConstants.AGENCY_IDS.Lyon
+                case 'Reims/Paris':
+                    return globalConstants.AGENCY_IDS.ReimsParis
+                default:
+                    console.log("Error - agency ID not found");
+            }
         }
 
 
@@ -166,8 +210,7 @@ export default {
     display: flex;
 }
 
-.SignUpForm-flex-container-child:nth-child(odd){
+.SignUpForm-flex-container-child:nth-child(odd) {
     margin-right: 20px;
 }
-
 </style>

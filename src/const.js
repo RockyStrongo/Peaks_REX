@@ -15,16 +15,20 @@ export default {
     ERROR_MESSAGE_PASSWORD_CONFIRMATION: "Le mot de passe et la confirmation ne correspondent pas",
     ERROR_MESSAGE_INVALID_CREDENTIALS: "La combinaison email - mot de passe est incorrecte",
     ERROR_MESSAGE_EMAIL_DOES_NOT_EXIST: "Cet email n'est lié à aucun utilisateur",
+    
+    //info messages
     INFO_MESSAGE_RECOVER_EMAIL: "Un email a été envoyé à ",
 
+    //Sucess messages
+    SUCCESS_MESSAGE_USER_CREATED: "L'utilisateur a été créé avec succès.",
+
     //List of Peaks Agencies
-    AGENCY_OPTIONS: ["Aix", "Lyon", "Reims/Paris"],
-    AGENCY_IDS : {
-        Aix : "472c3523-80ca-40fb-93cc-e41746894d29",
-        Lyon : "ad8cc137-ed55-463c-a232-0f5483c1d5f0",
-        ReimsParis : "f756adc3-9d4f-44c3-aca2-cc4901705c60"
+    AGENCY_OPTIONS: ["Aix-en-Provence", "Lyon", "Reims/Paris"],
+    AGENCY_IDS: {
+        Aix: "472c3523-80ca-40fb-93cc-e41746894d29",
+        Lyon: "ad8cc137-ed55-463c-a232-0f5483c1d5f0",
+        ReimsParis: "f756adc3-9d4f-44c3-aca2-cc4901705c60"
     },
-    AGENCY_ID_AIX: "472c3523-80ca-40fb-93cc-e41746894d29",
 
     //graphQL queries
     GQL_GET_USER_DATA: gql`query GetUser {
@@ -61,6 +65,26 @@ export default {
           }
         }
       }
-      `
+      `,
+    GQL_CREATE_USER: gql`
+        mutation CreateUser (
+
+            $email: String!
+            $firstname: String!
+            $lastname: String!
+            $password: String!
+            $agency_id: uuid!
+            ) {
+      insert_user_one(object: {
+            email: $email, 
+            firstname: $firstname, 
+            lastname: $lastname, 
+            password: $password, 
+            agency_id: $agency_id, 
+    }) {
+        id
+      } 
+    }
+    `,
 
 }

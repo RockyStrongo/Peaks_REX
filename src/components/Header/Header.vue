@@ -6,10 +6,13 @@
         </div>
 
         <div class="Header-profile-div">
-            <img :v-if="userConnected" class="Header-profile-picture" :src="userConnected[0].profilimage"
-                alt="profile-picture">
+            <img 
+            :v-if="userConnected" 
+            class="Header-profile-picture" 
+            :src="profilPicExists"
+            alt="profile-picture">
 
-            <span :v-if="userConnected">Bonjour, {{ userConnected[0].firstname }}</span>
+            <span :v-if="userConnected" >Bonjour, {{ userConnected[0].firstname }}</span>
         </div>
 
 
@@ -45,15 +48,17 @@ export default {
 
 
     computed: {
-        userConnected() {
-            let user = sessionStorage.getItem('userConnected')
 
-            if (user) {
-                return JSON.parse(sessionStorage.getItem('userConnected'))
+        userConnected(){
+            let userObject = JSON.parse(sessionStorage.getItem('userConnected'))
+            return userObject
+        },
 
+        profilPicExists(){
+            if(!this.userConnected[0].profilimage){
+                return "../../src/assets/images/default-profile-picture.svg"
             } else {
-                this.$router.push('/login')
-                return false
+                return this.userConnected[0].profilimage
             }
         }
     },
