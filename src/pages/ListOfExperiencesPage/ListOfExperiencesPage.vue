@@ -8,17 +8,17 @@
         <div class="ListOfExperiencesPage-searchSection">
 
             <!-- Title  -->
-            <div class="ListOfExperiencesPage-title-container">
+            <div class="ListOfExperiencesPage-titleContainer">
                 <Title title="Rechercher un retour d'expérience"></Title>
                 <div>ou</div>
             </div>
-            <div class="ListOfExperiences-button-container">
+            <div class="ListOfExperiences-buttonContainer">
                 <Button class="Button--pink" label="Ajouter une expérience"></Button>
             </div>
 
             <!-- Search  -->
-            <div class="ListOfExperiences-search-container">
-                <input class="ListOfExperiences-search-bar-input input" placeholder="Chercher par mot clé" type="text"
+            <div class="ListOfExperiences-searchContainer">
+                <input class="ListOfExperiences-searchBarInput input" placeholder="Chercher par mot clé" type="text"
                     v-model="keyword" @keyup="updateData" />
                 <div class="ListOfExperiencesPage-searchIconBackground"></div>
                 <svg viewBox="0 0 24 25" alt="Search icon" title="Search icon" class="ListOfExperiencesPage-searchIcon">
@@ -29,16 +29,16 @@
             </div>
 
             <!-- Filters  -->
-            <div class="ListOfExperiencesPage-filters-section">
-                <span class="ListOfExperiencesPage-filters-title">
+            <div class="ListOfExperiencesPage-filtersSection">
+                <span class="ListOfExperiencesPage-filtersTitle">
                     Filtrer les résultats
                 </span>
-                <div class="ListOfExperiencesPage-filters-container">
+                <div class="ListOfExperiencesPage-filtersContainer">
                     <div>
                         <Toggle v-model="filteredOnUser" @click="updateData" />
-                        <span class="ListOfExperiencesPage-toggle-label">Mes retours d'expérience uniquement</span>
+                        <span class="ListOfExperiencesPage-toggleLabel">Mes retours d'expérience uniquement</span>
                     </div>
-                    <div class="ListOfExperiencesPage-radio-container">
+                    <div class="ListOfExperiencesPage-radioContainer">
                         <span>Agences Peaks : </span>
                         <input type="checkbox" name="agency" ref="agency" :id="agencyIds.Aix" @change="updateData">
                         <label for="aix">Aix-en-Provence</label>
@@ -54,7 +54,7 @@
 
         <!-- List section  -->
 
-        <div class="ListOfExperiencesPage-list-section">
+        <div class="ListOfExperiencesPage-listSection">
             <table-lite class="ListOfExperiencesPage-table" ref="table" :is-static-mode="true"
                 :columns="tableData.columns" :rows="tableData.rows"
                 :total="tableData.totalRecordCount" :sortable="tableData.sortable"
@@ -346,7 +346,7 @@ export default {
     cursor: pointer;
 }
 
-.ListOfExperiences-search-container {
+.ListOfExperiences-searchContainer {
     position: relative;
     display: flex;
     align-items: center;
@@ -355,29 +355,29 @@ export default {
     margin: 17px;
 }
 
-.ListOfExperiences-search-bar-input {
+.ListOfExperiences-searchBarInput {
     width: 100%;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
     border-radius: 52px;
 }
 
-.ListOfExperiences-button-container {
+.ListOfExperiences-buttonContainer {
     margin: 17px;
 }
 
-.ListOfExperiencesPage-title-container {
+.ListOfExperiencesPage-titleContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
 
-.ListOfExperiencesPage-title-container>h2 {
+.ListOfExperiencesPage-titleContainer>h2 {
     color: colors.$blue;
     font-weight: 700;
 }
 
-.ListOfExperiencesPage-filters-container {
+.ListOfExperiencesPage-filtersContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -385,36 +385,36 @@ export default {
 
 }
 
-.ListOfExperiencesPage-filters-section {
+.ListOfExperiencesPage-filtersSection {
     width: 55%;
 }
 
-.ListOfExperiencesPage-filters-section>*,
-.ListOfExperiencesPage-filters-container>* {
+.ListOfExperiencesPage-filtersSection>*,
+.ListOfExperiencesPage-filtersContainer>* {
     color: colors.$bluelight;
     font-family: Oswald;
     font-weight: 400;
 }
 
-.ListOfExperiencesPage-toggle-label {
+.ListOfExperiencesPage-toggleLabel {
     margin-left: 10px;
 }
 
-.ListOfExperiencesPage-radio-container {
+.ListOfExperiencesPage-radioContainer {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-.ListOfExperiencesPage-radio-container>label {
+.ListOfExperiencesPage-radioContainer>label {
     margin: 10px;
 }
 
-.ListOfExperiencesPage-radio-container>span {
+.ListOfExperiencesPage-radioContainer>span {
     margin: 10px;
 }
 
-.ListOfExperiencesPage-filters-title {
+.ListOfExperiencesPage-filtersTitle {
     text-transform: uppercase;
     text-decoration: underline;
 }
@@ -423,7 +423,7 @@ export default {
     width: 90%
 }
 
-.ListOfExperiencesPage-list-section {
+.ListOfExperiencesPage-listSection {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -465,7 +465,4 @@ export default {
     background-image: url('../../assets/images/sort-down-icon.svg');
 }
 
-.highlight {
-    background-color: yellow;
-}
 </style>    

@@ -11,7 +11,7 @@
         <EmailInput label="Email" :isRequired="true" field="email" />
 
 
-        <div class="login-forms-align-right">
+        <div class="loginForms-alignRight">
 
             <Button label="Connexion" class="Button--pink"></Button>
 
@@ -122,5 +122,4 @@ export default {
 </script>
 
 <style >
-
 </style>

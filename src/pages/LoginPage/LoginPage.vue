@@ -1,23 +1,21 @@
 <template>
 
-    <div class="login-pages-grid-container">
+    <div class="loginPages-gridContainer">
 
         <!-- left column -->
-        <div class="login-pages-grid-item-left"></div>
+        <div class="loginPages-gridItemLeft"></div>
 
         <!-- right column -->
-        <div class="login-pages-grid-item-right">
+        <div class="loginPages-gridItemRight">
 
-            <div class="login-pages-flex-container">
-                <div class="LoginPage-logo-container">
+            <div class="loginPages-flexContainer">
                     <Logo type="pinkA" />
-                </div>
                 <ConnectionForm />
 
             </div> 
 
             <!-- Recover password link -->
-            <div class="LoginPage-bottom-right">
+            <div class="LoginPage-bottomRight">
                 <Link class="Link--small Link--lostpassword" href="/recover-password" target="_self"
                     title="Vous avez perdu votre mot de passe ?" />
             </div>
@@ -48,7 +46,7 @@ export default {
 </script>
 
 <style lang="scss">
-.LoginPage-bottom-right {
+.LoginPage-bottomRight {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;

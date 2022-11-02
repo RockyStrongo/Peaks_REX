@@ -1,5 +1,5 @@
 <template>
-    <h2 class="Form" :class="class">{{title}}</h2>
+    <h2 class="Title" :class="class">{{title}}</h2>
 </template>
 
 <script>
@@ -23,7 +23,7 @@ export default {
 
 
 <style lang="scss">
-.Form {
+.Title {
     font-family: Catamaran;
     font-size: 35px;
 }

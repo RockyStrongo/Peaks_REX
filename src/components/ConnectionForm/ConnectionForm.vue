@@ -13,7 +13,7 @@
 
         <PasswordInput label="Mot de passe" :isRequired="true" field="password" />
 
-        <div class="login-forms-align-right">
+        <div class="loginForms-alignRight">
 
             <Link href="/signup" class="Link--small Link--noaccount" title="Vous n'avez pas encore de compte ?"
                 target="_self" />

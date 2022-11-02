@@ -5,10 +5,10 @@
             <Logo type="normal" />
         </div>
 
-        <div class="Header-profile-div">
+        <div class="Header-profileDiv">
             <img 
             :v-if="userConnected" 
-            class="Header-profile-picture" 
+            class="Header-profilePicture" 
             :src="profilPicExists"
             alt="profile-picture">
 
@@ -18,7 +18,7 @@
 
         <div class="vertical-line"></div>
 
-        <Link class='Header-profile-link' title="Mon Profil" />
+        <Link class='Header-profileLink' title="Mon Profil" />
 
         <Button class='Button--bluelight' label="Déconnexion" @click="disconnect"></Button>
 
@@ -91,7 +91,7 @@ export default {
     width: 81px;
 }
 
-.Header-profile-picture {
+.Header-profilePicture {
     height: 32px;
     border-radius: 50%;
     margin-right: 13px;
@@ -106,12 +106,12 @@ export default {
     height: 45%;
 }
 
-.Header-profile-link {
+.Header-profileLink {
     color: colors.$blue;
     font-weight: 700    ;
 }
 
-.Header-profile-div{
+.Header-profileDiv{
     display: flex;
     align-items: center;
 }

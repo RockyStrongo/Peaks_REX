@@ -37,7 +37,7 @@ textarea {
     margin-bottom: 5px;
 }
 
-.input-flex-container {
+.input-flexContainer {
     display: flex;
     flex-direction: column;
 }
@@ -51,7 +51,7 @@ textarea {
     width: 100%;
 }
 
-.login-forms-align-right {
+.loginForms-alignRight {
     display: flex;
     justify-content: right;
 
@@ -67,25 +67,25 @@ textarea {
     opacity: 0;
 }
 
-.login-pages-grid-container {
+.loginPages-gridContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: minmax(100vh, 100%);
 }
 
-.login-pages-grid-item-left {
+.loginPages-gridItemLeft {
     background: linear-gradient(rgba(25, 40, 74, 0.45),
             rgba(25, 40, 74, 0.45)), url(../src/assets/images/montagne.jpg)no-repeat;
     background-size: cover;
 }
 
-.login-pages-grid-item-right {
+.loginPages-gridItemRight {
     display: grid;
     grid-template-rows: 9fr 1fr;
     background: colors.$blue;
 }
 
-.login-pages-flex-container {
+.loginPages-flexContainer {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -153,12 +153,12 @@ input[type="checkbox"] {
 
 @media only screen and (max-width: 600px) {
 
-    .login-pages-grid-container {
+    .loginPages-gridContainer {
         display: grid;
         grid-template-columns: 1fr;
     }
 
-    .login-pages-grid-item-left {
+    .loginPages-gridItemLeft {
         display: none;
     }
 

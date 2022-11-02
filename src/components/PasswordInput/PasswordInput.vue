@@ -5,7 +5,7 @@
         {{label}}
     </label>
 
-    <div class="PasswordInput-eye-container">
+    <div class="PasswordInput-eyeContainer">
         <input 
         class="input" 
         type="password" 
@@ -94,7 +94,7 @@ export default {
     cursor: pointer;
 }
 
-.PasswordInput-eye-container {
+.PasswordInput-eyeContainer {
     position: relative
 }
 </style>

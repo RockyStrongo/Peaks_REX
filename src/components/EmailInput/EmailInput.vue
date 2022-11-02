@@ -78,7 +78,4 @@ export default {
     margin-bottom: 5px;
 }
 
-.pink-asterisk {
-    color: colors.$pink;
-}
 </style>

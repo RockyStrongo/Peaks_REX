@@ -62,10 +62,6 @@ export default {
     font-weight: 300;
 }
 
-.pink-asterisk {
-    color: colors.$pink;
-}
-
 .LoginFormsTitle-line {
     width: 215px;
     margin-top: 13px;

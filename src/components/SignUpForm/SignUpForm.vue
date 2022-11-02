@@ -14,12 +14,12 @@
 
         <LoginFormsTitle titleText="Inscription" />
 
-        <div class="SignUpForm-flex-container">
-            <div class="SignUpForm-flex-container-child">
+        <div class="SignUpForm-flexContainer">
+            <div class="SignUpForm-flexContainerChild">
                 <TextInput label="Nom" placeholder="Nom" :isRequired="true" field="lastName" />
             </div>
 
-            <div class=SignUpForm-flex-container-child>
+            <div class=SignUpForm-flexContainerChild>
                 <TextInput label="Prénom" placeholder="Prénom" :isRequired="true" field="firstName" />
             </div>
         </div>
@@ -34,7 +34,7 @@
         <PasswordInput label="Mot de passe (confirmation)" :isRequired="true" field="passwordConfirmation" />
 
 
-        <div class="login-forms-align-right">
+        <div class="loginForms-alignRight">
 
             <Link href="/login" class="Link--small Link--noaccount" title="Se connecter" target="_self" />
 
@@ -206,11 +206,11 @@ export default {
 
 
 
-.SignUpForm-flex-container {
+.SignUpForm-flexContainer {
     display: flex;
 }
 
-.SignUpForm-flex-container-child:nth-child(odd) {
+.SignUpForm-flexContainerChild:nth-child(odd) {
     margin-right: 20px;
 }
 </style>
