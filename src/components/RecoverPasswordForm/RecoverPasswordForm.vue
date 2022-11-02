@@ -1,7 +1,7 @@
 <template>
 
     <form class="login-forms" ref="RecoverPasswordFormElement" @submit="validateRecoverPasswordForm">
-        
+
         <Transition>
             <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
         </Transition>
@@ -31,20 +31,22 @@ import globalConstants from '../../const'
 export default {
     name: 'RecoverPasswordForm',
 
-    props: {
-
-    },
-
     components: {
         SnackBar,
         LoginFormsTitle,
         EmailInput,
         Button
     },
+    
+    apollo: {
+        user: globalConstants.GQL_GET_USER_DATA
+    },
 
     data() {
         return {
             formFields: ["email"],
+
+            user: String,
 
             email: String,
 
@@ -66,18 +68,15 @@ export default {
 
         async getUserData() {
 
+            let wait = await this.$apollo.query({
+                query: globalConstants.GQL_GET_USER_DATA,
+            })
+
             const emailinput = this.email
 
-            const response = await fetch('../../src/mock-data/mock-user-data.json')
-                .then(function (response) {
-                    if (response.ok) {
-                        return response.json()
-                    } else {
-                        console.log("error")
-                    }
-                })
+            const usersData = this.user
 
-            const filtered = response.filter(item => item['email'] === emailinput)
+            const filtered = usersData.filter(item => item['email'] === emailinput)
 
             filtered.length !== 1
                 ? this.emailExists = false
@@ -94,7 +93,7 @@ export default {
             } else {
                 //send recover email
                 this.snackBarVisible = true
-                this.snackBarText = globalConstants.INFO_MESSAGE_RECOVER_EMAIL+this.email
+                this.snackBarText = globalConstants.INFO_MESSAGE_RECOVER_EMAIL + this.email
                 this.snackBarType = "info"
             }
 

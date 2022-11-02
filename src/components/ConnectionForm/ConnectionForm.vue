@@ -104,8 +104,6 @@ export default {
 
             const filtered = usersData.filter(item => item['email'] === emailinput)
 
-            console.log(filtered)
-
             filtered.length !== 1
                 ? this.emailExists = false
                 : this.emailExists = true
