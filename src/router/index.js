@@ -16,7 +16,8 @@ const history = createWebHistory();
 const routes = [
   {
     path: "/",
-    component: LoginPage
+    component: ListOfExperiencesPage,
+    meta: { requiresAuth: true }
   },
   {
     path: "/login",
@@ -32,7 +33,8 @@ const routes = [
   },
   {
     path: "/list-of-experiences",
-    component: ListOfExperiencesPage
+    component: ListOfExperiencesPage,
+    meta: { requiresAuth: true }
   },
 ];
 
@@ -41,4 +43,18 @@ const router = createRouter({
   history,
   routes
 });
+
+
+router.beforeEach((to, from) => {
+  
+  let userConnected = JSON.parse(sessionStorage.getItem('userConnected'))
+
+  if (to.meta.requiresAuth && !userConnected) {
+    return {
+      path: '/login'
+    }
+  } 
+})
+
+
 export default router;

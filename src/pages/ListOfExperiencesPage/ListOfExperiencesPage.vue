@@ -56,9 +56,10 @@
 
         <div class="ListOfExperiencesPage-list-section">
             <table-lite class="ListOfExperiencesPage-table" ref="table" :is-static-mode="true"
-                :columns="tableData.columns" :rows="tableData.rows" :total="tableData.totalRecordCount"
-                :sortable="tableData.sortable" :messages="tableData.messages" @row-clicked="test"
-                :pageOptions="tableData.pageOptions" :pageSize="5" :max-height="250" />
+                :columns="tableData.columns" :rows="tableData.rows"
+                :total="tableData.totalRecordCount" :sortable="tableData.sortable"
+                :messages="tableData.messages" @row-clicked="test" :pageOptions="tableData.pageOptions"
+                :pageSize="5" :max-height="250" />
         </div>
 
 
@@ -105,8 +106,7 @@ export default {
             retour_exp: String,
 
             filteredOnUser: true,
-            experiencesData: Array,
-            tableData: Array,
+            experiencesData: [Array],
             filteredOnAgency: Array,
             keyword: '',
             agencyIds: {
@@ -117,52 +117,9 @@ export default {
         }
     },
 
-    methods: {
-
-        agencyFilter() {
-            let checkboxes = document.getElementsByName("agency")
-
-            let agencyFilterArray = Array(0)
-
-            checkboxes.forEach(
-                function (currentValue) {
-                    if (currentValue.checked) {
-                        agencyFilterArray.push(currentValue.id)
-                    }
-                }
-            )
-
-            agencyFilterArray.length === 0
-                ? this.filteredOnAgency = [this.agencyIds.Aix, this.agencyIds.Lyon, this.agencyIds.ReimsParis]
-                : this.filteredOnAgency = agencyFilterArray
-
-            this.experiencesData = this.experiencesData.filter(item => this.filteredOnAgency.includes(item.agency.id))
-        },
-
-        userFilter() {
-            if (this.filteredOnUser) {
-                let user = JSON.parse(sessionStorage.getItem('userConnected'))
-                let userId = user[0].id
-                this.experiencesData = this.experiencesData.filter(item => item.user.id === userId)
-            } else if (!this.filteredOnUser) {
-                this.experiencesData = this.experiencesData
-            }
-        },
-
-        keywordFilter() {
-
-            this.experiencesData = this.experiencesData.filter(item =>
-                item.consultantName.toLowerCase().includes(this.keyword.toLowerCase()) ||
-                item.agencyName.toLowerCase().includes(this.keyword.toLowerCase()) ||
-                item.project.toLowerCase().includes(this.keyword.toLowerCase()) ||
-                item.client.toLowerCase().includes(this.keyword.toLowerCase()) ||
-                item.technologies.toLowerCase().includes(this.keyword.toLowerCase())
-            )
-
-        },
-
-        tableConfig() {
-            this.tableData = {
+    computed: {
+        tableData() {
+            return {
                 isLoading: false,
                 columns: [
                     {
@@ -239,9 +196,52 @@ export default {
                     }]
             }
 
+        }
+    },
+
+    methods: {
+
+        agencyFilter() {
+            let checkboxes = document.getElementsByName("agency")
+
+            let agencyFilterArray = Array(0)
+
+            checkboxes.forEach(
+                function (currentValue) {
+                    if (currentValue.checked) {
+                        agencyFilterArray.push(currentValue.id)
+                    }
+                }
+            )
+
+            agencyFilterArray.length === 0
+                ? this.filteredOnAgency = [this.agencyIds.Aix, this.agencyIds.Lyon, this.agencyIds.ReimsParis]
+                : this.filteredOnAgency = agencyFilterArray
+
+            this.experiencesData = this.experiencesData.filter(item => this.filteredOnAgency.includes(item.agency.id))
         },
 
+        userFilter() {
+            if (this.filteredOnUser) {
+                let user = JSON.parse(sessionStorage.getItem('userConnected'))
+                let userId = user[0].id
+                this.experiencesData = this.experiencesData.filter(item => item.user.id === userId)
+            } else if (!this.filteredOnUser) {
+                this.experiencesData = this.experiencesData
+            }
+        },
 
+        keywordFilter() {
+
+            this.experiencesData = this.experiencesData.filter(item =>
+                item.consultantName.toLowerCase().includes(this.keyword.toLowerCase()) ||
+                item.agencyName.toLowerCase().includes(this.keyword.toLowerCase()) ||
+                item.project.toLowerCase().includes(this.keyword.toLowerCase()) ||
+                item.client.toLowerCase().includes(this.keyword.toLowerCase()) ||
+                item.technologies.toLowerCase().includes(this.keyword.toLowerCase())
+            )
+
+        },
 
         async updateData() {
 
@@ -290,9 +290,6 @@ export default {
 
             //apply keyword filter
             this.keywordFilter()
-
-            //fill in table config with data
-            this.tableConfig()
 
         },
 

@@ -20,7 +20,7 @@
 
         <Link class='Header-profile-link' title="Mon Profil" />
 
-        <Button class='Button--bluelight' label="Déconnexion"></Button>
+        <Button class='Button--bluelight' label="Déconnexion" @click="disconnect"></Button>
 
     </div>
 
@@ -34,18 +34,13 @@ import Logo from '../Logo/Logo.vue';
 
 
 export default {
-    name: '',
-
-    props: {
-
-    },
+    name: 'Header',
 
     components: {
         Link,
         Button,
         Logo
     },
-
 
     computed: {
 
@@ -62,26 +57,13 @@ export default {
             }
         }
     },
-
-    watch: {
-
-    },
-
-    data() {
-        return {
-
-        }
-
-    },
-
     methods: {
-
+        disconnect(){
+            sessionStorage.removeItem('userConnected');
+            this.$router.push('/login')
+        }
     },
-    mounted() {
-
-    }
 }
-
 
 </script>
 
