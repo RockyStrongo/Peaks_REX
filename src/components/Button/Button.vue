@@ -24,6 +24,7 @@ export default {
 
 <style lang="scss">
 @use '../../styles/colors';
+@use '../../styles/variables';
 
 .Button {
     display: inline-block;
@@ -34,6 +35,7 @@ export default {
     background-color: colors.$blue;
     color: colors.$white;
     cursor: pointer;
+    box-shadow: variables.$boxshadow;
     transition: background-color .2s ease-in-out, color .2s;
 }
 

@@ -15,7 +15,11 @@
         </div>
         <div class="ProfilePage-emptyRow"></div>
         <div class="ProfilePage-content">
-            <form class="ProfilePage-form">
+
+            <form class="ProfilePage-form" @submit="validateProfileUpdateForm">
+                <Transition>
+                    <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+                </Transition>
                 <TextInput label="Nom" placeholder="Nom" :isRequired="true" field="lastName" :value="lastName" />
 
                 <TextInput label="Prénom" placeholder="Prénom" :isRequired="true" field="firstName"
@@ -27,7 +31,7 @@
 
                 <EmailInput label="Email" :isRequired="true" field="email" :value="email" />
 
-                <Button label="Valider" @click="updateUser"></Button>
+                <Button label="Valider"></Button>
             </form>
 
         </div>
@@ -45,6 +49,7 @@ import SelectInput from '../../components/SelectInput/SelectInput.vue';
 import PasswordInput from '../../components/PasswordInput/PasswordInput.vue';
 import Button from '../../components/Button/Button.vue';
 import Title from '../../components/Title/Title.vue';
+import SnackBar from '../../components/SnackBar/SnackBar.vue';
 
 
 import globalConstants from '../../const'
@@ -59,7 +64,8 @@ export default {
         SelectInput,
         Button,
         PasswordInput,
-        Title
+        Title,
+        SnackBar
     },
 
 
@@ -81,7 +87,6 @@ export default {
                     return false
             }
         },
-
         profilPicExists() {
             if (!this.profileImageURL) {
                 return "../../src/assets/images/default-profile-picture.svg"
@@ -95,6 +100,10 @@ export default {
         return {
             formFields: ["lastName", "firstName", "agency", "email"],
 
+            snackBarVisible: false,
+            snackBarText: "",
+            snackBarType: "",
+
             agencyOptions: globalConstants.AGENCY_OPTIONS,
             userData: Array,
             firstName: "",
@@ -103,6 +112,9 @@ export default {
             email: "",
             password: "",
             agency: "",
+
+            emailIsValid: Boolean,
+            emailIsPeaks: Boolean,
         }
 
     },
@@ -143,7 +155,27 @@ export default {
             }
         },
 
+        validateProfileUpdateForm(e) {
+            e.preventDefault();
+
+            if (!this.emailIsValid) {
+                this.snackBarVisible = true
+                this.snackBarText = globalConstants.ERROR_MESSAGE_INVALID_EMAIL
+                this.snackBarType = "error"
+            }
+            else if (!this.emailIsPeaks) {
+                this.snackBarVisible = true
+                this.snackBarText = globalConstants.ERROR_MESSAGE_EMAIL_PEAKS
+                this.snackBarType = "error"
+            } else {
+                this.updateUser()
+            }
+
+
+        },
+
         async updateUser() {
+
             let APIData = await this.$apollo.mutate({
                 mutation: globalConstants.GQL_UPDATE_USER,
                 variables: {
@@ -155,21 +187,34 @@ export default {
                 }
             }).then(() => {
                 //change to snackbar
-                console.log("success")
+                this.snackBarVisible = true
+                this.snackBarText = globalConstants.SUCCESS_MESSAGE_USER_UPDATED
+                this.snackBarType = "success"
             }).catch((error) => {
-                //change to snackbar
-                console.log("error: " + error)
+                this.snackBarVisible = true
+                this.snackBarText = error
+                this.snackBarType = "error"
             })
         },
 
         getFormDatafromEmitter(item) {
             const fieldname = item.field.toString()
             this[fieldname] = item.value
-        }
+        },
+        getEmailIsValidfromEmitter(bool) {
+            this.emailIsValid = bool
+        },
+        getEmailIsPeaksfromEmitter(bool) {
+            this.emailIsPeaks = bool
+        },
 
     },
     mounted() {
+
         this.getUserData()
+
+        this.emitter.on("email-valid", this.getEmailIsValidfromEmitter)
+        this.emitter.on("email-peaks", this.getEmailIsPeaksfromEmitter)
 
         this.formFields.forEach(item =>
 
@@ -182,6 +227,8 @@ export default {
 
 <style lang="scss">
 @use '../../styles/colors';
+@use '../../styles/variables';
+
 
 .ProfilePage-gridContainer {
     display: grid;
@@ -202,6 +249,7 @@ export default {
 
 .ProfilePage-profileImage {
     border-radius: 50%;
+    box-shadow: variables.$boxshadow;
 }
 
 .ProfilePage-nameTitle {
@@ -219,12 +267,13 @@ export default {
     align-items: flex-end;
 }
 
-.ProfilePage-form{
+.ProfilePage-form {
     width: 50%;
     margin: 10px;
 }
 
-.ProfilePage-content, .ProfilePage-emptyRow{
+.ProfilePage-content,
+.ProfilePage-emptyRow {
     display: flex;
     justify-content: center;
     align-items: center;
