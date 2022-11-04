@@ -28,11 +28,11 @@ export default {
         isRequired: false,
         items: Array,
         field: String,
+        value: String,
     },
 
     data() {
         return {
-            value: '',
             options: this.items
         }
     },

@@ -1,7 +1,7 @@
 <template>
     <div class="input-flexContainer">
         <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{ label }} </label>
-        <input class="input" type="text" :placeholder="placeholder" v-model="textInput" :required="isRequired" @keyup="emit"/>
+        <input class="input" type="text" :placeholder="placeholder" v-model="value" :required="isRequired" @keyup="emit" />
     </div>
 
 </template>
@@ -20,17 +20,21 @@ export default {
             required: true
         },
         field : String,
+        value: {
+            type: String,
+            default : "",
+            required: false,
+        },
     },
 
     data() {
         return {
-            textInput: '',
         }
     },
 
     methods : {
         emit(){
-            const dataobj = {"field": this.field, "value" : this.textInput};
+            const dataobj = {"field": this.field, "value" : this.value};
             this.emitter.emit(this.field, dataobj);
         }
     }

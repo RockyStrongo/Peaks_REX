@@ -29,6 +29,7 @@ export default {
 .Link {
     text-decoration: underline;
     transition: color .2s;
+    cursor: pointer;
 }
 
 .Link--small {

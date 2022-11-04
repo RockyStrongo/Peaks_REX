@@ -18,7 +18,7 @@
 
         <div class="vertical-line"></div>
 
-        <Link class='Header-profileLink' title="Mon Profil" />
+        <Link class='Header-profileLink' title="Mon Profil" @click="goToProfilePage"/>
 
         <Button class='Button--bluelight' label="Déconnexion" @click="disconnect"></Button>
 
@@ -61,6 +61,9 @@ export default {
         disconnect(){
             sessionStorage.removeItem('userConnected');
             this.$router.push('/login')
+        },
+        goToProfilePage(){
+            this.$router.push('/profile')
         }
     },
 }

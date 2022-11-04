@@ -41,6 +41,29 @@ export default {
         }
       }
       `,
+      GQL_GET_USER_PROFILE_DATA: gql`query GetUser ($id: uuid!) {
+        user(where: {id: {_eq: $id}}) {
+          firstname
+          lastname
+          email
+          password
+          profilimage
+          agency {
+            id
+            name
+          }
+          retour_exps {
+            client
+            project
+            retour_exp_technologies {
+              technology {
+                name
+              }
+            }
+          }
+        }
+      }      
+      `,
     GQL_GET_EXPERIENCES: gql`
       query GetExperiences {
         retour_exp {
@@ -68,23 +91,39 @@ export default {
       `,
     GQL_CREATE_USER: gql`
         mutation CreateUser (
-
             $email: String!
             $firstname: String!
             $lastname: String!
-            $password: String!
             $agency_id: uuid!
             ) {
       insert_user_one(object: {
             email: $email, 
             firstname: $firstname, 
             lastname: $lastname, 
-            password: $password, 
             agency_id: $agency_id, 
     }) {
         id
       } 
     }
     `,
+    GQL_UPDATE_USER: gql`
+    mutation UpdateUser(
+      $id: uuid!, 
+      $email: String!, 
+      $firstname: String!, 
+      $lastname: String!, 
+      $agency_id: uuid!) {
+      update_user(where: {id: {_eq: $id}}, 
+      _set: {
+        agency_id: $agency_id, 
+        email: $email, 
+        firstname: $firstname, 
+        lastname: $lastname}) {
+        returning {
+          id
+        }
+      }
+    }
+    `
 
 }

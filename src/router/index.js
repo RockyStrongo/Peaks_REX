@@ -11,6 +11,7 @@ import LoginPage from "../pages/LoginPage/LoginPage.vue";
 import SignUpPage from "../pages/SignUpPage/SignUpPage.vue";
 import RecoverPasswordPage from "../pages/RecoverPasswordPage/RecoverPasswordPage.vue";
 import ListOfExperiencesPage from "../pages/ListOfExperiencesPage/ListOfExperiencesPage.vue";
+import ProfilePage from "../pages/ProfilePage/ProfilePage.vue";
 
 const history = createWebHistory();
 const routes = [
@@ -34,6 +35,11 @@ const routes = [
   {
     path: "/list-of-experiences",
     component: ListOfExperiencesPage,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/profile",
+    component: ProfilePage,
     meta: { requiresAuth: true }
   },
 ];

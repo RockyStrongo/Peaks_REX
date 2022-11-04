@@ -13,7 +13,7 @@
 
         <div class="loginForms-alignRight">
 
-            <Button label="Connexion" class="Button--pink"></Button>
+            <Button label="Envoyer" class="Button--pink"></Button>
 
         </div>
 

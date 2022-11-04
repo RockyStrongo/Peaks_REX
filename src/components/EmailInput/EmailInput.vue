@@ -1,6 +1,6 @@
 <template>
     <label class="EmailInput-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{label}}</label>
-    <input class="EmailInput" name="login" placeholder="Email" type="email" autocomplete="username" v-model="email"
+    <input class="EmailInput" name="login" placeholder="Email" type="email" autocomplete="username" v-model="value"
         :required="isRequired" @keyup="emit"/>
 </template>
 
@@ -21,11 +21,15 @@ export default {
             required: true,
         },
         field : String,
+        value : {
+            type: String,
+            default : "",
+            required: false,
+        },
     },
 
     data() {
         return {
-            email: '',
             emailValid: false,
             emailPeaks: false,
         }
@@ -33,11 +37,11 @@ export default {
 
     methods: {
         emailIsValid() {
-            this.emailValid = globalConstants.VALID_EMAIL_REGEX.test(this.email)
+            this.emailValid = globalConstants.VALID_EMAIL_REGEX.test(this.value)
         },
 
         emailIsPeaks() {
-            this.emailPeaks = this.email.includes("peaks")
+            this.emailPeaks = this.value.includes("peaks")
         },
 
         emit(){
@@ -47,7 +51,7 @@ export default {
             this.emailIsPeaks()
             this.emitter.emit("email-peaks", this.emailPeaks);
 
-            const dataobj = {"field": this.field, "value" : this.email};
+            const dataobj = {"field": this.field, "value" : this.value};
             this.emitter.emit(this.field, dataobj);
         }
 
