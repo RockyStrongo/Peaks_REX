@@ -129,6 +129,10 @@ export default {
                 variables: {
                     id: this.userID,
                 }
+            }).catch((error) => {
+                this.snackBarVisible = true
+                this.snackBarText = error
+                this.snackBarType = "error"
             })
 
             this.userData = APIData.data.user
@@ -245,6 +249,7 @@ export default {
     justify-content: center;
     font-weight: 600;
     color: colors.$white;
+    box-shadow: variables.$boxshadow;
 }
 
 .ProfilePage-profileImage {
@@ -277,6 +282,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: colors.$gray;
+    background: colors.$lightgray;
 }
 </style>

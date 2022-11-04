@@ -90,6 +90,36 @@ export default {
         }
       }
       `,
+      GQL_GET_ONE_EXPERIENCE: gql`
+      query GetOneExperience($id: uuid!) {
+        retour_exp(where: {id: {_eq: $id}, retour_exp_technologies: {technology: {name: {}}}}) {
+          id
+          project
+          client
+          start_date
+          end_date
+          description_1
+          description_2
+          retour_exp_technologies {
+            technology {
+              id
+              name
+            }
+          }
+          user {
+            id
+            firstname
+            lastname
+            profilimage
+          }
+          agency {
+            id
+            name
+          }
+        }
+      }
+      
+      `,
     GQL_CREATE_USER: gql`
         mutation CreateUser (
             $email: String!

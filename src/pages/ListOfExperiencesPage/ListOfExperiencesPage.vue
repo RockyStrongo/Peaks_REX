@@ -56,10 +56,10 @@
 
         <div class="ListOfExperiencesPage-listSection">
             <table-lite class="ListOfExperiencesPage-table" ref="table" :is-static-mode="true"
-                :columns="tableData.columns" :rows="tableData.rows"
-                :total="tableData.totalRecordCount" :sortable="tableData.sortable"
-                :messages="tableData.messages" @row-clicked="test" :pageOptions="tableData.pageOptions"
-                :pageSize="5" :max-height="250" />
+                :columns="tableData.columns" :rows="tableData.rows" :total="tableData.totalRecordCount"
+                :sortable="tableData.sortable" :messages="tableData.messages" @row-clicked="goToExperiencePage"
+                :pageOptions="tableData.pageOptions" :pageSize="5" :max-height="250"
+                rowClasses="ListOfExperiencesPage-tableHover" />
         </div>
 
 
@@ -173,7 +173,7 @@ export default {
                 },
                 messages: {
                     pagingInfo: "{0} à {1} sur {2}",
-                    pageSizeChangeLabel: "Nombre par page :",
+                    pageSizeChangeLabel: "Nombre par page : ",
                     gotoPageLabel: "Aller à la page : ",
                     noDataAvailable: "Pas de données pour les filtres en cours",
                 },
@@ -291,6 +291,10 @@ export default {
             //apply keyword filter
             this.keywordFilter()
 
+        },
+
+        goToExperiencePage(rowdata) {
+            this.$router.push("/experience/" + rowdata.id)
         },
 
         test(rowdata) {
@@ -446,7 +450,7 @@ export default {
 .vtl-table tr {
     font-family: Oswald;
     font-size: 16px;
-    color: #68789B;
+    color: colors.$bluelight;
 }
 
 .vtl-table td {
@@ -465,4 +469,16 @@ export default {
     background-image: url('../../assets/images/sort-down-icon.svg');
 }
 
+.vtl-row {
+    color: colors.$blue;
+    align-items: center;
+}
+
+.vtl-paging-page-label {
+    margin-left: 5px;
+}
+
+.vtl-tbody>.vtl-tbody-tr.ListOfExperiencesPage-tableHover:hover {
+    color: colors.$blue;
+}
 </style>    
