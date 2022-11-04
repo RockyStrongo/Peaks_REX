@@ -6,14 +6,14 @@
 
         <div class="ProfilePage-title">
             <Title title="Modifier mon profil"></Title>
-            <Button label="Modifier"></Button>
+            <!-- <Button label="Modifier"></Button> -->
             <div class="ProfilePage-imageTitleContainer">
                 <img class="ProfilePage-profileImage" :src="profilPicExists" alt="profile-picture">
                 <Title :title="firstName + ' ' + lastName" class="ProfilePage-nameTitle"></Title>
 
             </div>
         </div>
-        <div class="ProfilePage-imageTitleContainer2"></div>
+        <div class="ProfilePage-emptyRow"></div>
         <div class="ProfilePage-content">
             <form class="ProfilePage-form">
                 <TextInput label="Nom" placeholder="Nom" :isRequired="true" field="lastName" :value="lastName" />
@@ -26,8 +26,6 @@
                 </SelectInput>
 
                 <EmailInput label="Email" :isRequired="true" field="email" :value="email" />
-
-                <Button label="Récupération du mot de passe"></Button>
 
                 <Button label="Valider" @click="updateUser"></Button>
             </form>
@@ -221,4 +219,15 @@ export default {
     align-items: flex-end;
 }
 
+.ProfilePage-form{
+    width: 50%;
+    margin: 10px;
+}
+
+.ProfilePage-content, .ProfilePage-emptyRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: colors.$gray;
+}
 </style>
