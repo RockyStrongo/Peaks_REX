@@ -374,6 +374,7 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-top: 20px;
 }
 
 .ListOfExperiencesPage-titleContainer>h2 {
@@ -431,8 +432,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
-}
+    }
 
 .vtl-table .vtl-thead .vtl-thead-th {
     font-family: Catamaran;
@@ -480,5 +480,6 @@ export default {
 
 .vtl-tbody>.vtl-tbody-tr.ListOfExperiencesPage-tableHover:hover {
     color: colors.$blue;
+    cursor: pointer;
 }
 </style>    

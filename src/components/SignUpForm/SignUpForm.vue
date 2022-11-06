@@ -40,6 +40,8 @@
 
             <Button label="Inscription" class="Button--pink"></Button>
 
+            <button @click="test">TEST</button>
+
         </div>
 
     </form>
@@ -55,7 +57,10 @@ import LoginFormsTitle from '../LoginFormsTitle/LoginFormsTitle.vue';
 import TextInput from '../TextInput/TextInput.vue';
 import SelectInput from '../SelectInput/SelectInput.vue';
 
+import CryptoJS from "crypto-js";
+
 import globalConstants from '../../const'
+import cryptoPassphrase from '../../cryptoPassphrase'
 
 export default {
     name: 'SignUpForm',
@@ -81,6 +86,8 @@ export default {
             email: String,
             password: String,
             passwordConfirmation: String,
+
+            encryptedPassword: String,
 
 
             emailIsValid: false,
@@ -151,13 +158,15 @@ export default {
             this[fieldname] = item.value
         },
         createUser() {
+            this.encryptPassword(this.password)
+
             this.$apollo.mutate({
                 mutation: globalConstants.GQL_CREATE_USER,
                 variables: {
                     email: this.email,
                     firstname: this.firstName,
                     lastname: this.lastName,
-                    password: this.password,
+                    password: this.encryptedPassword,
                     agency_id: this.agencyID(this.agency)
                 }
             }).then(() => {
@@ -183,6 +192,16 @@ export default {
                 default:
                     console.log("Error - agency ID not found");
             }
+        },
+
+        encryptPassword(password){
+            const encryptedPassword = CryptoJS.AES.encrypt(password, cryptoPassphrase.passphrase).toString();
+            this.encryptedPassword = encryptedPassword
+        },
+
+        test(){
+            const encryptedPassword = CryptoJS.AES.encrypt(this.password, cryptoPassphrase.passphrase).toString();
+            console.log(encryptedPassword)
         }
 
 

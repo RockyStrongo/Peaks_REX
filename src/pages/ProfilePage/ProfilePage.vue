@@ -131,7 +131,7 @@ export default {
                 }
             }).catch((error) => {
                 this.snackBarVisible = true
-                this.snackBarText = error
+                this.snackBarText = "Erreur API : "+error
                 this.snackBarType = "error"
             })
 

@@ -6,7 +6,7 @@
         <Transition>
             <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
         </Transition>
-        
+
         <LoginFormsTitle titleText="Connexion" />
 
         <EmailInput label="Email" :isRequired="true" field="email" />
@@ -34,7 +34,9 @@ import Link from '../Link/Link.vue';
 import LoginFormsTitle from '../LoginFormsTitle/LoginFormsTitle.vue';
 
 import globalConstants from '../../const'
+import cryptoPassphrase from '../../cryptoPassphrase';
 
+import CryptoJS from "crypto-js";
 
 export default {
     name: 'ConnectionForm',
@@ -55,12 +57,12 @@ export default {
     data() {
         return {
             formFields: ["email", "password"],
-            
+
             user: String,
 
             email: String,
             password: String,
-
+            
             emailExists: Boolean,
             PasswordIsCorrect: Boolean,
 
@@ -70,12 +72,13 @@ export default {
             snackBarType: String,
 
             userConnected: Array,
+            decryptedPassword: String,
         }
 
     },
 
     methods: {
-        
+
         async validateConnnectionForm(event) {
             event.preventDefault();
 
@@ -113,7 +116,10 @@ export default {
                 this.userConnected = filtered;
 
                 const userpassword = filtered[0].password
-                userpassword === this.password
+                
+                this.decryptPassword(userpassword)
+
+                this.decryptedPassword === this.password
                     ? this.PasswordIsCorrect = true
                     : this.PasswordIsCorrect = false
             }
@@ -134,6 +140,15 @@ export default {
             } else {
                 return true;
             }
+        },
+
+        decryptPassword(password) {
+            let decryptData = CryptoJS.AES.decrypt(
+                password,
+                cryptoPassphrase.passphrase
+            ).toString(CryptoJS.enc.Utf8)
+
+            this.decryptedPassword = decryptData
         },
 
 
@@ -157,4 +172,5 @@ export default {
 </script>
 
 <style>
+
 </style>

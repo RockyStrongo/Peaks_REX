@@ -125,13 +125,15 @@ export default {
             $email: String!
             $firstname: String!
             $lastname: String!
-            $agency_id: uuid!
+            $agency_id: uuid!,
+            $password: String!
             ) {
       insert_user_one(object: {
             email: $email, 
             firstname: $firstname, 
             lastname: $lastname, 
             agency_id: $agency_id, 
+            password: $password, 
     }) {
         id
       } 

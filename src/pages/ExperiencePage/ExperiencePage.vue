@@ -1,11 +1,15 @@
 <template>
     <Header></Header>
+    <Transition>
+        <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+    </Transition>
     <p>{{ this.experienceData }}</p>
 </template>
 
 <script>
 
 import Header from '../../components/Header/Header.vue';
+import SnackBar from '../../components/SnackBar/SnackBar.vue';
 
 import globalConstants from '../../const'
 
@@ -19,6 +23,7 @@ export default {
 
     components: {
         Header,
+        SnackBar
     },
 
 
@@ -30,21 +35,25 @@ export default {
         return {
             experienceId: this.$route.params.experienceId,
             experienceData: Array,
+
+            snackBarVisible: false,
+            snackBarText: String,
         }
 
     },
 
     methods: {
 
-        async getExperienceData(){
+        async getExperienceData() {
             let APIData = await this.$apollo.query({
-                query: globalConstants.GQL_GET_ONE_EXPERIENCE ,
+                query: globalConstants.GQL_GET_ONE_EXPERIENCE,
                 variables: {
                     id: this.experienceId,
                 }
             }).catch((error) => {
+                console.log(error)
                 this.snackBarVisible = true
-                this.snackBarText = error
+                this.snackBarText = "Erreur API : "+error
                 this.snackBarType = "error"
             })
 

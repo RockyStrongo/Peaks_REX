@@ -13,6 +13,8 @@ import RecoverPasswordPage from "../pages/RecoverPasswordPage/RecoverPasswordPag
 import ListOfExperiencesPage from "../pages/ListOfExperiencesPage/ListOfExperiencesPage.vue";
 import ProfilePage from "../pages/ProfilePage/ProfilePage.vue";
 import ExperiencePage from "../pages/ExperiencePage/ExperiencePage.vue";
+import CreateFakeData from "../mock-data/CreateFakeData.vue";
+
 
 const history = createWebHistory();
 const routes = [
@@ -47,6 +49,10 @@ const routes = [
     path: "/experience/:experienceId",
     component: ExperiencePage,
     meta: { requiresAuth: true }
+  },
+  {
+    path: "/create-data",
+    component: CreateFakeData
   },
 ];
 
