@@ -32,8 +32,8 @@ export default {
     },
 
     //graphQL queries
-    GQL_GET_USER_DATA: gql`query GetUser {
-        user {
+      GQL_GET_USER_BY_EMAIL: gql`query GetOneUser($email: String!) {
+        user (where: {email: {_eq: $email}}){
           id
           email
           password
@@ -42,6 +42,7 @@ export default {
         }
       }
       `,
+
       GQL_GET_USER_PROFILE_DATA: gql`query GetUser ($id: uuid!) {
         user(where: {id: {_eq: $id}}) {
           firstname

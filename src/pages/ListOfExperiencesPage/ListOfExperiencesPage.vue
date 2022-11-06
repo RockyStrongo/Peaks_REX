@@ -59,7 +59,7 @@
                 :columns="tableData.columns" :rows="tableData.rows" :total="tableData.totalRecordCount"
                 :sortable="tableData.sortable" :messages="tableData.messages" @row-clicked="goToExperiencePage"
                 :pageOptions="tableData.pageOptions" :pageSize="5" :max-height="250"
-                rowClasses="ListOfExperiencesPage-tableHover" />
+                :rowClasses="['ListOfExperiencesPage-tableHover']" />
         </div>
 
 
@@ -106,7 +106,7 @@ export default {
             retour_exp: String,
 
             filteredOnUser: true,
-            experiencesData: [Array],
+            experiencesData: [],
             filteredOnAgency: Array,
             keyword: '',
             agencyIds: {
@@ -432,7 +432,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    }
+}
 
 .vtl-table .vtl-thead .vtl-thead-th {
     font-family: Catamaran;
@@ -482,4 +482,14 @@ export default {
     color: colors.$blue;
     cursor: pointer;
 }
+
+.vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-number.page-link, 
+.vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-next.page-link,
+.vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-prev.page-link,
+.vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-first.page-link,
+.vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-last.page-link {
+    color: colors.$blue;
+}
+
+
 </style>    

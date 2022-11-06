@@ -20,6 +20,7 @@
 
             <Button label="Connexion" class="Button--pink"></Button>
 
+
         </div>
 
     </form>
@@ -50,15 +51,10 @@ export default {
         LoginFormsTitle
     },
 
-    apollo: {
-        user: globalConstants.GQL_GET_USER_DATA
-    },
 
     data() {
         return {
             formFields: ["email", "password"],
-
-            user: String,
 
             email: String,
             password: String,
@@ -97,25 +93,24 @@ export default {
 
         async getUserData() {
 
-            let wait = await this.$apollo.query({
-                query: globalConstants.GQL_GET_USER_DATA,
+            let APIData = await this.$apollo.query({
+                query: globalConstants.GQL_GET_USER_BY_EMAIL,
+                variables: {
+                    email: this.email,
+                }
             })
 
-            const emailinput = this.email
+            let userData = APIData.data.user
 
-            const usersData = this.user
-
-            const filtered = usersData.filter(item => item['email'] === emailinput)
-
-            filtered.length !== 1
+            userData.length !== 1
                 ? this.emailExists = false
                 : this.emailExists = true
 
-            if (filtered.length === 1) {
+            if (userData.length === 1) {
 
-                this.userConnected = filtered;
+                this.userConnected = userData;
 
-                const userpassword = filtered[0].password
+                const userpassword = userData[0].password
                 
                 this.decryptPassword(userpassword)
 

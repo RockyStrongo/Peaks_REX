@@ -37,16 +37,10 @@ export default {
         EmailInput,
         Button
     },
-    
-    apollo: {
-        user: globalConstants.GQL_GET_USER_DATA
-    },
 
     data() {
         return {
             formFields: ["email"],
-
-            user: String,
 
             email: String,
 
@@ -68,17 +62,16 @@ export default {
 
         async getUserData() {
 
-            let wait = await this.$apollo.query({
-                query: globalConstants.GQL_GET_USER_DATA,
+            let APIData = await this.$apollo.query({
+                query: globalConstants.GQL_GET_USER_BY_EMAIL,
+                variables: {
+                    email: this.email,
+                }
             })
 
-            const emailinput = this.email
+            let userData = APIData.data.user
 
-            const usersData = this.user
-
-            const filtered = usersData.filter(item => item['email'] === emailinput)
-
-            filtered.length !== 1
+            userData.length !== 1
                 ? this.emailExists = false
                 : this.emailExists = true
         },
