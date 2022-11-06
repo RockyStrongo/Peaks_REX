@@ -93,14 +93,6 @@ export default {
 
     },
 
-    apollo: {
-        retour_exp() {
-            return {
-                query: globalConstants.GQL_GET_EXPERIENCES
-            }
-        }
-    },
-
     data() {
         return {
             retour_exp: String,
@@ -245,13 +237,14 @@ export default {
 
         async updateData() {
 
-            let wait = await this.$apollo.query({
+            let APIData = await this.$apollo.query({
                 query: globalConstants.GQL_GET_EXPERIENCES,
             })
 
+            let retourExperienceData = APIData.data.retour_exp 
             let processedData = []
 
-            this.retour_exp.map(function (item) {
+            retourExperienceData.map(function (item) {
 
                 //make a copy as originial object is not extensible
                 let itemcopy = Object.assign([], item);
@@ -296,11 +289,7 @@ export default {
         goToExperiencePage(rowdata) {
             this.$router.push("/experience/" + rowdata.id)
         },
-
-        test(rowdata) {
-            alert(rowdata.project);
-        }
-
+        
     },
     mounted() {
         this.updateData()

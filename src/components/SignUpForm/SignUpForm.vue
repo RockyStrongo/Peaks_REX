@@ -40,8 +40,6 @@
 
             <Button label="Inscription" class="Button--pink"></Button>
 
-            <button @click="test">TEST</button>
-
         </div>
 
     </form>
@@ -198,12 +196,6 @@ export default {
             const encryptedPassword = CryptoJS.AES.encrypt(password, cryptoPassphrase.passphrase).toString();
             this.encryptedPassword = encryptedPassword
         },
-
-        test(){
-            const encryptedPassword = CryptoJS.AES.encrypt(this.password, cryptoPassphrase.passphrase).toString();
-            console.log(encryptedPassword)
-        }
-
 
     },
     mounted() {
