@@ -5,20 +5,29 @@
             <Logo type="normal" />
         </div>
 
+        <!-- Profile Picture -->
         <div class="Header-profileDiv">
-            <img 
-            :v-if="userConnected" 
-            class="Header-profilePicture" 
-            :src="profilPicExists"
-            alt="profile-picture">
 
-            <span :v-if="userConnected" >Bonjour, {{ userConnected[0].firstname }}</span>
+            <!-- if a picture exists  -->
+            <div v-if="userConnected[0].profilimage">
+                <img class="Header-profilePicture" :src="userConnected[0].profilimage" alt="profile-picture">
+            </div>
+
+            <!-- default if no picture  -->
+            <div v-if="!userConnected[0].profilimage" class="Header-defaultProfilePictureBackground">
+                <svg  viewBox="0 0 32 32" class="Header-defaultProfilePicture" alt="Default profile picture"
+                    title="Default profile picture">
+                    <use xlink:href='../../assets/images/default-profile-picture.svg#defaultprofilepic'
+                        href="../../assets/images/default-profile-picture.svg#defaultprofilepic"></use>
+                </svg>
+            </div>
+            <span :v-if="userConnected">Bonjour, {{ userConnected[0].firstname }}</span>
         </div>
 
 
         <div class="vertical-line"></div>
 
-        <Link class='Header-profileLink' title="Mon Profil" @click="goToProfilePage"/>
+        <Link class='Header-profileLink' title="Mon Profil" @click="goToProfilePage" />
 
         <Button class='Button--bluelight' label="Déconnexion" @click="disconnect"></Button>
 
@@ -44,28 +53,24 @@ export default {
 
     computed: {
 
-        userConnected(){
+        userConnected() {
             let userObject = JSON.parse(sessionStorage.getItem('userConnected'))
             return userObject
         },
 
-        profilPicExists(){
-            if(!this.userConnected[0].profilimage){
-                return "../../src/assets/images/default-profile-picture.svg"
-            } else {
-                return this.userConnected[0].profilimage
-            }
-        }
     },
     methods: {
-        disconnect(){
+        disconnect() {
             sessionStorage.removeItem('userConnected');
             this.$router.push('/login')
         },
-        goToProfilePage(){
+        goToProfilePage() {
             this.$router.push('/profile')
         }
     },
+    mounted() {
+        console.log(this.profilPicExists);
+    }
 }
 
 </script>
@@ -100,6 +105,22 @@ export default {
     margin-right: 13px;
 }
 
+.Header-defaultProfilePicture{
+    height: 17.5px;
+    color: white;
+}
+
+.Header-defaultProfilePictureBackground{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    background-color: colors.$bluelight;
+    border-radius: 50%;
+    margin-right: 13px; 
+}
+
 .Header-button {
     height: fit-content;
 }
@@ -111,10 +132,10 @@ export default {
 
 .Header-profileLink {
     color: colors.$blue;
-    font-weight: 700    ;
+    font-weight: 700;
 }
 
-.Header-profileDiv{
+.Header-profileDiv {
     display: flex;
     align-items: center;
 }

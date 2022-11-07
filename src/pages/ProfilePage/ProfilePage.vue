@@ -7,8 +7,23 @@
         <div class="ProfilePage-title">
             <Title title="Modifier mon profil"></Title>
             <!-- <Button label="Modifier"></Button> -->
+
             <div class="ProfilePage-imageTitleContainer">
-                <img class="ProfilePage-profileImage" :src="profilPicExists" alt="profile-picture">
+
+                <!-- if a picture exists  -->
+                <div v-if="profileImageURL">
+                    <img class="ProfilePage-profileImage" :src="profileImageURL" alt="profile-picture">
+                </div>
+
+                <!-- default if no picture  -->
+                <div v-if="!profileImageURL" class="ProfilePage-defaultProfileImageBackground">
+                    <svg viewBox="0 0 32 32" class="ProfilePage-defaultProfileImage" alt="Default profile picture"
+                        title="Default profile picture">
+                        <use xlink:href='../../assets/images/default-profile-picture.svg#defaultprofilepic'
+                            href="../../assets/images/default-profile-picture.svg#defaultprofilepic"></use>
+                    </svg>
+
+                </div>
                 <Title :title="firstName + ' ' + lastName" class="ProfilePage-nameTitle"></Title>
 
             </div>
@@ -87,13 +102,6 @@ export default {
                     return false
             }
         },
-        profilPicExists() {
-            if (!this.profileImageURL) {
-                return "../../src/assets/images/default-profile-picture.svg"
-            } else {
-                return this.profileImageURL
-            }
-        }
     },
 
     data() {
@@ -131,7 +139,7 @@ export default {
                 }
             }).catch((error) => {
                 this.snackBarVisible = true
-                this.snackBarText = "Erreur API : "+error
+                this.snackBarText = "Erreur API : " + error
                 this.snackBarType = "error"
             })
 
@@ -270,6 +278,23 @@ export default {
     left: 5%;
     bottom: -45%;
     align-items: flex-end;
+}
+
+.ProfilePage-defaultProfileImage{
+    height: 80px;
+    width: 80px;
+}
+
+.ProfilePage-defaultProfileImageBackground{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 128px;
+    width: 128px;
+    background-color: colors.$bluelight;
+    border-radius: 50%;
+    margin-right: 13px; 
+    box-shadow: variables.$boxshadow;
 }
 
 .ProfilePage-form {
