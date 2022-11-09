@@ -68,9 +68,7 @@ export default {
             this.$router.push('/profile')
         }
     },
-    mounted() {
-        console.log(this.profilPicExists);
-    }
+
 }
 
 </script>

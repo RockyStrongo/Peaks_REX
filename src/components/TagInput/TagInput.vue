@@ -1,0 +1,74 @@
+<template>
+    <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span>{{ label }}</label>
+    <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="Chercher ou ajouter" label="name"
+        track-by="code" :options="options" :multiple="true" :taggable="true" @tag="addTag" @focusout="emit"></multiselect>
+</template>
+
+<script>
+
+import Multiselect from 'vue-multiselect'
+
+export default {
+    name: '',
+
+    props: {
+        label: {
+            type: String,
+            required: true,
+        },
+        isRequired: {
+            type: Boolean,
+            required: true,
+        },
+        field: String,
+        tagOptions: Array,
+
+    },
+
+    components: {
+        Multiselect
+    },
+
+
+    computed: {
+
+    },
+
+    watch: {
+
+    },
+
+    data() {
+        return {
+            value: [],
+            options: this.tagOptions
+        }
+
+    },
+
+    methods: {
+        addTag(newTag) {
+            const tag = {
+                name: newTag,
+                code: "new"+Math.floor((Math.random() * 10000000))
+            }
+            this.options.push(tag)
+            this.value.push(tag)
+        },
+
+        emit() {
+            const dataobj = { "field": this.field, "value": this.value };
+            this.emitter.emit(this.field, dataobj);
+        }
+    },
+    mounted() {
+
+    }
+}
+
+
+</script>
+
+<style lang="scss">
+
+</style>

@@ -13,7 +13,7 @@
                 <div>ou</div>
             </div>
             <div class="ListOfExperiences-buttonContainer">
-                <Button class="Button--pink" label="Ajouter une expérience"></Button>
+                <Button class="Button--pink" label="Ajouter une expérience" @click="goToNewExperience()"></Button>
             </div>
 
             <!-- Search  -->
@@ -289,6 +289,11 @@ export default {
         goToExperiencePage(rowdata) {
             this.$router.push("/experience/" + rowdata.id)
         },
+
+        goToNewExperience(){
+            this.$router.push("/experience/new")
+
+        }
         
     },
     mounted() {
