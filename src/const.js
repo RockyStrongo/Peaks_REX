@@ -39,6 +39,7 @@ export default {
           password
           profilimage
           firstname,
+          lastname,
           agency_id
         }
       }

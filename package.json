@@ -10,6 +10,7 @@
     "@vue/apollo-option": "^4.0.0-alpha.20",
     "@vueform/toggle": "^2.1.2",
     "crypto-js": "^4.1.1",
+    "html-to-image": "^1.10.8",
     "mitt": "^3.0.0",
     "vue": "^3.2.38",
     "vue-multiselect": "^3.0.0-alpha.2",

@@ -5,14 +5,11 @@
         <TextInput label="Client" :is-required="true" field="client"></TextInput>
         <DateInput label="Date de début" field="startDate" :is-required="true"></DateInput>
         <DateInput label="Date de fin" field="endDate" :is-required="true"></DateInput>
-        <SelectInput label="Agence de rattachement" :items="agencies" :is-required="true" field="agency"></SelectInput>
         <TagInput label="Technologies" :is-required="true" :tagOptions="technologies" field="technologiesInput">
         </TagInput>
         <TextInput label="Description du projet" :is-required="true" field="description1"></TextInput>
         <TextInput label="Réalisé par Peaks" :is-required="true" field="description2"></TextInput>
-        <TextInput label="Challenges" :is-required="true" field="description3"></TextInput>
         <Button label="Valider"></Button>
-        <Button label="Générer PDF"></Button>
     </form>
 </template>
 
@@ -55,25 +52,22 @@ export default {
 
     data() {
         return {
-            formFields: ["project", "client", "startDate", "endDate", "agency", "technologiesInput", "description1", "description2", "description3"],
-
-            agencies: globalConstants.AGENCY_OPTIONS,
+            formFields: ["project", "client", "startDate", "endDate", "technologiesInput", "description1", "description2"],
 
             snackBarVisible: false,
             snackText: String,
             snacktype: String,
 
             technologies: [],
+            newTechnologies: [],
 
             project: String,
             client: String,
             startDate: Date,
             endDate: Date,
-            agency: String,
             technologiesInput: Array,
             description1: String,
             description2: String,
-            description3: String
         }
 
     },
@@ -91,6 +85,7 @@ export default {
                 this.snackBarVisible = true
                 this.snackBarText = "Erreur API : " + error
                 this.snackBarType = "error"
+                return false
             })
 
             let APItechnologies = APIData.data.technology
@@ -111,39 +106,65 @@ export default {
             let userID = user[0].id
             let userAgencyID = user[0].agency_id
 
-            // let APIdataExp = await this.$apollo.mutate({
-            //     mutation: globalConstants.GQL_CREATE_EXPERIENCE,
-            //     variables: {
-            //         project: this.project,
-            //         client: this.client,
-            //         start_date: this.startDate,
-            //         end_date: this.endDate,
-            //         description_1: this.description1,
-            //         description_2: this.description2,
-            //         user_id: userID,
-            //         agency_id: userAgencyID
-            //     }
-            // }).catch((error) => {
-            //     this.snackBarVisible = true
-            //     this.snackBarText = "Erreur API : "+error
-            //     this.snackBarType = "error"
-            // })
+            let APIdataExp = await this.$apollo.mutate({
+                mutation: globalConstants.GQL_CREATE_EXPERIENCE,
+                variables: {
+                    project: this.project,
+                    client: this.client,
+                    start_date: this.startDate,
+                    end_date: this.endDate,
+                    description_1: this.description1,
+                    description_2: this.description2,
+                    user_id: userID,
+                    agency_id: userAgencyID
+                }
+            }).catch((error) => {
+                this.snackBarVisible = true
+                this.snackBarText = "Erreur API : "+error
+                this.snackBarType = "error"
+            })
 
-            // let experienceCreatedId = APIdataExp.data.insert_retour_exp_one.id
+            let experienceCreatedId = APIdataExp.data.insert_retour_exp_one.id
 
-            let technologiesToMap = await this.getTechnologiestoMap()
-            
-            console.log(technologiesToMap)
+            let technologiesToCreate = []
+            let existingTechnologies = []
 
-            technologiesToMap.forEach((item) => {
-                console.log(item)
+            this.technologiesInput.forEach((item) => {
+
+                if (item.code.substring(0, 3) === "new") {
+                    technologiesToCreate.push(item.name)
+                } else {
+                    existingTechnologies.push(item.code)
+                }
             }
             )
 
-            // technologiesToMap.forEach((item) => {
-            //     this.createExpTechMapping(experienceCreatedId, item)
-            // }
-            // )
+            technologiesToCreate.forEach(
+                (item) => {
+                    this.$apollo.mutate({
+                    mutation: globalConstants.GQL_CREATE_TECHNOLOGY,
+                    variables: {
+                        name: item
+                    }
+                }).then((response) => {
+                    let techID = response.data.insert_technology_one.id
+                    this.createExpTechMapping(experienceCreatedId, techID)
+                })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+
+                }
+            )
+
+            existingTechnologies.forEach(
+                (item) => {
+                    this.createExpTechMapping(experienceCreatedId, item)
+                }
+            )
+
+
+
         },
 
         async createTechnology(technologyName) {
@@ -187,13 +208,16 @@ export default {
                     let techID = await this.createTechnology(item.name)
                     technologiesToMap.push(techID)
                 }
-                else {
-                    technologiesToMap.push(item.code)
-                }
             }
             )
 
             return technologiesToMap
+        },
+
+        validateMandatoryFields(){
+            
+           //TODO
+            
         }
     },
     mounted() {
