@@ -7,8 +7,11 @@
         </Transition>
         <p>{{ this.experienceData }}</p>
     </div>
-
+    <div class="ExperiencePage-title">
+        <Title :title="title"></Title>
+    </div>
     <div class="ExperiencePage-gridContainer" v-if="isNewExperience">
+
         <div>
             <NewExperienceForm></NewExperienceForm>
         </div>
@@ -67,6 +70,7 @@
 
 import Header from '../../components/Header/Header.vue';
 import SnackBar from '../../components/SnackBar/SnackBar.vue';
+import Title from '../../components/Title/Title.vue';
 import NewExperienceForm from '../../components/NewExperienceForm/NewExperienceForm.vue';
 import Button from '../../components/Button/Button.vue';
 
@@ -86,7 +90,8 @@ export default {
         Header,
         SnackBar,
         NewExperienceForm,
-        Button
+        Button,
+        Title
     },
 
 
@@ -96,6 +101,13 @@ export default {
                 return true
             } else {
                 return false
+            }
+        },
+        title() {
+            if (this.isNewExperience) {
+                return "Nouveau retour d'expérience"
+            } else {
+                return "Retour d'expérience"
             }
         },
         userConnectedName() {
@@ -193,7 +205,7 @@ export default {
 .ExperiencePage-gridContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: minmax(calc(100vh - 91px), 100%);
+    grid-template-rows: minmax(calc(100vh - 91px - 10vh), 100%);
 }
 
 .ExperiencePreview-container {
@@ -279,7 +291,17 @@ export default {
     box-shadow: variables.$boxshadow;
 }
 
-.ExperiencePreview-buttons{
+.ExperiencePreview-buttons {
     margin: 10px;
+}
+
+.ExperiencePage-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    background-color: colors.$blue;
+    color: white;
+    box-shadow: variables.$boxshadow;
 }
 </style>

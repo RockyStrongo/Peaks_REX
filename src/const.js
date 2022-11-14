@@ -15,6 +15,8 @@ export default {
   ERROR_MESSAGE_PASSWORD_CONFIRMATION: "Le mot de passe et la confirmation ne correspondent pas",
   ERROR_MESSAGE_INVALID_CREDENTIALS: "La combinaison email - mot de passe est incorrecte",
   ERROR_MESSAGE_EMAIL_DOES_NOT_EXIST: "Cet email n'est lié à aucun utilisateur",
+  ERROR_MESSAGE_END_DATE_BEFORE_START_DATE: "La date de fin doit être supérieure à la date de début",
+  ERROR_MESSAGE_REQUIRED_FIELDS : "Tous les champs requis doivent être saisis",
 
   //info messages
   INFO_MESSAGE_RECOVER_EMAIL: "Un email a été envoyé à ",
@@ -102,7 +104,6 @@ export default {
           start_date
           end_date
           description_1
-          description_2
           retour_exp_technologies {
             technology {
               id
@@ -176,7 +177,6 @@ export default {
             $start_date: date!
             $end_date: date!
             $description_1: String!
-            $description_2: String!
             $user_id: uuid!
             $agency_id: uuid!
             ) {
@@ -186,7 +186,6 @@ export default {
             start_date: $start_date, 
             end_date: $end_date, 
             description_1: $description_1,
-            description_2: $description_2,
             user_id: $user_id,
             agency_id: $agency_id
     }) {

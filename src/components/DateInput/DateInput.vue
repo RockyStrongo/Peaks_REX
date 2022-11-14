@@ -1,6 +1,8 @@
 <template>
-    <label class=""><span class="pink-asterisk" v-if="isRequired">* </span> {{ label }}</label>
-    <input type="date" v-model="value" :required="isRequired" @blur="emit" />
+    <div class="input-flexContainer">
+        <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{ label }}</label>
+        <input type="date" class="input DateInput" v-model="value" :required="isRequired" @blur="emit" />
+    </div>
 </template>
 
 <script>
@@ -61,5 +63,9 @@ export default {
 </script>
 
 <style lang="scss">
+@use '../../styles/colors';
 
+.DateInput{
+    color:colors.$gray;
+}
 </style>

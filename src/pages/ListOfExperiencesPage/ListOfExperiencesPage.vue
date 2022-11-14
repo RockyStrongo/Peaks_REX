@@ -259,6 +259,7 @@ export default {
 
                 //concatenate technologies in one string
                 let technoString = []
+                console.log(item)
                 if (item.retour_exp_technologies.length > 1) {
                     technoString = item.retour_exp_technologies.reduce((previtem, currentitem) => {
                         return previtem.technology.name + ", ".concat(currentitem.technology.name);

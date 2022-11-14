@@ -1,15 +1,30 @@
 <template>
-    <form @submit="createExperience">
-        <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
-        <TextInput label="Nom du projet" :is-required="true" field="project"></TextInput>
-        <TextInput label="Client" :is-required="true" field="client"></TextInput>
-        <DateInput label="Date de début" field="startDate" :is-required="true"></DateInput>
-        <DateInput label="Date de fin" field="endDate" :is-required="true"></DateInput>
-        <TagInput label="Technologies" :is-required="true" :tagOptions="technologies" field="technologiesInput">
+    <form @submit="handleSubmit" class="NewExperienceForm">
+
+        <div class="NewExperienceForm-snack">
+            <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+        </div>
+        <div class="NewEperienceForm-row">
+            <TextInput class="NewEperienceForm-input NewEperienceForm-inputTwoElements " label="Nom du projet"
+                placeholder="Projet" :is-required="true" field="project">
+            </TextInput>
+            <TextInput class="NewEperienceForm-input NewEperienceForm-inputTwoElements " label="Client"
+                placeholder="Client" :is-required="true" field="client"></TextInput>
+        </div>
+        <div class="NewEperienceForm-row">
+            <DateInput class="NewEperienceForm-input NewEperienceForm-inputTwoElements" label="Date de début"
+                field="startDate" :is-required="true"></DateInput>
+            <DateInput class="NewEperienceForm-input NewEperienceForm-inputTwoElements" label="Date de fin"
+                field="endDate" :is-required="true"></DateInput>
+        </div>
+        <TagInput class="NewEperienceForm-input" label="Technologies" :is-required="true" :tagOptions="technologies"
+            field="technologiesInput">
         </TagInput>
-        <TextInput label="Description du projet" :is-required="true" field="description1"></TextInput>
-        <TextInput label="Réalisé par Peaks" :is-required="true" field="description2"></TextInput>
-        <Button label="Valider"></Button>
+        <TextAreaInput class="NewEperienceForm-input" label="Description du projet" placeholder="Description du projet"
+            :is-required="true" field="description1"></TextAreaInput>
+        <div class="NewExperienceForm-buttonContainer">
+            <Button class="NewExperienceForm-button" label="Valider"></Button>
+        </div>
     </form>
 </template>
 
@@ -23,6 +38,7 @@ import TagInput from '../TagInput/TagInput.vue';
 import SnackBar from '../SnackBar/SnackBar.vue';
 
 import globalConstants from '../../const'
+import TextAreaInput from '../TextAreaInput/TextAreaInput.vue';
 
 
 export default {
@@ -38,7 +54,8 @@ export default {
         SelectInput,
         Button,
         SnackBar,
-        TagInput
+        TagInput,
+        TextAreaInput
     },
 
 
@@ -52,7 +69,9 @@ export default {
 
     data() {
         return {
-            formFields: ["project", "client", "startDate", "endDate", "technologiesInput", "description1", "description2"],
+            formFields: ["project", "client", "startDate", "endDate", "technologiesInput", "description1"],
+
+            formIsValid: false,
 
             snackBarVisible: false,
             snackText: String,
@@ -67,7 +86,8 @@ export default {
             endDate: Date,
             technologiesInput: Array,
             description1: String,
-            description2: String,
+
+            experienceCreatedId: String
         }
 
     },
@@ -98,9 +118,7 @@ export default {
                 this.technologies.push(newitem)
             })
         },
-        async createExperience(e) {
-
-            e.preventDefault();
+        async createExperience() {
 
             let user = JSON.parse(sessionStorage.getItem('userConnected'))
             let userID = user[0].id
@@ -114,17 +132,18 @@ export default {
                     start_date: this.startDate,
                     end_date: this.endDate,
                     description_1: this.description1,
-                    description_2: this.description2,
                     user_id: userID,
                     agency_id: userAgencyID
                 }
             }).catch((error) => {
                 this.snackBarVisible = true
-                this.snackBarText = "Erreur API : "+error
+                this.snackBarText = "Erreur API : " + error
                 this.snackBarType = "error"
             })
 
             let experienceCreatedId = APIdataExp.data.insert_retour_exp_one.id
+
+            this.experienceCreatedId = experienceCreatedId;
 
             let technologiesToCreate = []
             let existingTechnologies = []
@@ -142,17 +161,17 @@ export default {
             technologiesToCreate.forEach(
                 (item) => {
                     this.$apollo.mutate({
-                    mutation: globalConstants.GQL_CREATE_TECHNOLOGY,
-                    variables: {
-                        name: item
-                    }
-                }).then((response) => {
-                    let techID = response.data.insert_technology_one.id
-                    this.createExpTechMapping(experienceCreatedId, techID)
-                })
-                    .catch((error) => {
-                        console.log(error)
+                        mutation: globalConstants.GQL_CREATE_TECHNOLOGY,
+                        variables: {
+                            name: item
+                        }
+                    }).then((response) => {
+                        let techID = response.data.insert_technology_one.id
+                        this.createExpTechMapping(experienceCreatedId, techID)
                     })
+                        .catch((error) => {
+                            console.log(error)
+                        })
 
                 }
             )
@@ -163,8 +182,16 @@ export default {
                 }
             )
 
+        },
+        async handleSubmit(e) {
+            e.preventDefault();
 
+            this.validateForm()
 
+            if (this.formIsValid) {
+                let wait = await this.createExperience()
+                this.$router.replace("/experience/" + this.experienceCreatedId)
+            }
         },
 
         async createTechnology(technologyName) {
@@ -214,10 +241,27 @@ export default {
             return technologiesToMap
         },
 
-        validateMandatoryFields(){
-            
-           //TODO
-            
+        validateForm() {
+
+            if (this.startDate >= this.endDate) {
+                this.formIsValid = false
+                this.snackBarVisible = true
+                this.snackBarText = globalConstants.ERROR_MESSAGE_END_DATE_BEFORE_START_DATE
+                this.snackBarType = "error"
+            } else {
+                this.formIsValid = true
+            }
+
+
+            this.formFields.forEach(item => {
+                if (this[item].length == 0) {
+                    this.formIsValid = false
+                    this.snackBarVisible = true
+                    this.snackBarText = globalConstants.ERROR_MESSAGE_REQUIRED_FIELDS
+                    this.snackBarType = "error"
+                }
+            }
+            )
         }
     },
     mounted() {
@@ -233,5 +277,30 @@ export default {
 </script>
 
 <style lang="scss">
+.NewEperienceForm-row {
+    display: flex;
+    // margin: 10px;
+}
 
+.NewEperienceForm-input {
+    margin: 10px 10px 0px 10px;
+}
+
+.NewEperienceForm-inputTwoElements {
+    width: 50%;
+}
+
+.NewExperienceForm-buttonContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.NewExperienceForm-button {
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+.NewExperienceForm-snack {
+    margin: 10px 0px 10px 10px;
+}
 </style>

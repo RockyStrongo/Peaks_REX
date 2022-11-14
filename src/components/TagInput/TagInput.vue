@@ -1,7 +1,10 @@
 <template>
-    <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span>{{ label }}</label>
-    <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="Chercher ou ajouter" label="name"
-        track-by="code" :options="options" :multiple="true" :taggable="true" @tag="addTag" @focusout="emit"></multiselect>
+    <div class="input-flexContainer">
+        <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span>{{ label }}</label>
+        <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="Chercher ou ajouter"
+            label="name" track-by="code" :options="options" :multiple="true" :taggable="true" @tag="addTag"
+            @focusout="emit"></multiselect>
+    </div>
 </template>
 
 <script>
@@ -50,7 +53,7 @@ export default {
         addTag(newTag) {
             const tag = {
                 name: newTag,
-                code: "new"+Math.floor((Math.random() * 10000000))
+                code: "new" + Math.floor((Math.random() * 10000000))
             }
             this.options.push(tag)
             this.value.push(tag)
@@ -70,5 +73,12 @@ export default {
 </script>
 
 <style lang="scss">
+@use '../../styles/colors';
 
+.multiselect {
+    border: solid;
+    border-width: 1px;
+    border-color: colors.$gray;
+    border-radius: 4px;
+}
 </style>

@@ -17,6 +17,7 @@ textarea {
 
 *::placeholder {
     color: colors.$gray;
+    font-family: Oswald;
 }
 
 .input {
@@ -24,7 +25,9 @@ textarea {
     width: 100%;
     padding: 18px;
     margin-bottom: 20px;
-    border: none;
+    border: solid;
+    border-width: 1px;
+    border-color: colors.$gray;
     border-radius: 4px;
     font-size: 16px;
     color: colors.$blue;
