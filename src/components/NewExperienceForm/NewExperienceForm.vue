@@ -87,7 +87,7 @@ export default {
             technologiesInput: Array,
             description1: String,
 
-            experienceCreatedId: String
+            experienceCreated: String
         }
 
     },
@@ -143,7 +143,7 @@ export default {
 
             let experienceCreatedId = APIdataExp.data.insert_retour_exp_one.id
 
-            // this.experienceCreatedId = experienceCreatedId;
+            this.experienceCreated = experienceCreatedId;
 
             let technologiesToCreate = []
             let existingTechnologies = []
@@ -167,10 +167,12 @@ export default {
                         }
                     }).then((response) => {
                         let techID = response.data.insert_technology_one.id
-                        let mapping = this.createExpTechMapping(experienceCreatedId, techID)
+                        this.createExpTechMapping(experienceCreatedId, techID)
                     })
                         .catch((error) => {
-                            console.log(error)
+                            this.snackBarVisible = true
+                            this.snackBarText = "Erreur API : " + error
+                            this.snackBarType = "error"
                         })
 
                 }
@@ -178,9 +180,15 @@ export default {
 
             existingTechnologies.forEach(
                 (item) => {
-                    this.createExpTechMapping(experienceCreatedId, item)
+                        this.createExpTechMapping(experienceCreatedId, item)
+                        .catch((error) => {
+                            this.snackBarVisible = true
+                            this.snackBarText = "Erreur API : " + error
+                            this.snackBarType = "error"
+                        })
                 }
             )
+
 
         },
         async handleSubmit(e) {
@@ -189,8 +197,7 @@ export default {
             this.validateForm()
 
             if (this.formIsValid) {
-                let wait = await this.createExperience()
-                this.$router.replace("/experience/" + this.experienceCreatedId)
+                this.createExperience()
             }
         },
 
@@ -259,6 +266,8 @@ export default {
                     this.snackBarVisible = true
                     this.snackBarText = globalConstants.ERROR_MESSAGE_REQUIRED_FIELDS
                     this.snackBarType = "error"
+                } else {
+                    this.formIsValid = true
                 }
             }
             )

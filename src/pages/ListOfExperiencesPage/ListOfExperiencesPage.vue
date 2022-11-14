@@ -259,24 +259,12 @@ export default {
                 itemcopy.agencyName = agencyName
 
                 //concatenate technologies in one string
-                
 
                 let technologiesArray = item.retour_exp_technologies.map(
                     (element) => element.technology.name
                 )
-                
+
                 let technoString = technologiesArray.join(', ')
-
-                console.log(technoString)
-
-                // if (item.retour_exp_technologies.length > 1) {
-                //     technoString = item.retour_exp_technologies.reduce((previtem, currentitem) => {
-                //         return previtem.technology.name + ", ".concat(currentitem.technology.name);
-                //     })
-                // } else {
-                //     technoString = item.retour_exp_technologies.map(item => item.technology.name)
-                //     technoString = technoString[0]
-                // }
 
                 itemcopy.technologies = technoString
 
