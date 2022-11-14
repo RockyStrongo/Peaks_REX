@@ -241,8 +241,9 @@ export default {
                 query: globalConstants.GQL_GET_EXPERIENCES,
             })
 
-            let retourExperienceData = APIData.data.retour_exp 
+            let retourExperienceData = APIData.data.retour_exp
             let processedData = []
+
 
             retourExperienceData.map(function (item) {
 
@@ -258,16 +259,24 @@ export default {
                 itemcopy.agencyName = agencyName
 
                 //concatenate technologies in one string
-                let technoString = []
-                console.log(item)
-                if (item.retour_exp_technologies.length > 1) {
-                    technoString = item.retour_exp_technologies.reduce((previtem, currentitem) => {
-                        return previtem.technology.name + ", ".concat(currentitem.technology.name);
-                    })
-                } else {
-                    technoString = item.retour_exp_technologies.map(item => item.technology.name)
-                    technoString = technoString[0]
-                }
+                
+
+                let technologiesArray = item.retour_exp_technologies.map(
+                    (element) => element.technology.name
+                )
+                
+                let technoString = technologiesArray.join(', ')
+
+                console.log(technoString)
+
+                // if (item.retour_exp_technologies.length > 1) {
+                //     technoString = item.retour_exp_technologies.reduce((previtem, currentitem) => {
+                //         return previtem.technology.name + ", ".concat(currentitem.technology.name);
+                //     })
+                // } else {
+                //     technoString = item.retour_exp_technologies.map(item => item.technology.name)
+                //     technoString = technoString[0]
+                // }
 
                 itemcopy.technologies = technoString
 
@@ -291,11 +300,11 @@ export default {
             this.$router.push("/experience/" + rowdata.id)
         },
 
-        goToNewExperience(){
+        goToNewExperience() {
             this.$router.push("/experience/new")
 
         }
-        
+
     },
     mounted() {
         this.updateData()
@@ -478,13 +487,11 @@ export default {
     cursor: pointer;
 }
 
-.vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-number.page-link, 
+.vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-number.page-link,
 .vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-next.page-link,
 .vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-prev.page-link,
 .vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-first.page-link,
 .vtl-paging-pagination-page-link.vtl-paging-pagination-page-link-last.page-link {
     color: colors.$blue;
 }
-
-
 </style>    

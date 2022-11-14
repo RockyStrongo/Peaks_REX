@@ -143,7 +143,7 @@ export default {
 
             let experienceCreatedId = APIdataExp.data.insert_retour_exp_one.id
 
-            this.experienceCreatedId = experienceCreatedId;
+            // this.experienceCreatedId = experienceCreatedId;
 
             let technologiesToCreate = []
             let existingTechnologies = []
@@ -167,7 +167,7 @@ export default {
                         }
                     }).then((response) => {
                         let techID = response.data.insert_technology_one.id
-                        this.createExpTechMapping(experienceCreatedId, techID)
+                        let mapping = this.createExpTechMapping(experienceCreatedId, techID)
                     })
                         .catch((error) => {
                             console.log(error)
