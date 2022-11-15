@@ -95,7 +95,11 @@ export default {
 
             createExperienceIsOK: Boolean,
             createTechnoIsOK: Boolean,
+            mapnewTechIsOK: Boolean,
             mapExistingTechnoIsOK: Boolean,
+
+            updateExperienceIsOK: Boolean,
+            deleteMappingIsOK: Boolean,
 
         }
 
@@ -261,21 +265,131 @@ export default {
             }
         },
 
-        async updateExperience(){
-            console.log("hellow")
+        async updateExperience() {
+
+            let updateExp = await this.$apollo.mutate(
+                {
+                    mutation: globalConstants.GQL_UPDATE_EXPERIENCE,
+                    variables: {
+                        id: this.currentExperience,
+                        project: this.project,
+                        client: this.client,
+                        start_date: this.startDate,
+                        end_date: this.endDate,
+                        description_1: this.description1
+                    }
+                }
+            ).then(
+                this.updateExperienceIsOK = true
+            )
+                .catch((error) => {
+                    this.snackBarVisible = true
+                    this.snackBarText = "Erreur API : " + error
+                    this.snackBarType = "error"
+                    this.updateExperienceIsOK = false
+                })
+
+            let technologiesInDatabase = this.currentExperienceData.retour_exp_technologies
+            let technologiesInDatabaseIds = technologiesInDatabase.map(
+                (item) => item.technology.id
+            )
+
+            let technologiesInputIds = this.technologiesInput.map(
+                (item) => item.code
+            )
+
+            let technologiesToRemove = technologiesInDatabaseIds.filter(value => !technologiesInputIds.includes(value));
+
+            let existingTechnologiesToAdd = []
+            let newTechnologiesToAdd = []
+
+            this.technologiesInput.forEach(
+                (item) => {
+                    if (item.code.substring(0, 3) === "new") {
+                        newTechnologiesToAdd.push(item.name)
+                    } else if (!technologiesInDatabaseIds.includes(item.code)) {
+                        existingTechnologiesToAdd.push(item.code)
+                    }
+                }
+            )
+
+            if (technologiesToRemove.length > 0) {
+                technologiesToRemove.forEach(
+                    (item) => {
+                        this.deleteExpTechnoMapping(item, this.currentExperience)
+                    }
+                )
+            } else {
+                this.deleteMappingIsOK = true
+            }
+
+            if (existingTechnologiesToAdd.length > 0) {
+                existingTechnologiesToAdd.forEach(
+                    (item) => {
+                        this.createExpTechMapping(this.currentExperience, item)
+                    }
+                )
+            } else {
+                this.mapnewTechIsOK = true
+            }
+
+            if (newTechnologiesToAdd.length > 0) {
+                newTechnologiesToAdd.forEach(
+                    (item) => {
+                        this.$apollo.mutate({
+                            mutation: globalConstants.GQL_CREATE_TECHNOLOGY,
+                            variables: {
+                                name: item
+                            }
+                        }).then((response) => {
+                            this.createTechnoIsOK = true
+                            let techID = response.data.insert_technology_one.id
+                            this.createExpTechMapping(this.currentExperience, techID)
+                        })
+                            .catch((error) => {
+                                this.snackBarVisible = true
+                                this.snackBarText = "Erreur API : " + error
+                                this.snackBarType = "error"
+                                this.createTechnoIsOK = false
+                            })
+
+                    }
+                )
+            } else {
+                this.createTechnoIsOK = true
+            }
+
+        },
+
+        async deleteExpTechnoMapping(techID, expID) {
+            let deleteMap = await this.$apollo.mutate(
+                {
+                    mutation: globalConstants.GQL_DELETE_EXP_TECH_MAPPING,
+                    variables: {
+                        technology_id: techID,
+                        retour_exp_id: expID
+                    }
+                }
+            ).then(
+                this.deleteMappingIsOK = true
+            )
+                .catch((error) => {
+                    this.snackBarVisible = true
+                    this.snackBarText = "Erreur API : " + error
+                    this.snackBarType = "error"
+                    this.deleteMappingIsOK = false
+                })
         },
 
         async handleSubmit(e) {
-            e.preventDefault();
+            e.preventDefault()
 
             this.validateForm()
-
-            console.log(this.isNewExperience)
 
             if (this.isNewExperience) {
                 if (this.formIsValid) {
                     this.createExperience().then(() => {
-                        if (this.createExperienceIsOK && this.createTechnoIsOK && this.mapExistingTechnoIsOK) {
+                        if (this.createExperienceIsOK && this.createTechnoIsOK && this.mapnewTechIsOK && this.mapExistingTechnoIsOK) {
                             this.snackBarVisible = true
                             this.snackBarText = globalConstants.SUCCESS_MESSAGE_EXPERIENCE_CREATED
                             this.snackBarType = "success"
@@ -286,11 +400,11 @@ export default {
             } else {
                 if (this.formIsValid) {
                     this.updateExperience().then(() => {
-                        // if (this.createExperienceIsOK && this.createTechnoIsOK && this.mapExistingTechnoIsOK) {
-                        //     this.snackBarVisible = true
-                        //     this.snackBarText = globalConstants.SUCCESS_MESSAGE_EXPERIENCE_CREATED
-                        //     this.snackBarType = "success"
-                        // }
+                        if (this.updateExperienceIsOK && this.deleteMappingIsOK && this.mapnewTechIsOK && this.createTechnoIsOK) {
+                            this.snackBarVisible = true
+                            this.snackBarText = globalConstants.SUCCESS_MESSAGE_EXPERIENCE_UPDATED
+                            this.snackBarType = "success"
+                        }
                     }
                     )
                 }
@@ -305,9 +419,15 @@ export default {
                 variables: {
                     name: technologyName
                 }
-            }).catch((error) => {
-                console.log(error)
+            }).then((response) => {
+                this.createTechnoIsOK = true
             })
+                .catch((error) => {
+                    this.snackBarVisible = true
+                    this.snackBarText = "Erreur API : " + error
+                    this.snackBarType = "error"
+                    this.createTechnoIsOK = false
+                })
 
             return APIdataTech.data.insert_technology_one.id
 
@@ -320,12 +440,15 @@ export default {
                     retour_exp_id: experienceId,
                     technology_id: technologyId
                 }
-            }).catch((error) => {
-                this.snackBarVisible = true
-                this.snackBarText = "Erreur API : " + error
-                this.snackBarType = "error"
-                return false
-            })
+            }).then(
+                this.mapnewTechIsOK = true
+            )
+                .catch((error) => {
+                    this.snackBarVisible = true
+                    this.snackBarText = "Erreur API : " + error
+                    this.snackBarType = "error"
+                    this.mapnewTechIsOK = false
+                })
 
             return APIdataMap.data.insert_retour_exp_technology_one.id
         },
@@ -364,8 +487,6 @@ export default {
                     this.snackBarVisible = true
                     this.snackBarText = globalConstants.ERROR_MESSAGE_REQUIRED_FIELDS
                     this.snackBarType = "error"
-                } else {
-                    this.formIsValid = true
                 }
             }
             )

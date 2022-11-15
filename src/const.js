@@ -16,7 +16,7 @@ export default {
   ERROR_MESSAGE_INVALID_CREDENTIALS: "La combinaison email - mot de passe est incorrecte",
   ERROR_MESSAGE_EMAIL_DOES_NOT_EXIST: "Cet email n'est lié à aucun utilisateur",
   ERROR_MESSAGE_END_DATE_BEFORE_START_DATE: "La date de fin doit être supérieure à la date de début",
-  ERROR_MESSAGE_REQUIRED_FIELDS : "Tous les champs requis doivent être saisis",
+  ERROR_MESSAGE_REQUIRED_FIELDS: "Tous les champs requis doivent être saisis",
 
   //info messages
   INFO_MESSAGE_RECOVER_EMAIL: "Un email a été envoyé à ",
@@ -24,7 +24,8 @@ export default {
   //Sucess messages
   SUCCESS_MESSAGE_USER_CREATED: "L'utilisateur a été créé avec succès.",
   SUCCESS_MESSAGE_USER_UPDATED: "L'utilisateur a bien été mis à jour.",
-  SUCCESS_MESSAGE_EXPERIENCE_CREATED: "Le retour d'expérience a bien été créé !",
+  SUCCESS_MESSAGE_EXPERIENCE_CREATED: "Le retour d'expérience a bien été créé.",
+  SUCCESS_MESSAGE_EXPERIENCE_UPDATED: "Le retour d'expérience a bien été mis à jour.",
 
   //List of Peaks Agencies
   AGENCY_OPTIONS: ["Aix-en-Provence", "Lyon", "Reims/Paris"],
@@ -205,7 +206,7 @@ export default {
       } 
     }
     `,
-    GQL_CREATE_TECHNO_EXP_MAPPING : gql`
+  GQL_CREATE_TECHNO_EXP_MAPPING: gql`
         mutation CreateTechnoExpMapping (
             $retour_exp_id: uuid!
             $technology_id: uuid!
@@ -216,6 +217,38 @@ export default {
     }) {
         id
       } 
+    }
+    `,
+  GQL_UPDATE_EXPERIENCE: gql`
+    mutation UpdateExperience(
+          $id: uuid!
+          $project: String!
+          $client: String!
+          $start_date: date!
+          $end_date: date!
+          $description_1: String!
+    ) {
+    update_retour_exp (where: {id: {_eq: $id}}, 
+    _set: {
+      project: $project, 
+      client: $client, 
+      start_date: $start_date, 
+      end_date: $end_date
+      description_1: $description_1}) {
+      returning {
+        id
+      }
+    }
+    }
+    `,
+    GQL_DELETE_EXP_TECH_MAPPING: gql`
+    mutation deleteExpTechMap($retour_exp_id: uuid!, $technology_id: uuid!) {
+      delete_retour_exp_technology(where: {retour_exp_id: {_eq: $retour_exp_id}, technology_id: {_eq: $technology_id}}) {
+        returning {
+          id
+        }
+        affected_rows
+      }
     }
     `
 

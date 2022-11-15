@@ -1,7 +1,7 @@
 <template>
     <div class="input-flexContainer">
         <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{ label }}</label>
-        <input type="date" class="input" :class="DateInputClass" v-model="value" :required="isRequired" @blur="emit" />
+        <input type="date" class="input" :class="DateInputClass" v-model="value" :required="isRequired" @input="emit" />
     </div>
 </template>
 

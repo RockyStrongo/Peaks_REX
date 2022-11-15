@@ -50,7 +50,7 @@
 
             <div class="ExperiencePreview-buttons">
                 <Button label="Générer image" @click="GetImage"></Button>
-                <a download="hello.png" v-if="imageURL" :href="imageURL">Download</a>
+                <a class="ExperiencePreview-dowloadLink" download="experience.png" v-if="imageURL" :href="imageURL">Télécharger l'image</a>
             </div>
 
 
@@ -288,6 +288,7 @@ export default {
 }
 
 .ExperiencePreview-buttons {
+    display: flex;
     margin: 10px;
 }
 
@@ -299,5 +300,9 @@ export default {
     background-color: colors.$blue;
     color: white;
     box-shadow: variables.$boxshadow;
+}
+
+.ExperiencePreview-dowloadLink{
+    margin: 10px;
 }
 </style>

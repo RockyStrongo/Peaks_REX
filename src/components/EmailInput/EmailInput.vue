@@ -1,6 +1,6 @@
 <template>
-    <label class="EmailInput-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{label}}</label>
-    <input class="EmailInput" name="login" placeholder="Email" type="email" autocomplete="username" v-model="value"
+    <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{label}}</label>
+    <input class="input" name="login" placeholder="Email" type="email" autocomplete="username" v-model="value"
         :required="isRequired" @keyup="emit"/>
 </template>
 
@@ -61,25 +61,4 @@ export default {
 </script>
 
 <style lang="scss">
-
-@use '../../styles/colors';
-
-.EmailInput {
-    height: 45px;
-    width: 100%;
-    padding: 18px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    color: colors.$blue;
-}
-
-.EmailInput-label{
-    font-family: Catamaran;
-    font-weight: 700;
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-
 </style>

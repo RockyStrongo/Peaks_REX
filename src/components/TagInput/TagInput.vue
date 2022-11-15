@@ -3,7 +3,7 @@
         <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span>{{ label }}</label>
         <multiselect v-model="value" tag-placeholder="Cliquer entrée pour ajouter" selectLabel="Cliquer entrée pour sélectionner" deselectLabel="Cliquer entrée pour dé-sélectionner" placeholder="Chercher ou ajouter"
             label="name" track-by="code" :options="options" :multiple="true" :taggable="true" @tag="addTag"
-            @focusout="emit"></multiselect>
+            @focusout="emit" @remove="emit" @input="test"></multiselect>
     </div>
 </template>
 
@@ -62,10 +62,13 @@ export default {
         emit() {
             const dataobj = { "field": this.field, "value": this.value };
             this.emitter.emit(this.field, dataobj);
-        }
+        },
+        
     },
-    mounted() {
-
+    watch : {
+        value(){
+            this.emit()
+        }
     }
 }
 
