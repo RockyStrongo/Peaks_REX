@@ -24,6 +24,7 @@ export default {
   //Sucess messages
   SUCCESS_MESSAGE_USER_CREATED: "L'utilisateur a été créé avec succès.",
   SUCCESS_MESSAGE_USER_UPDATED: "L'utilisateur a bien été mis à jour.",
+  SUCCESS_MESSAGE_EXPERIENCE_CREATED: "Le retour d'expérience a bien été créé !",
 
   //List of Peaks Agencies
   AGENCY_OPTIONS: ["Aix-en-Provence", "Lyon", "Reims/Paris"],

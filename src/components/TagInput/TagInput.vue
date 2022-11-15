@@ -1,7 +1,7 @@
 <template>
     <div class="input-flexContainer">
         <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span>{{ label }}</label>
-        <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="Chercher ou ajouter"
+        <multiselect v-model="value" tag-placeholder="Cliquer entrée pour ajouter" selectLabel="Cliquer entrée pour sélectionner" deselectLabel="Cliquer entrée pour dé-sélectionner" placeholder="Chercher ou ajouter"
             label="name" track-by="code" :options="options" :multiple="true" :taggable="true" @tag="addTag"
             @focusout="emit"></multiselect>
     </div>
@@ -25,6 +25,7 @@ export default {
         },
         field: String,
         tagOptions: Array,
+        value: [],
 
     },
 
@@ -43,7 +44,6 @@ export default {
 
     data() {
         return {
-            value: [],
             options: this.tagOptions
         }
 
@@ -80,5 +80,10 @@ export default {
     border-width: 1px;
     border-color: colors.$gray;
     border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.multiselect__tag {
+    background: colors.$pink;
 }
 </style>

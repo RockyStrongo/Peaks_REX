@@ -1,19 +1,14 @@
 <template>
     <Header></Header>
-
-    <div v-if="!isNewExperience">
-        <Transition>
-            <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
-        </Transition>
-        <p>{{ this.experienceData }}</p>
-    </div>
     <div class="ExperiencePage-title">
         <Title :title="title"></Title>
     </div>
-    <div class="ExperiencePage-gridContainer" v-if="isNewExperience">
-
+    <div class="ExperiencePage-gridContainer">
+        <Transition>
+            <SnackBar v-if="snackBarVisible" :snackText="snackBarText" :snackType="snackBarType"></SnackBar>
+        </Transition>
         <div>
-            <NewExperienceForm></NewExperienceForm>
+            <NewExperienceForm :currentExperience="experienceId"></NewExperienceForm>
         </div>
         <div class="ExperiencePreview-container" id="preview">
 
@@ -46,8 +41,8 @@
                 }} </span></p>
                 <p class="ExperiencePreview-content"><span class="ExperiencePreview-label">Client : </span> {{ client }}
                 </p>
-                <p class="ExperiencePreview-content"> <span class="ExperiencePreview-label">Du</span> {{ startDate }}
-                    <span class="ExperiencePreview-label">au</span> {{ endDate }}
+                <p class="ExperiencePreview-content"> <span class="ExperiencePreview-label">Du</span> {{ startDateIfSet }}
+                    <span class="ExperiencePreview-label">au</span> {{ endDateIfSet }}
                 </p>
                 <p class="ExperiencePreview-content ExperiencePreview-description">{{ description1 }}</p>
 
@@ -110,6 +105,20 @@ export default {
                 return "Retour d'expérience"
             }
         },
+        startDateIfSet(){
+            if(!this.startDate){
+                return " "
+            } else {
+                return this.startDate
+            }
+        },
+        endDateIfSet(){
+            if(!this.endDate){
+                return " "
+            } else {
+                return this.endDate
+            }
+        },
         userConnectedName() {
             let user = JSON.parse(sessionStorage.getItem('userConnected'))
             return user[0].firstname + " " + user[0].lastname
@@ -147,26 +156,6 @@ export default {
 
     methods: {
 
-        async getExperienceData() {
-            if (!this.isNewExperience) {
-                let APIData = await this.$apollo.query({
-                    query: globalConstants.GQL_GET_ONE_EXPERIENCE,
-                    variables: {
-                        id: this.experienceId,
-                    }
-                }).catch((error) => {
-                    console.log(error)
-                    this.snackBarVisible = true
-                    this.snackBarText = "Erreur API : " + error
-                    this.snackBarType = "error"
-                })
-
-                this.experienceData = APIData.data.retour_exp
-            }
-            else {
-                return
-            }
-        },
 
         getFormDatafromEmitter(item) {
             const fieldname = item.field.toString()
@@ -183,16 +172,23 @@ export default {
 
             this.imageURL = data
 
+        },
+        getExperienceFormData(item){
+            const fieldname = item.field.toString()
+            this[fieldname] = item.value
         }
 
     },
     mounted() {
-        this.getExperienceData()
-
         this.formFields.forEach(item =>
 
             this.emitter.on(item, this.getFormDatafromEmitter))
+
+            this.emitter.on("ExperienceForm", this.getExperienceFormData)
+
     }
+
+    
 }
 
 
@@ -247,8 +243,8 @@ export default {
 }
 
 .ExperiencePreview-technoTag {
-    background-color: #FBD347;
-    color: colors.$blue;
+    background-color: colors.$pink;
+    color: white;
     margin: 5px;
     border-radius: 10%;
     align-self: center;

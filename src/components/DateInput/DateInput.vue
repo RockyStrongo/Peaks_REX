@@ -1,7 +1,7 @@
 <template>
     <div class="input-flexContainer">
         <label class="input-label"><span class="pink-asterisk" v-if="isRequired">* </span> {{ label }}</label>
-        <input type="date" class="input DateInput" v-model="value" :required="isRequired" @blur="emit" />
+        <input type="date" class="input" :class="DateInputClass" v-model="value" :required="isRequired" @blur="emit" />
     </div>
 </template>
 
@@ -33,7 +33,13 @@ export default {
 
 
     computed: {
-
+        DateInputClass(){
+            if(this.value){
+                return "DateInput-set"
+            } else {
+                return "DateInput-notSet"
+            }
+        }
     },
 
     watch: {
@@ -65,7 +71,11 @@ export default {
 <style lang="scss">
 @use '../../styles/colors';
 
-.DateInput{
+.DateInput-set{
+    color:colors.$blue;
+}
+
+.DateInput-notSet{
     color:colors.$gray;
 }
 </style>

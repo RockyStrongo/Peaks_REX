@@ -6,22 +6,22 @@
         </div>
         <div class="NewEperienceForm-row">
             <TextInput class="NewEperienceForm-input NewEperienceForm-inputTwoElements " label="Nom du projet"
-                placeholder="Projet" :is-required="true" field="project">
+                placeholder="Projet" :is-required="true" :value="project" field="project">
             </TextInput>
             <TextInput class="NewEperienceForm-input NewEperienceForm-inputTwoElements " label="Client"
-                placeholder="Client" :is-required="true" field="client"></TextInput>
+                placeholder="Client" :is-required="true" :value="client" field="client"></TextInput>
         </div>
         <div class="NewEperienceForm-row">
             <DateInput class="NewEperienceForm-input NewEperienceForm-inputTwoElements" label="Date de début"
-                field="startDate" :is-required="true"></DateInput>
+                :value="startDate" field="startDate" :is-required="true"></DateInput>
             <DateInput class="NewEperienceForm-input NewEperienceForm-inputTwoElements" label="Date de fin"
-                field="endDate" :is-required="true"></DateInput>
+                :value="endDate" field="endDate" :is-required="true"></DateInput>
         </div>
         <TagInput class="NewEperienceForm-input" label="Technologies" :is-required="true" :tagOptions="technologies"
-            field="technologiesInput">
+            field="technologiesInput" :value="technologiesInput">
         </TagInput>
         <TextAreaInput class="NewEperienceForm-input" label="Description du projet" placeholder="Description du projet"
-            :is-required="true" field="description1"></TextAreaInput>
+            :is-required="true" :value="description1" field="description1"></TextAreaInput>
         <div class="NewExperienceForm-buttonContainer">
             <Button class="NewExperienceForm-button" label="Valider"></Button>
         </div>
@@ -45,7 +45,7 @@ export default {
     name: 'NewExperienceForm',
 
     props: {
-
+        currentExperience: String,
     },
 
     components: {
@@ -60,11 +60,13 @@ export default {
 
 
     computed: {
-
-    },
-
-    watch: {
-
+        isNewExperience() {
+            if (this.currentExperience === "new") {
+                return true
+            } else {
+                return false
+            }
+        },
     },
 
     data() {
@@ -80,14 +82,21 @@ export default {
             technologies: [],
             newTechnologies: [],
 
-            project: String,
-            client: String,
-            startDate: Date,
-            endDate: Date,
-            technologiesInput: Array,
-            description1: String,
+            currentExperienceData: Array,
 
-            experienceCreated: String
+            project: "",
+            client: "",
+            startDate: "",
+            endDate: "",
+            technologiesInput: [],
+            description1: "",
+
+            experienceCreated: String,
+
+            createExperienceIsOK: Boolean,
+            createTechnoIsOK: Boolean,
+            mapExistingTechnoIsOK: Boolean,
+
         }
 
     },
@@ -96,6 +105,46 @@ export default {
         getFormDatafromEmitter(item) {
             const fieldname = item.field.toString()
             this[fieldname] = item.value
+        },
+        async getExperienceData() {
+            if (!this.isNewExperience) {
+                let APIData = await this.$apollo.query({
+                    query: globalConstants.GQL_GET_ONE_EXPERIENCE,
+                    variables: {
+                        id: this.currentExperience,
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                    this.snackBarVisible = true
+                    this.snackBarText = "Erreur API : " + error
+                    this.snackBarType = "error"
+                })
+
+                this.currentExperienceData = APIData.data.retour_exp[0]
+
+                this.project = this.currentExperienceData.project
+                this.client = this.currentExperienceData.client
+                this.startDate = this.currentExperienceData.start_date
+                this.endDate = this.currentExperienceData.end_date
+
+                let APItechnologies = this.currentExperienceData.retour_exp_technologies
+                let formattedTechnologies = []
+
+                APItechnologies.map((item) => {
+                    let newitem = {}
+                    newitem.name = item.technology.name
+                    newitem.code = item.technology.id
+
+                    formattedTechnologies.push(newitem)
+                })
+
+                this.technologiesInput = formattedTechnologies
+                this.description1 = this.currentExperienceData.description_1
+
+            }
+            else {
+                return
+            }
         },
         async getTechnologies() {
             let APIData = await this.$apollo.query({
@@ -135,11 +184,16 @@ export default {
                     user_id: userID,
                     agency_id: userAgencyID
                 }
-            }).catch((error) => {
-                this.snackBarVisible = true
-                this.snackBarText = "Erreur API : " + error
-                this.snackBarType = "error"
             })
+                .then(
+                    this.createExperienceIsOK = true
+                )
+                .catch((error) => {
+                    this.snackBarVisible = true
+                    this.snackBarText = "Erreur API : " + error
+                    this.snackBarType = "error"
+                    this.createExperienceIsOK = false
+                })
 
             let experienceCreatedId = APIdataExp.data.insert_retour_exp_one.id
 
@@ -158,47 +212,91 @@ export default {
             }
             )
 
-            technologiesToCreate.forEach(
-                (item) => {
-                    this.$apollo.mutate({
-                        mutation: globalConstants.GQL_CREATE_TECHNOLOGY,
-                        variables: {
-                            name: item
-                        }
-                    }).then((response) => {
-                        let techID = response.data.insert_technology_one.id
-                        this.createExpTechMapping(experienceCreatedId, techID)
-                    })
-                        .catch((error) => {
-                            this.snackBarVisible = true
-                            this.snackBarText = "Erreur API : " + error
-                            this.snackBarType = "error"
+            if (technologiesToCreate.length > 0) {
+
+                technologiesToCreate.forEach(
+                    (item) => {
+                        this.$apollo.mutate({
+                            mutation: globalConstants.GQL_CREATE_TECHNOLOGY,
+                            variables: {
+                                name: item
+                            }
+                        }).then((response) => {
+                            this.createTechnoIsOK = true
+                            let techID = response.data.insert_technology_one.id
+                            this.createExpTechMapping(experienceCreatedId, techID)
                         })
+                            .catch((error) => {
+                                this.snackBarVisible = true
+                                this.snackBarText = "Erreur API : " + error
+                                this.snackBarType = "error"
+                                this.createTechnoIsOK = false
+                            })
 
-                }
-            )
+                    }
+                )
 
-            existingTechnologies.forEach(
-                (item) => {
+            } else {
+                this.createTechnoIsOK = true
+            }
+
+
+            if (existingTechnologies.length > 0) {
+                existingTechnologies.forEach(
+                    (item) => {
                         this.createExpTechMapping(experienceCreatedId, item)
-                        .catch((error) => {
-                            this.snackBarVisible = true
-                            this.snackBarText = "Erreur API : " + error
-                            this.snackBarType = "error"
-                        })
-                }
-            )
-
-
+                            .then(
+                                this.mapExistingTechnoIsOK = true
+                            )
+                            .catch((error) => {
+                                this.snackBarVisible = true
+                                this.snackBarText = "Erreur API : " + error
+                                this.snackBarType = "error"
+                                this.mapExistingTechnoIsOK = false
+                            })
+                    }
+                )
+            } else {
+                this.mapExistingTechnoIsOK = true
+            }
         },
+
+        async updateExperience(){
+            console.log("hellow")
+        },
+
         async handleSubmit(e) {
             e.preventDefault();
 
             this.validateForm()
 
-            if (this.formIsValid) {
-                this.createExperience()
+            console.log(this.isNewExperience)
+
+            if (this.isNewExperience) {
+                if (this.formIsValid) {
+                    this.createExperience().then(() => {
+                        if (this.createExperienceIsOK && this.createTechnoIsOK && this.mapExistingTechnoIsOK) {
+                            this.snackBarVisible = true
+                            this.snackBarText = globalConstants.SUCCESS_MESSAGE_EXPERIENCE_CREATED
+                            this.snackBarType = "success"
+                        }
+                    }
+                    )
+                }
+            } else {
+                if (this.formIsValid) {
+                    this.updateExperience().then(() => {
+                        // if (this.createExperienceIsOK && this.createTechnoIsOK && this.mapExistingTechnoIsOK) {
+                        //     this.snackBarVisible = true
+                        //     this.snackBarText = globalConstants.SUCCESS_MESSAGE_EXPERIENCE_CREATED
+                        //     this.snackBarType = "success"
+                        // }
+                    }
+                    )
+                }
+
             }
+
         },
 
         async createTechnology(technologyName) {
@@ -273,12 +371,30 @@ export default {
             )
         }
     },
+
     mounted() {
+        //get existing technologies for techbonlogies field 
+        this.getTechnologies()
+
+        //get existing experience prop
+        this.getExperienceData().then(
+            () => {
+                //emit data
+                this.formFields.forEach(
+                    (item) => {
+                        const dataobj = { "field": item, "value": this[item] };
+                        this.emitter.emit("ExperienceForm", dataobj);
+                    }
+                )
+
+            }
+        )
+
+        //get field data from emitter
         this.formFields.forEach(item =>
 
             this.emitter.on(item, this.getFormDatafromEmitter))
 
-        this.getTechnologies()
     }
 }
 
@@ -310,6 +426,6 @@ export default {
 }
 
 .NewExperienceForm-snack {
-    margin: 10px 0px 10px 10px;
+    margin: 20px 0px 10px 10px;
 }
 </style>
